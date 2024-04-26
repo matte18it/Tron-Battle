@@ -8,10 +8,12 @@ import java.awt.*;
 public class GameFrame extends JPanel {
     // Attributi
     private static final JFrame frameGame = new JFrame("Menu Principale");
+    private static final MenuView menuView = new MenuView();
 
     //Metodi
     public static void launchMenu() {
         init(); // metodo per settare i settings della finestra
+        frameGame.add(menuView);
     }
 
     public static void launchGame() {
