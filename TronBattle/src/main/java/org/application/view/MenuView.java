@@ -30,7 +30,7 @@ public class MenuView extends JPanel {
 
         // creo model e controller
         model = new MenuModel(this);
-        controller = new MenuController(model);
+        controller = new MenuController(model, this);
 
         //Setto il layout del pannello principale
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -43,6 +43,7 @@ public class MenuView extends JPanel {
     private void initMenu() {
         // Creo il menu
         initComponent();    // qua creo tutti i componenti del menu e li metto nel panelMenu
+        controller.addListener();
         this.add(panelMenu);    // aggiungo il panelMenu al pannello principale
 
         repaint();
@@ -61,12 +62,12 @@ public class MenuView extends JPanel {
         btnExit.setFont(font);
 
         titleLabel = new JLabel();
-        ImageIcon image = new ImageIcon(loader.getBufferedImage("/title/TronBattleTitle.png", 504, 71, false));
+        ImageIcon image = new ImageIcon(loader.getBufferedImage("/title/TronBattleTitle.png", 604, 85, false));
         titleLabel.setIcon(image);
 
         // Aggiungo i vari componenti al pannello
         panelMenu = new JPanel();
-        panelMenu.add(Box.createVerticalStrut(50));
+        panelMenu.add(Box.createVerticalStrut(70));
         panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
 
         panelButton = new JPanel();
@@ -79,11 +80,24 @@ public class MenuView extends JPanel {
         panelButton.add(btnExit);
 
         panelMenu.add(panelButton);
-
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+    }
+
+    // Getters
+    public JButton getBtnHumanVsIA() {
+        return btnHumanVsIA;
+    }
+    public JButton getBtn2Players() {
+        return btn2Players;
+    }
+    public JButton getBtn4Players() {
+        return btn4Players;
+    }
+    public JButton getBtnExit() {
+        return btnExit;
     }
 }

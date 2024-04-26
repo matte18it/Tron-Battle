@@ -1,6 +1,7 @@
 package org.application.view;
 
 import org.application.controller.MovementController;
+import org.application.controller.TwoIAController;
 import org.application.loop.GameLoop;
 import org.application.utility.Settings;
 
@@ -12,19 +13,23 @@ public class GameFrame extends JPanel {
     private static final JFrame frameGame = new JFrame("Menu Principale");
     private static final MenuView menuView = new MenuView();
     private static final GameView gameView = new GameView();
+    private static final SinglePlayerView singlePlayerView = new SinglePlayerView();
+    private static final TwoIAView twoPlayerView = new TwoIAView();
 
     //Metodi
     public static void launchMenu() {
         init(); // metodo per settare i settings della finestra
         frameGame.add(menuView);
 
+        frameGame.setUndecorated(true);
         frameGame.setVisible(true);
+        frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void launchGame() {
         frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
-        frameGame.setTitle("Tron Battle");
+        frameGame.setTitle("Tron Battle - Competition");
         MovementController controller = new MovementController(gameView);
         GameLoop gameLoop = new GameLoop(controller);
         gameView.setController(controller);
@@ -32,8 +37,30 @@ public class GameFrame extends JPanel {
         gameView.requestFocus();
         frameGame.add(gameView);
         gameLoop.startGame();
+        frameGame.revalidate();
+        frameGame.repaint();
+    }
 
-        frameGame.setVisible(true);
+    public static void singlePlayer() {
+        frameGame.remove(menuView);
+        init(); // metodo per settare i settings della finestra
+        frameGame.setTitle("Tron Battle - Single Player");
+        frameGame.setFocusable(true);
+        frameGame.requestFocus();
+        frameGame.add(singlePlayerView);
+        frameGame.revalidate();
+        frameGame.repaint();
+    }
+
+    public static void twoPlayer() {
+        frameGame.remove(menuView);
+        init(); // metodo per settare i settings della finestra
+        frameGame.setTitle("Tron Battle - Single Player");
+        frameGame.setFocusable(true);
+        frameGame.requestFocus();
+        frameGame.add(twoPlayerView);
+        frameGame.revalidate();
+        frameGame.repaint();
     }
 
     private static void init() {
@@ -46,8 +73,5 @@ public class GameFrame extends JPanel {
         int x = (screenDimension.width - frameGame.getWidth())/2;
         int y = (screenDimension.height - frameGame.getHeight())/2;
         frameGame.setLocation(x, y);
-
-        frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameGame.setUndecorated(true);
     }
 }
