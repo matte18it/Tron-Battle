@@ -3,6 +3,7 @@ package org.application.utility;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 
 public class ResourceLoader {
@@ -18,7 +19,7 @@ public class ResourceLoader {
             instance = new ResourceLoader();
 
         return instance;
-    }
+    }   // funzione per ottenere l'istanza del ResourceLoader
     public BufferedImage getBufferedImage(String s, int width, int height, boolean b) {
         BufferedImage image=null;
         BufferedImage dimg=null;
@@ -35,5 +36,14 @@ public class ResourceLoader {
             System.out.println("Error: " + e);
         }
         return  dimg;
-    }
+    }   // funzione per caricare un'immagine
+    public Font getFont(String path, int size, int type) {
+        Font font=null;
+        try{
+            font = Font.createFont(Font.TRUETYPE_FONT, new BufferedInputStream(getClass().getResourceAsStream(path))).deriveFont(type,size);
+        }catch (IOException | FontFormatException e){
+            System.out.println("Error: " + e);
+        }
+        return font;
+    }   // funzione per caricare un font
 }

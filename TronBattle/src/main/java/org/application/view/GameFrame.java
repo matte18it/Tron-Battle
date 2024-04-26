@@ -17,6 +17,8 @@ public class GameFrame extends JPanel {
     public static void launchMenu() {
         init(); // metodo per settare i settings della finestra
         frameGame.add(menuView);
+
+        frameGame.setVisible(true);
     }
 
     public static void launchGame() {
@@ -29,10 +31,9 @@ public class GameFrame extends JPanel {
         gameView.setFocusable(true);
         gameView.requestFocus();
         frameGame.add(gameView);
-        frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameGame.setVisible(true);
         gameLoop.startGame();
 
+        frameGame.setVisible(true);
     }
 
     private static void init() {
@@ -48,6 +49,5 @@ public class GameFrame extends JPanel {
 
         frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameGame.setUndecorated(true);
-        frameGame.setVisible(true);
     }
 }
