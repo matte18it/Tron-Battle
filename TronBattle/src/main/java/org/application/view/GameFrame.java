@@ -1,5 +1,7 @@
 package org.application.view;
 
+import org.application.controller.MovementController;
+import org.application.loop.GameLoop;
 import org.application.utility.Settings;
 
 import javax.swing.*;
@@ -9,6 +11,7 @@ public class GameFrame extends JPanel {
     // Attributi
     private static final JFrame frameGame = new JFrame("Menu Principale");
     private static final MenuView menuView = new MenuView();
+    private static final GameView gameView = new GameView();
 
     //Metodi
     public static void launchMenu() {
@@ -17,7 +20,20 @@ public class GameFrame extends JPanel {
     }
 
     public static void launchGame() {
+        frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
+        GameView gameView = new GameView();
+        MovementController controller = new MovementController(gameView);
+        GameLoop gameLoop = new GameLoop(controller);
+        gameView.setController(controller);
+        gameView.setFocusable(true);
+        gameView.requestFocus();
+        frameGame.add(gameView);
+        frameGame.setUndecorated(true);
+        frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameGame.setVisible(true);
+        gameLoop.startGame();
+
     }
 
     private static void init() {

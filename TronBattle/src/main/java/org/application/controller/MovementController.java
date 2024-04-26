@@ -1,14 +1,14 @@
 package org.application.controller;
 
-import org.application.view.GameGraphics;
+import org.application.view.GameView;
 
 import java.awt.event.KeyAdapter;
 
 public class MovementController extends KeyAdapter {
-    private GameGraphics gameGraphics;
+    private GameView gameView;
 
-    public MovementController(GameGraphics gameGraphics) {
-        this.gameGraphics = gameGraphics;
+    public MovementController(GameView gameView) {
+        this.gameView = gameView;
     }
 
 }
