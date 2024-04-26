@@ -8,4 +8,5 @@ public class GameView extends JPanel {
     public void setController(MovementController controller) {
         addKeyListener(controller);
     }
+
 }
