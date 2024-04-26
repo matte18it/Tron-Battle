@@ -3,7 +3,7 @@ package org.application.model;
 import org.application.utility.Settings;
 
 public class Game {
-    private Block[][] blocks = new Block[Settings.CELL_SIZEX][Settings.CELL_SIZEY];
+    private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
     private int x;
     private int y;
     private int currentDirection = Settings.MOVE_RIGHT;
@@ -27,5 +27,9 @@ public class Game {
     }
 
     public void move() {
+    }
+
+    public Block[][] getBlocks() {
+        return blocks;
     }
 }

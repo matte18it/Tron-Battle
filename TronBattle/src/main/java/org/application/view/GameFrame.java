@@ -29,7 +29,6 @@ public class GameFrame extends JPanel {
         gameView.setFocusable(true);
         gameView.requestFocus();
         frameGame.add(gameView);
-        frameGame.setUndecorated(true);
         frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameGame.setVisible(true);
         gameLoop.startGame();
