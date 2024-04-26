@@ -11,4 +11,5 @@ public class Settings {
     public final static int MOVE_LEFT = 1;
     public final static int MOVE_UP = 2;
     public final static int MOVE_DOWN = 3;
+
 }
