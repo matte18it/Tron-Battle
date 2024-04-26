@@ -14,7 +14,7 @@ public class GameFrame extends JPanel {
         init(); // metodo per settare i settings della finestra
     }
 
-    public static void launch() {
+    public static void launchGame() {
         init(); // metodo per settare i settings della finestra
     }
 
@@ -22,7 +22,8 @@ public class GameFrame extends JPanel {
         //Con questo setto la dimensione e la posizione della finestra di gioco
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenDimension = toolkit.getScreenSize();
-        frameGame.setSize(1280, 660);
+        frameGame.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY);
+
         // Mettiamo la finestra al centro dello schermo
         int x = (screenDimension.width - frameGame.getWidth())/2;
         int y = (screenDimension.height - frameGame.getHeight())/2;
