@@ -11,15 +11,14 @@ public class GameFrame extends JPanel {
 
     //Metodi
     public static void launchMenu() {
-        settings(); // metodo per settare i settings della finestra
-        frameGame.setVisible(true);
+        init(); // metodo per settare i settings della finestra
     }
 
     public static void launch() {
-        frameGame.setVisible(true);
+        init(); // metodo per settare i settings della finestra
     }
 
-    private static void settings() {
+    private static void init() {
         //Con questo setto la dimensione e la posizione della finestra di gioco
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenDimension = toolkit.getScreenSize();
@@ -30,5 +29,7 @@ public class GameFrame extends JPanel {
         frameGame.setLocation(x, y);
 
         frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameGame.setUndecorated(true);
+        frameGame.setVisible(true);
     }
 }
