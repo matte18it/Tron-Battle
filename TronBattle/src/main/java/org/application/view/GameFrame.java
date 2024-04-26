@@ -22,7 +22,7 @@ public class GameFrame extends JPanel {
     public static void launchGame() {
         frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
-        GameView gameView = new GameView();
+        frameGame.setTitle("Tron Battle");
         MovementController controller = new MovementController(gameView);
         GameLoop gameLoop = new GameLoop(controller);
         gameView.setController(controller);
