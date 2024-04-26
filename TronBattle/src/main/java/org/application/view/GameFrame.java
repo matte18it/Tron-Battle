@@ -1,27 +1,35 @@
 package org.application.view;
 
-import org.application.controller.MovementController;
-import org.application.loop.GameLoop;
 import org.application.utility.Settings;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GameFrame extends JPanel {
+    // Attributi
+    private static final JFrame frameGame = new JFrame("Menu Principale");
+
+    //Metodi
+    public static void launchMenu() {
+        init(); // metodo per settare i settings della finestra
+    }
+
     public static void launch() {
-        JFrame frame = new JFrame("Pacman");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY);
-        frame.setVisible(true);
-        GameGraphics gameGraphics = new GameGraphics();
-        MovementController controller = new MovementController(gameGraphics);
-        GameLoop gameLoop = new GameLoop(controller);
-        gameGraphics.setController(controller);
-        gameGraphics.setFocusable(true);
-        gameGraphics.requestFocus();
-        frame.add(gameGraphics);
-        frame.setUndecorated(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        gameLoop.startGame();
+        init(); // metodo per settare i settings della finestra
+    }
+
+    private static void init() {
+        //Con questo setto la dimensione e la posizione della finestra di gioco
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Dimension screenDimension = toolkit.getScreenSize();
+        frameGame.setSize(1280, 660);
+        // Mettiamo la finestra al centro dello schermo
+        int x = (screenDimension.width - frameGame.getWidth())/2;
+        int y = (screenDimension.height - frameGame.getHeight())/2;
+        frameGame.setLocation(x, y);
+
+        frameGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameGame.setUndecorated(true);
+        frameGame.setVisible(true);
     }
 }
