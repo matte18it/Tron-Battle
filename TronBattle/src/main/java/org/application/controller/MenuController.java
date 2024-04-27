@@ -25,6 +25,7 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                view.stopAnimation();
                 System.exit(0);
             }
         });
@@ -34,6 +35,7 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                view.stopAnimation();
                 GameFrame.launchGame();
             }
         });
@@ -43,6 +45,7 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                view.stopAnimation();
                 GameFrame.singlePlayer();
             }
         });
@@ -52,6 +55,7 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                view.stopAnimation();
                 GameFrame.twoPlayer();
             }
         });

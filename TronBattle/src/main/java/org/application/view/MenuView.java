@@ -2,17 +2,11 @@ package org.application.view;
 
 import org.application.Model.MenuModel;
 import org.application.controller.MenuController;
+import org.application.loop.MenuLoop;
 import org.application.utility.ResourceLoader;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MenuView extends JPanel {
     // Attributi
@@ -23,10 +17,9 @@ public class MenuView extends JPanel {
     private JButton btnHumanVsIA, btn2Players, btn4Players, btnExit;
     private JLabel titleLabel;
     private Font font;
-    // variabili utili per la gestione dell'animazione di sfondo
-    private List<BufferedImage> frames;
+    // Attributi per l'animazione
+    private MenuLoop menuLoop;
     private int currentFrame = 0;
-    private Timer timer;
 
     // Costruttore
     public MenuView () {
@@ -142,43 +135,25 @@ public class MenuView extends JPanel {
         panelMenu.add(panelButton);
     }
     private void initImageAnimation() {
-        frames = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            try {
-                // Costruisci il percorso dell'immagine basato sull'indice
-                String imagePath = "/background/gifFrame/frame" + i + ".jpg";
-                // Carica l'immagine
-                BufferedImage frame = ImageIO.read(getClass().getResource(imagePath));
-
-                // Ridimensiona l'immagine se necessario
-                double scaleX = 1280.0 / frame.getWidth();
-                double scaleY = 640.0 / frame.getHeight();
-                AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
-                AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
-                BufferedImage resizedFrame = bilinearScaleOp.filter(frame, null);
-
-                frames.add(resizedFrame);
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
-            }
+        // Inizializza l'animazione con MenuLoop
+        menuLoop = new MenuLoop(this);
+        menuLoop.startAnimation();
+    }
+    public void setCurrentFrame(int currentFrame) {
+        this.currentFrame = currentFrame;
+    }
+    public void stopAnimation() {
+        if (menuLoop != null) {
+            menuLoop.stopAnimation();
         }
-
-        // Inizializzo il timer per l'animazione
-        timer = new Timer(70, e -> {
-            currentFrame = (currentFrame + 1) % frames.size();
-            invalidate();
-            repaint();
-        });
-        timer.start();
     }
 
     // Override del metodo paintComponent per disegnare l'immagine di sfondo
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (frames != null && !frames.isEmpty()) {
-            g.drawImage(frames.get(currentFrame), 0, 0, this);
+        if (menuLoop.getFrames() != null && !menuLoop.getFrames().isEmpty()) {
+            g.drawImage(menuLoop.getFrames().get(currentFrame), 0, 0, this);
         }
     }
 
