@@ -46,25 +46,25 @@ public class GameFrame extends JPanel {
     }
 
     public static void singlePlayer() {
+        Game.getInstance().setModalitaCorrente(Settings.SINGLE_PLAYER);
         frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
         frameGame.setTitle("Tron Battle - Single Player");
         frameGame.setFocusable(true);
         frameGame.requestFocus();
         frameGame.add(GAME_VIEW);
-        Game.getInstance().setModalitaCorrente(Settings.SINGLE_PLAYER);
         frameGame.revalidate();
         frameGame.repaint();
     }
 
     public static void twoPlayer() {
+        Game.getInstance().setModalitaCorrente(Settings.TWO_PLAYER);
         frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
         frameGame.setTitle("Tron Battle - IA VS IA");
         frameGame.setFocusable(true);
         frameGame.requestFocus();
         frameGame.add(GAME_VIEW);
-        Game.getInstance().setModalitaCorrente(Settings.TWO_PLAYER);
         frameGame.revalidate();
         frameGame.repaint();
     }

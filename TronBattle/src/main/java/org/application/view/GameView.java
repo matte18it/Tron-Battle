@@ -46,12 +46,12 @@ public class GameView extends JPanel {
             for(int j = 0; j < game.getBlocks()[i].length; j++) {
                 int y = Settings.CELL_SIZEY * j;
                 System.out.println(game.getBlocks()[i][j].type());
+                g.drawImage(cella, x, y, null);
                 switch (game.getBlocks()[i][j].type()){
-                    case Block.EMPTY -> g.drawImage(cella, x, y, null);
-                    case Block.PLAYER1 -> g.drawImage(giocatori[0][0], x, y, null);
-                    case Block.PLAYER2 ->g.drawImage( giocatori[1][0], x, y, null);
-                    case Block.PLAYER3 -> g.drawImage(giocatori[2][0], x, y, null);
-                    case Block.PLAYER4 -> g.drawImage(giocatori[3][0], x, y, null);
+                    case Block.PLAYER1_HEAD -> g.drawImage(giocatori[0][game.getDirectionPlayer1()], x, y, null);
+                    case Block.PLAYER2_HEAD ->g.drawImage( giocatori[1][game.getDirectionPlayer2()], x, y, null);
+                    case Block.PLAYER3_HEAD -> g.drawImage(giocatori[2][game.getDirectionPlayer3()], x, y, null);
+                    case Block.PLAYER4_HEAD -> g.drawImage(giocatori[3][game.getDirectionPlayer4()], x, y, null);
                 }
             }
         }
