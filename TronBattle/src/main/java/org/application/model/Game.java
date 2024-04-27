@@ -2,7 +2,10 @@ package org.application.model;
 
 import org.application.utility.Settings;
 
+import java.util.Random;
+
 public class Game {
+    private final Random random = new Random();
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
     private int x;
     private int y;
@@ -44,10 +47,13 @@ public class Game {
         this.directionPlayer2 = directionPlayer2;
     }
 
-    private Game(){
+    private Game() {
 
-    };
+    }
+
+    ;
     private static Game instance;
+
     public static Game getInstance() {
         if (instance == null) {
             instance = new Game();
@@ -57,43 +63,110 @@ public class Game {
 
 
     public void move() {
-    }
-    public void setModalitaCorrente(int modalitàCorrente) {
-        this.modalitàCorrente = modalitàCorrente;
-        this.loadWorld();
-    }
-
-    private void loadWorld() {
-        for (int i = 0; i < blocks.length; i++) {
-            for (int j = 0; j < blocks[i].length; j++) {
-                blocks[i][j] = new Block(Block.EMPTY);
+        switch (modalitàCorrente) {
+            case Settings.SINGLE_PLAYER -> {
+                //TODO
+            }
+            case Settings.TWO_PLAYER -> {
+                //TODO
+            }
+            case Settings.COMPETITION -> {
+                directionPlayer1 = random.nextInt(4);
+                directionPlayer2 = random.nextInt(4);
+                directionPlayer3 = random.nextInt(4);
+                directionPlayer4 = random.nextInt(4);
+                movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
+                movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
+                movePlayer( directionPlayer3, Block.PLAYER3_HEAD, Block.PLAYER3_BODY);
+                movePlayer( directionPlayer4, Block.PLAYER4_HEAD, Block.PLAYER4_BODY);
             }
         }
-        if(modalitàCorrente==Settings.COMPETITION){
-            // Imposta il giocatore 1 nell'angolo in alto a sinistra
-            blocks[1][1] = new Block(Block.PLAYER1_HEAD);
-            directionPlayer1 = Settings.RIGHT;
+    }
 
-            // Imposta il giocatore 2 nell'angolo in alto a destra
-            blocks[1][blocks[0].length - 2] = new Block(Block.PLAYER2_HEAD);
-            directionPlayer2 = Settings.LEFT;
+    private void movePlayer( int direction, int headType, int bodyType) {
+        // Ottieni la posizione corrente del giocatore
+        int[] playerPosition = getPlayerPosition(headType);
+        int x = playerPosition[0];
+        int y = playerPosition[1];
 
-            // Imposta il giocatore 3 nell'angolo in basso a sinistra
-            blocks[blocks.length - 2][1] = new Block(Block.PLAYER3_HEAD);
-            directionPlayer3 = Settings.RIGHT;
+        // Calcola la nuova posizione del giocatore
+        int newX = x;
+        int newY = y;
+        switch (direction) {
+            case Settings.RIGHT:
+                newX++;
+                break;
+            case Settings.LEFT:
+                newX--;
+                break;
+            case Settings.UP:
+                newY--;
+                break;
+            case Settings.DOWN:
+                newY++;
+                break;
+            default:
+                // Direzione non valida
+                return;
 
-            // Imposta il giocatore 4 nell'angolo in basso a destra
-            blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER4_HEAD);
-            directionPlayer4 = Settings.LEFT;
 
         }
+        if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY)
+            return;
+        blocks[x][y] = new Block(bodyType);
+        blocks[newX][newY] = new Block(headType);
     }
 
-    public int getModalitàCorrente() {
-        return modalitàCorrente;
-    }
+        public void setModalitaCorrente ( int modalitàCorrente){
+            this.modalitàCorrente = modalitàCorrente;
+            this.loadWorld();
+        }
 
-    public Block[][] getBlocks() {
-        return blocks;
+        private void loadWorld () {
+            for (int i = 0; i < blocks.length; i++) {
+                for (int j = 0; j < blocks[i].length; j++) {
+                    blocks[i][j] = new Block(Block.EMPTY);
+                }
+            }
+            if (modalitàCorrente == Settings.COMPETITION) {
+                // Imposta il giocatore 1 nell'angolo in alto a sinistra
+                blocks[1][1] = new Block(Block.PLAYER1_HEAD);
+                directionPlayer1 = Settings.RIGHT;
+
+                // Imposta il giocatore 2 nell'angolo in alto a destra
+                blocks[1][blocks[0].length - 2] = new Block(Block.PLAYER2_HEAD);
+                directionPlayer2 = Settings.LEFT;
+
+                // Imposta il giocatore 3 nell'angolo in basso a sinistra
+                blocks[blocks.length - 2][1] = new Block(Block.PLAYER3_HEAD);
+                directionPlayer3 = Settings.RIGHT;
+
+                // Imposta il giocatore 4 nell'angolo in basso a destra
+                blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER4_HEAD);
+                directionPlayer4 = Settings.LEFT;
+
+            }
+        }
+
+        public int getModalitàCorrente () {
+            return modalitàCorrente;
+        }
+
+        public Block[][] getBlocks () {
+            return blocks;
+        }
+
+
+    private int[] getPlayerPosition(int playerIndex) {
+        for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks[i].length; j++) {
+                if (blocks[i][j].type() == playerIndex) {
+                    return new int[]{i, j}; // Restituisci le coordinate della testa del giocatore
+                }
+            }
+        }
+        return new int[]{-1, -1};
     }
 }
+
+

@@ -45,13 +45,17 @@ public class GameView extends JPanel {
             int x = Settings.CELL_SIZEX * i;
             for(int j = 0; j < game.getBlocks()[i].length; j++) {
                 int y = Settings.CELL_SIZEY * j;
-                System.out.println(game.getBlocks()[i][j].type());
                 g.drawImage(cella, x, y, null);
                 switch (game.getBlocks()[i][j].type()){
                     case Block.PLAYER1_HEAD -> g.drawImage(giocatori[0][game.getDirectionPlayer1()], x, y, null);
                     case Block.PLAYER2_HEAD ->g.drawImage( giocatori[1][game.getDirectionPlayer2()], x, y, null);
                     case Block.PLAYER3_HEAD -> g.drawImage(giocatori[2][game.getDirectionPlayer3()], x, y, null);
                     case Block.PLAYER4_HEAD -> g.drawImage(giocatori[3][game.getDirectionPlayer4()], x, y, null);
+                    case Block.PLAYER1_BODY -> {g.setColor(Color.GREEN);g.fillRect(x, y, Settings.CELL_SIZEX, Settings.CELL_SIZEY);}
+                    case Block.PLAYER2_BODY -> {g.setColor(Color.WHITE);g.fillRect(x, y, Settings.CELL_SIZEX, Settings.CELL_SIZEY);}
+                    case Block.PLAYER3_BODY -> {g.setColor(Color.ORANGE);g.fillRect(x, y, Settings.CELL_SIZEX, Settings.CELL_SIZEY);}
+                    case Block.PLAYER4_BODY -> {g.setColor(Color.BLUE);g.fillRect(x, y, Settings.CELL_SIZEX, Settings.CELL_SIZEY);}
+
                 }
             }
         }

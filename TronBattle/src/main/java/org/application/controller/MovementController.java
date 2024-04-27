@@ -1,5 +1,6 @@
 package org.application.controller;
 
+import org.application.model.Game;
 import org.application.view.GameView;
 
 import java.awt.event.KeyAdapter;
@@ -28,7 +29,7 @@ public class MovementController extends KeyAdapter {
     }
 
     public void update() {
-        //Game.getInstance().move();
+        Game.getInstance().move();
         gameView.repaint();
     }
 
