@@ -51,9 +51,10 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                chooseSinglePlayerIA();
-                view.stopAnimation();
-                GameFrame.singlePlayer();
+                if(chooseSinglePlayerIA()){
+                    view.stopAnimation();
+                    GameFrame.singlePlayer();
+                }
             }
         });
 
@@ -62,13 +63,14 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
-                chooseTwoPlayerIA();
-                view.stopAnimation();
-                GameFrame.twoPlayer();
+                if(chooseTwoPlayerIA()){
+                    view.stopAnimation();
+                    GameFrame.twoPlayer();
+                }
             }
         });
     }   // aggiunge i listener ai bottoni
-    public void chooseSinglePlayerIA() {
+    public boolean chooseSinglePlayerIA() {
         IconFontSwing.register(FontAwesomeSolid.getIconFont());
         Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.ROBOT, 40, new Color(82, 135, 172));
 
@@ -86,13 +88,14 @@ public class MenuController {
             case 3:
                 Settings.SinglePlayerIA = "NonPiuSoli";
                 break;
-            default:
-                String[] choose = {"Palkia", "Dialga", "_4F", "NonPiuSolii"};
-                Settings.SinglePlayerIA = choose[(int) (Math.random() * choose.length)];
-                break;
         }
+
+        if(choice == -1)
+            return false;
+
+        return true;
     }   // permette di scegliere l'IA con cui giocare
-    public void chooseTwoPlayerIA() {
+    public boolean chooseTwoPlayerIA() {
         // Registra l'icona
         IconFontSwing.register(FontAwesomeSolid.getIconFont());
         Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.ROBOT, 40, new Color(82, 135, 172));
@@ -131,8 +134,7 @@ public class MenuController {
             selectedOptions[0] = Objects.requireNonNull(comboBox1.getSelectedItem()).toString();
             selectedOptions[1] = Objects.requireNonNull(comboBox2.getSelectedItem()).toString();
         } else {
-            selectedOptions[0] = options[(int) (Math.random() * options.length)];
-            selectedOptions[1] = options[(int) (Math.random() * options.length)];
+            return false;
         }
 
         // se le due IA sono uguali, cambio la seconda IA
@@ -143,5 +145,7 @@ public class MenuController {
         // Memorizza le selezioni
         Settings.TwoPlayer_FirstIA = selectedOptions[0];
         Settings.TwoPlayer_SecondIA = selectedOptions[1];
+
+        return true;
     }
 }
