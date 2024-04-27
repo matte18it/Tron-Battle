@@ -16,4 +16,9 @@ public class Settings {
     public static String SinglePlayerIA = "";
     public static String TwoPlayer_FirstIA = "";
     public static String TwoPlayer_SecondIA = "";
+
+    // variabili per la modalità
+    public static final int SINGLE_PLAYER = 0;
+    public static final int TWO_PLAYER = 1;
+    public static final int COMPETITION = 2;
 }

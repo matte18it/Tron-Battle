@@ -27,11 +27,10 @@ public class MovementController extends KeyAdapter {
             default -> throw new IllegalStateException("Unexpected value: " + e.getKeyCode());
         };
 
-        Game.getInstance().setCurrentDirection(direction);
     }
 
     public void update() {
-        Game.getInstance().move();
+        //Game.getInstance().move();
         competitionView.repaint();
     }
 

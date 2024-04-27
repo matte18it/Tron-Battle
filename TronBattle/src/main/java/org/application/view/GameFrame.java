@@ -2,6 +2,7 @@ package org.application.view;
 
 import org.application.controller.MovementController;
 import org.application.loop.GameLoop;
+import org.application.model.Game;
 import org.application.utility.PlayWav;
 import org.application.utility.Settings;
 
@@ -31,6 +32,7 @@ public class GameFrame extends JPanel {
     }
 
     public static void launchGame() {
+        Game.getInstance().setModalitàCorrente(Settings.COMPETITION);
         frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
         frameGame.setTitle("Tron Battle - Competition");
@@ -52,6 +54,7 @@ public class GameFrame extends JPanel {
         frameGame.setFocusable(true);
         frameGame.requestFocus();
         frameGame.add(singlePlayerView);
+        Game.getInstance().setModalitàCorrente(Settings.SINGLE_PLAYER);
         frameGame.revalidate();
         frameGame.repaint();
     }
@@ -63,6 +66,7 @@ public class GameFrame extends JPanel {
         frameGame.setFocusable(true);
         frameGame.requestFocus();
         frameGame.add(twoPlayerView);
+        Game.getInstance().setModalitàCorrente(Settings.TWO_PLAYER);
         frameGame.revalidate();
         frameGame.repaint();
     }

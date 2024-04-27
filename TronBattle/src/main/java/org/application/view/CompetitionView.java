@@ -8,8 +8,10 @@ import org.application.utility.Settings;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.AdjustmentEvent;
 import java.io.IOException;
 import java.util.Objects;
+import org.application.model.Block;
 
 public class CompetitionView extends JPanel {
     private final Image cella;
@@ -46,8 +48,14 @@ public class CompetitionView extends JPanel {
             int x = Settings.CELL_SIZEX * i;
             for(int j = 0; j < game.getBlocks()[i].length; j++) {
                 int y = Settings.CELL_SIZEY * j;
-
-                g.drawImage(cella, x, y, Settings.CELL_SIZEX, Settings.CELL_SIZEY, this); // Disegna l'immagine di sfondo per ogni cella
+                System.out.println(game.getBlocks()[i][j].type());
+                switch (game.getBlocks()[i][j].type()){
+                    case Block.EMPTY -> g.drawImage(cella, x, y, null);
+                    case Block.PLAYER1 -> g.drawImage(giocatori[0][0], x, y, null);
+                    case Block.PLAYER2 ->g.drawImage( giocatori[1][0], x, y, null);
+                    case Block.PLAYER3 -> g.drawImage(giocatori[2][0], x, y, null);
+                    case Block.PLAYER4 -> g.drawImage(giocatori[3][0], x, y, null);
+                }
             }
         }
 
