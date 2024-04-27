@@ -2,11 +2,14 @@ package org.application.model;
 
 import org.application.utility.Settings;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Game {
     private final Random random = new Random();
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
+    private List<Integer> alivePlayers;
     private int x;
     private int y;
     private int modalitàCorrente;
@@ -121,6 +124,10 @@ public class Game {
 
 
     private void uccidiGiocatore(int headType, int bodyType) {
+        alivePlayers.remove((Integer) headType);
+        if(alivePlayers.isEmpty()){
+            //TODO Game over
+        }
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks[i].length; j++) {
                 if (blocks[i][j].type() == headType || blocks[i][j].type() == bodyType) {
@@ -142,6 +149,11 @@ public class Game {
                 }
             }
             if (modalitàCorrente == Settings.COMPETITION) {
+                alivePlayers = new ArrayList<>(4); // Inizializza i giocatori vivi
+                alivePlayers.add(1);
+                alivePlayers.add(2);
+                alivePlayers.add(3);
+                alivePlayers.add(4);
                 // Imposta il giocatore 1 nell'angolo in alto a sinistra
                 blocks[1][1] = new Block(Block.PLAYER1_HEAD);
                 directionPlayer1 = Settings.RIGHT;
