@@ -54,13 +54,44 @@ public class MenuView extends JPanel {
     private void initComponent() {
         // Inizializzo i vari componenti che poi userò nel menù
         btnHumanVsIA = new JButton("Giocatore Singolo");
-        btnHumanVsIA.setFont(font);
+        btnHumanVsIA.setIcon(new ImageIcon(loader.getBufferedImage("/button/buttonBG.png", 300, 75, false)));
+        btnHumanVsIA.setHorizontalTextPosition(JButton.CENTER);
+        btnHumanVsIA.setVerticalTextPosition(JButton.CENTER);
+        btnHumanVsIA.setFont(font.deriveFont(Font.PLAIN, 20));
+        btnHumanVsIA.setBorderPainted(false);
+        btnHumanVsIA.setFocusPainted(false);
+        btnHumanVsIA.setContentAreaFilled(false);
+        btnHumanVsIA.setForeground(Color.WHITE);
+
         btn2Players = new JButton("IA VS IA");
-        btn2Players.setFont(font);
+        btn2Players.setIcon(new ImageIcon(loader.getBufferedImage("/button/buttonBG.png", 300, 75, false)));
+        btn2Players.setHorizontalTextPosition(JButton.CENTER);
+        btn2Players.setVerticalTextPosition(JButton.CENTER);
+        btn2Players.setFont(font.deriveFont(Font.PLAIN, 20));
+        btn2Players.setBorderPainted(false);
+        btn2Players.setFocusPainted(false);
+        btn2Players.setContentAreaFilled(false);
+        btn2Players.setForeground(Color.WHITE);
+
         btn4Players = new JButton("Competition");
-        btn4Players.setFont(font);
+        btn4Players.setIcon(new ImageIcon(loader.getBufferedImage("/button/buttonBG.png", 300, 75, false)));
+        btn4Players.setHorizontalTextPosition(JButton.CENTER);
+        btn4Players.setVerticalTextPosition(JButton.CENTER);
+        btn4Players.setFont(font.deriveFont(Font.PLAIN, 20));
+        btn4Players.setBorderPainted(false);
+        btn4Players.setFocusPainted(false);
+        btn4Players.setContentAreaFilled(false);
+        btn4Players.setForeground(Color.WHITE);
+
         btnExit = new JButton("Esci");
-        btnExit.setFont(font);
+        btnExit.setIcon(new ImageIcon(loader.getBufferedImage("/button/buttonBG.png", 300, 75, false)));
+        btnExit.setHorizontalTextPosition(JButton.CENTER);
+        btnExit.setVerticalTextPosition(JButton.CENTER);
+        btnExit.setFont(font.deriveFont(Font.PLAIN, 20));
+        btnExit.setBorderPainted(false);
+        btnExit.setFocusPainted(false);
+        btnExit.setContentAreaFilled(false);
+        btnExit.setForeground(Color.WHITE);
 
         titleLabel = new JLabel();
         ImageIcon image = new ImageIcon(loader.getBufferedImage("/title/TronBattleTitle.png", 604, 85, false));
@@ -95,10 +126,6 @@ public class MenuView extends JPanel {
         // Aggiungo il bottone "Esci" alla cella 0,4
         c.gridx = 0; c.gridy = 4;
         panelButton.add(btnExit, c);
-
-        // Aggiungo uno spazio vuoto alla cella 0,5
-        c.gridx = 0; c.gridy = 5;
-        panelButton.add(Box.createVerticalStrut(100), c);
 
         panelMenu.add(panelButton);
     }
