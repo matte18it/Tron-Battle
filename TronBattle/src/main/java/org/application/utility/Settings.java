@@ -12,4 +12,8 @@ public class Settings {
     public final static int MOVE_UP = 2;
     public final static int MOVE_DOWN = 3;
 
+    // variabili per la IA
+    public String SinglePlayerIA = "";
+    public String TwoPlayer_FirstIA = "";
+    public String TwoPlayer_SecondIA = "";
 }

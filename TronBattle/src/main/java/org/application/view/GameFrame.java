@@ -1,7 +1,6 @@
 package org.application.view;
 
 import org.application.controller.MovementController;
-import org.application.controller.TwoIAController;
 import org.application.loop.GameLoop;
 import org.application.utility.Settings;
 

@@ -5,6 +5,7 @@ import org.application.controller.MenuController;
 import org.application.utility.ResourceLoader;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class MenuView extends JPanel {
@@ -67,17 +68,37 @@ public class MenuView extends JPanel {
 
         // Aggiungo i vari componenti al pannello
         panelMenu = new JPanel();
-        panelMenu.add(Box.createVerticalStrut(70));
         panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
 
         panelButton = new JPanel();
-        panelButton.setLayout(new BoxLayout(panelButton, BoxLayout.Y_AXIS));
-        panelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelButton.add(titleLabel);
-        panelButton.add(btnHumanVsIA);
-        panelButton.add(btn2Players);
-        panelButton.add(btn4Players);
-        panelButton.add(btnExit);
+        panelButton.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.CENTER;
+        c.insets = new Insets(20, 0, 0, 0);
+
+        // Aggiungo il titolo alla cella 0,0
+        c.gridx = 0; c.gridy = 0;
+        panelButton.add(titleLabel, c);
+
+        // Aggiungo il bottone "Giocatore Singolo" alla cella 0,1
+        c.gridx = 0; c.gridy = 1;
+        panelButton.add(btnHumanVsIA, c);
+
+        // Aggiungo il bottone "IA VS IA" alla cella 0,2
+        c.gridx = 0; c.gridy = 2;
+        panelButton.add(btn2Players, c);
+
+        // Aggiungo il bottone "Competition" alla cella 0,3
+        c.gridx = 0; c.gridy = 3;
+        panelButton.add(btn4Players, c);
+
+        // Aggiungo il bottone "Esci" alla cella 0,4
+        c.gridx = 0; c.gridy = 4;
+        panelButton.add(btnExit, c);
+
+        // Aggiungo uno spazio vuoto alla cella 0,5
+        c.gridx = 0; c.gridy = 5;
+        panelButton.add(Box.createVerticalStrut(100), c);
 
         panelMenu.add(panelButton);
     }
