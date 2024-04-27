@@ -1,9 +1,14 @@
 package org.application.controller;
 
+import com.github.pervoj.jiconfont.FontAwesomeSolid;
+import jiconfont.swing.IconFontSwing;
 import org.application.model.MenuModel;
+import org.application.utility.Settings;
 import org.application.view.GameFrame;
 import org.application.view.MenuView;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -45,6 +50,7 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                chooseSinglePlayerIA();
                 view.stopAnimation();
                 GameFrame.singlePlayer();
             }
@@ -55,9 +61,38 @@ public class MenuController {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                chooseTwoPlayerIA();
                 view.stopAnimation();
                 GameFrame.twoPlayer();
             }
         });
     }
+
+    public void chooseSinglePlayerIA() {
+        IconFontSwing.register(FontAwesomeSolid.getIconFont());
+        Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.ROBOT, 40, new Color(82, 135, 172));
+
+        int choice = JOptionPane.showOptionDialog(view, "Contro quale IA vuoi giocare?", "Modalità Giocatore Singolo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, new String[]{"Palkia", "Dialga", "4F", "NonPiuSoli"}, null);
+
+        switch (choice) {
+            case 0:
+                Settings.SinglePlayerIA = "Palkia";
+                break;
+            case 1:
+                Settings.SinglePlayerIA = "Dialga";
+                break;
+            case 2:
+                Settings.SinglePlayerIA = "_4F";
+                break;
+            case 3:
+                Settings.SinglePlayerIA = "NonPiuSoli";
+                break;
+            default:
+                String[] choose = {"Palkia", "Dialga", "_4F", "NonPiuSolii"};
+                Settings.SinglePlayerIA = choose[(int) (Math.random() * choose.length)];
+                break;
+        }
+    }
+
+    public void chooseTwoPlayerIA() {}
 }
