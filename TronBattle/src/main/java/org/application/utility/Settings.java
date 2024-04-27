@@ -23,4 +23,7 @@ public class Settings {
     public static final int SINGLE_PLAYER = 0;
     public static final int TWO_PLAYER = 1;
     public static final int COMPETITION = 2;
+
+    // variabili per la gestione del gioco
+    public static boolean access = false;
 }

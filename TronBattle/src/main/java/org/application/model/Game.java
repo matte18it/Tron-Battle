@@ -1,7 +1,13 @@
 package org.application.model;
 
+import com.github.pervoj.jiconfont.FontAwesomeSolid;
+import jiconfont.swing.IconFontSwing;
+import org.application.loop.GameLoop;
 import org.application.utility.Settings;
+import org.application.view.GameFrame;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -126,7 +132,12 @@ public class Game {
     private void uccidiGiocatore(int headType, int bodyType) {
         alivePlayers.remove((Integer) headType);
         if(alivePlayers.isEmpty()){
-            //TODO Game over
+            IconFontSwing.register(FontAwesomeSolid.getIconFont());
+            Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.TROPHY, 40, new Color(255, 215, 0));
+            String message = "The winner is player " + headType;
+
+            JOptionPane.showConfirmDialog(null, message, "THE END", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+            GameFrame.launchMenu();
         }
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks[i].length; j++) {
