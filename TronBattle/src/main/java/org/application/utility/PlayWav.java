@@ -20,15 +20,18 @@ public class PlayWav {
         return play;
     }   // funzione per ottenere l'istanza di PlayWav
     public void play() {
-        //carico la musica, la avvio e la setto in loop. Infine prendo il controllore della musica
+        // scelgo un file audio a caso
         String[] paths = {"/music/music1.wav", "/music/music2.wav", "/music/music3.wav"};
         String path = paths[(int) (Math.random() * paths.length)];
 
+        // lo carico e lo riproduco
         clip = ResourceLoader.getInstance().getAudioClip(path);
         clip.start();
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+        // setto il volume
         music = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        setVolume(0);
+        music.setValue(6);
     }   // funzione per riprodurre un file audio
     public void stop(){
         //stoppo la musica
@@ -40,8 +43,4 @@ public class PlayWav {
             return clip.isRunning();
         return false;
     }   // funzione per controllare se un file audio è in riproduzione
-    public void setVolume(int value){
-        //setto volume della musica
-        music.setValue(value);
-    }   // funzione per impostare il volume di un file audio
 }

@@ -13,7 +13,7 @@ public class Settings {
     public final static int DOWN = 3;
 
     // variabili per la IA
-    public String SinglePlayerIA = "";
-    public String TwoPlayer_FirstIA = "";
-    public String TwoPlayer_SecondIA = "";
+    public static String SinglePlayerIA = "";
+    public static String TwoPlayer_FirstIA = "";
+    public static String TwoPlayer_SecondIA = "";
 }
