@@ -1,6 +1,7 @@
 package org.application.utility;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -46,4 +47,15 @@ public class ResourceLoader {
         }
         return font;
     }   // funzione per caricare un font
+    public Clip getAudioClip(String path){
+        AudioInputStream audioIn;
+        Clip clip=null;
+        try {
+            audioIn = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(path));
+            clip = AudioSystem.getClip();
+            clip.open(audioIn);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.out.println("Error: " + e);
+        } return clip;
+    }   // funzione per caricare un clip audio
 }
