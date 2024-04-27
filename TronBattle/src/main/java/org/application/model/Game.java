@@ -71,10 +71,10 @@ public class Game {
                 //TODO
             }
             case Settings.COMPETITION -> {
-                directionPlayer1 = random.nextInt(4);
-                directionPlayer2 = random.nextInt(4);
-                directionPlayer3 = random.nextInt(4);
-                directionPlayer4 = random.nextInt(4);
+                directionPlayer1 = 0;
+                directionPlayer2 = 2;
+                directionPlayer3 = 1;
+                directionPlayer4 = 2;
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
                 movePlayer( directionPlayer3, Block.PLAYER3_HEAD, Block.PLAYER3_BODY);
@@ -111,12 +111,14 @@ public class Game {
 
 
         }
-        if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY){
+        if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY || isCollisionWithOtherPlayer(newX, newY, headType)){
             uccidiGiocatore(headType, bodyType);
             return;}
         blocks[x][y] = new Block(bodyType);
         blocks[newX][newY] = new Block(headType);
     }
+
+
 
     private void uccidiGiocatore(int headType, int bodyType) {
         for (int i = 0; i < blocks.length; i++) {
@@ -145,7 +147,7 @@ public class Game {
                 directionPlayer1 = Settings.RIGHT;
 
                 // Imposta il giocatore 2 nell'angolo in alto a destra
-                blocks[1][blocks[0].length - 2] = new Block(Block.PLAYER2_HEAD);
+                blocks[1][6] = new Block(Block.PLAYER2_HEAD);
                 directionPlayer2 = Settings.LEFT;
 
                 // Imposta il giocatore 3 nell'angolo in basso a sinistra
@@ -177,6 +179,28 @@ public class Game {
             }
         }
         return new int[]{-1, -1};
+    }
+    private boolean isCollisionWithOtherPlayer(int newX, int newY, int currentPlayerType) {
+        for (int i = 0; i < 4; i++) {
+            if (i + 1 != currentPlayerType) {
+                int[] playerPosition = getPlayerPosition(i + 1);
+                int playerX = playerPosition[0];
+                int playerY = playerPosition[1];
+                if (playerX == newX && playerY == newY - 1) {
+                    return true;
+                }
+                if (playerX == newX && playerY == newY + 1) {
+                    return true;
+                }
+                if(playerY == newY && playerX == newX + 1){
+                    return true;
+                }
+                if(playerY == newY && playerX == newX - 1){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 
