@@ -111,13 +111,24 @@ public class Game {
 
 
         }
-        if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY)
-            return;
+        if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY){
+            uccidiGiocatore(headType, bodyType);
+            return;}
         blocks[x][y] = new Block(bodyType);
         blocks[newX][newY] = new Block(headType);
     }
 
-        public void setModalitaCorrente ( int modalitàCorrente){
+    private void uccidiGiocatore(int headType, int bodyType) {
+        for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks[i].length; j++) {
+                if (blocks[i][j].type() == headType || blocks[i][j].type() == bodyType) {
+                    blocks[i][j] = new Block(Block.EMPTY);
+                }
+            }
+        }
+    }
+
+    public void setModalitaCorrente ( int modalitàCorrente){
             this.modalitàCorrente = modalitàCorrente;
             this.loadWorld();
         }
