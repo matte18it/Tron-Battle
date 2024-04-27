@@ -6,7 +6,7 @@ public class Game {
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
     private int x;
     private int y;
-    private int currentDirection = Settings.MOVE_RIGHT;
+    private int currentDirection = Settings.RIGHT;
     private Game(){
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks[i].length; j++) {
