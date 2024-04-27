@@ -73,7 +73,6 @@ public class MenuController {
         Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.ROBOT, 40, new Color(82, 135, 172));
 
         int choice = JOptionPane.showOptionDialog(view, "Contro quale IA vuoi giocare?", "Modalità Giocatore Singolo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, new String[]{"Palkia", "Dialga", "4F", "NonPiuSoli"}, null);
-
         switch (choice) {
             case 0:
                 Settings.SinglePlayerIA = "Palkia";
@@ -94,5 +93,8 @@ public class MenuController {
         }
     }
 
-    public void chooseTwoPlayerIA() {}
+    public void chooseTwoPlayerIA() {
+        IconFontSwing.register(FontAwesomeSolid.getIconFont());
+        Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.ROBOT, 40, new Color(82, 135, 172));
+    }
 }
