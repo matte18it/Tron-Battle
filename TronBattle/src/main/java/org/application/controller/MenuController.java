@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 public class MenuController {
     // Attributi
@@ -66,8 +67,7 @@ public class MenuController {
                 GameFrame.twoPlayer();
             }
         });
-    }
-
+    }   // aggiunge i listener ai bottoni
     public void chooseSinglePlayerIA() {
         IconFontSwing.register(FontAwesomeSolid.getIconFont());
         Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.ROBOT, 40, new Color(82, 135, 172));
@@ -91,10 +91,57 @@ public class MenuController {
                 Settings.SinglePlayerIA = choose[(int) (Math.random() * choose.length)];
                 break;
         }
-    }
-
+    }   // permette di scegliere l'IA con cui giocare
     public void chooseTwoPlayerIA() {
+        // Registra l'icona
         IconFontSwing.register(FontAwesomeSolid.getIconFont());
         Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.ROBOT, 40, new Color(82, 135, 172));
+
+        // Array di opzioni per entrambe le scelte
+        String[] options = {"Palkia", "Dialga", "4F", "NonPiuSoli"};
+
+        // Array di etichette per le liste a discesa
+        String[] labels = {"Prima IA:", "Seconda IA:"};
+
+        // Array di valori per memorizzare le selezioni
+        String[] selectedOptions = new String[2];
+
+        // Finestra di dialogo personalizzata con due liste a discesa
+        JPanel panel = new JPanel(new GridLayout(0, 2));
+
+        // Aggiungi la label "Scegli le due IA:"
+        JLabel chooseLabel = new JLabel("Scegli le due IA:");
+        panel.add(chooseLabel);
+
+        // Aggiungi un componente vuoto per allineare le JComboBox
+        panel.add(new JPanel());
+
+        // Aggiungi le JComboBox per la selezione delle IA
+        JComboBox<String> comboBox1 = new JComboBox<>(options);
+        JComboBox<String> comboBox2 = new JComboBox<>(options);
+        panel.add(new JLabel(labels[0]));
+        panel.add(comboBox1);
+        panel.add(new JLabel(labels[1]));
+        panel.add(comboBox2);
+
+        // Mostra la finestra di dialogo
+        int result = JOptionPane.showConfirmDialog(view, panel, "Modalità IA VS IA", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon);
+        if (result == JOptionPane.OK_OPTION) {
+            // Ottieni le selezioni dalle liste a discesa
+            selectedOptions[0] = Objects.requireNonNull(comboBox1.getSelectedItem()).toString();
+            selectedOptions[1] = Objects.requireNonNull(comboBox2.getSelectedItem()).toString();
+        } else {
+            selectedOptions[0] = options[(int) (Math.random() * options.length)];
+            selectedOptions[1] = options[(int) (Math.random() * options.length)];
+        }
+
+        // se le due IA sono uguali, cambio la seconda IA
+        while (selectedOptions[0].equals(selectedOptions[1])) {
+            selectedOptions[1] = options[(int) (Math.random() * options.length)];
+        }
+
+        // Memorizza le selezioni
+        Settings.TwoPlayer_FirstIA = selectedOptions[0];
+        Settings.TwoPlayer_SecondIA = selectedOptions[1];
     }
 }
