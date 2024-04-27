@@ -11,6 +11,8 @@ public class Settings {
     public final static int LEFT = 1;
     public final static int UP = 2;
     public final static int DOWN = 3;
+    public static final int PLAYER_SIZEX = CELL_SIZEX+30;
+    public static final int PLAYER_SIZEY = CELL_SIZEY+32;
 
     // variabili per la IA
     public static String SinglePlayerIA = "";
