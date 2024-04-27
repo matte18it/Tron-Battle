@@ -11,7 +11,7 @@ public class GameFrame extends JPanel {
     // Attributi
     private static final JFrame frameGame = new JFrame("Menu Principale");
     private static final MenuView menuView = new MenuView();
-    private static final GameView gameView = new GameView();
+    private static final CompetitionView COMPETITION_VIEW = new CompetitionView();
     private static final SinglePlayerView singlePlayerView = new SinglePlayerView();
     private static final TwoIAView twoPlayerView = new TwoIAView();
 
@@ -29,12 +29,12 @@ public class GameFrame extends JPanel {
         frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
         frameGame.setTitle("Tron Battle - Competition");
-        MovementController controller = new MovementController(gameView);
+        MovementController controller = new MovementController(COMPETITION_VIEW);
         GameLoop gameLoop = new GameLoop(controller);
-        gameView.setController(controller);
-        gameView.setFocusable(true);
-        gameView.requestFocus();
-        frameGame.add(gameView);
+        COMPETITION_VIEW.setController(controller);
+        COMPETITION_VIEW.setFocusable(true);
+        COMPETITION_VIEW.requestFocus();
+        frameGame.add(COMPETITION_VIEW);
         gameLoop.startGame();
         frameGame.revalidate();
         frameGame.repaint();

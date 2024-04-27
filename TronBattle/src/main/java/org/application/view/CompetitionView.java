@@ -10,13 +10,13 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public class GameView extends JPanel {
+public class CompetitionView extends JPanel {
     private Image cella;
     private final String PATH = "/background";
     public void setController(MovementController controller) {
         addKeyListener(controller);
     }
-    public GameView(){
+    public CompetitionView(){
         try {
             cella = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(PATH + "/cell.png")));
             cella = cella.getScaledInstance(Settings.CELL_SIZEX, Settings.CELL_SIZEY, Image.SCALE_SMOOTH);
