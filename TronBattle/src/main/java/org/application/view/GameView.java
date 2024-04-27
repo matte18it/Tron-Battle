@@ -5,21 +5,18 @@ import org.application.model.Game;
 import org.application.utility.ResourceLoader;
 import org.application.utility.Settings;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.io.IOException;
-import java.util.Objects;
+
 import org.application.model.Block;
 
-public class CompetitionView extends JPanel {
+public class GameView extends JPanel {
     private final Image cella;
     private final Image[][] giocatori = new Image[4][4];
     public void setController(MovementController controller) {
         addKeyListener(controller);
     }
-    public CompetitionView() {
+    public GameView() {
         cella = ResourceLoader.getInstance().getBufferedImage("/background/cell.png", Settings.CELL_SIZEX, Settings.CELL_SIZEY, false);
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 4; i++) {

@@ -14,9 +14,7 @@ public class GameFrame extends JPanel {
     private static final PlayWav playMenuMusic = PlayWav.getInstance();
     private static final JFrame frameGame = new JFrame("Menu Principale");
     private static final MenuView menuView = new MenuView();
-    private static final CompetitionView COMPETITION_VIEW = new CompetitionView();
-    private static final SinglePlayerView singlePlayerView = new SinglePlayerView();
-    private static final TwoIAView twoPlayerView = new TwoIAView();
+    private static final GameView GAME_VIEW = new GameView();
 
     //Metodi
     public static void launchMenu() {
@@ -32,16 +30,16 @@ public class GameFrame extends JPanel {
     }
 
     public static void launchGame() {
-        Game.getInstance().setModalitàCorrente(Settings.COMPETITION);
+        Game.getInstance().setModalitaCorrente(Settings.COMPETITION);
         frameGame.remove(menuView);
         init(); // metodo per settare i settings della finestra
         frameGame.setTitle("Tron Battle - Competition");
-        MovementController controller = new MovementController(COMPETITION_VIEW);
+        MovementController controller = new MovementController(GAME_VIEW);
         GameLoop gameLoop = new GameLoop(controller);
-        COMPETITION_VIEW.setController(controller);
-        COMPETITION_VIEW.setFocusable(true);
-        COMPETITION_VIEW.requestFocus();
-        frameGame.add(COMPETITION_VIEW);
+        GAME_VIEW.setController(controller);
+        GAME_VIEW.setFocusable(true);
+        GAME_VIEW.requestFocus();
+        frameGame.add(GAME_VIEW);
         gameLoop.startGame();
         frameGame.revalidate();
         frameGame.repaint();
@@ -53,8 +51,8 @@ public class GameFrame extends JPanel {
         frameGame.setTitle("Tron Battle - Single Player");
         frameGame.setFocusable(true);
         frameGame.requestFocus();
-        frameGame.add(singlePlayerView);
-        Game.getInstance().setModalitàCorrente(Settings.SINGLE_PLAYER);
+        frameGame.add(GAME_VIEW);
+        Game.getInstance().setModalitaCorrente(Settings.SINGLE_PLAYER);
         frameGame.revalidate();
         frameGame.repaint();
     }
@@ -65,8 +63,8 @@ public class GameFrame extends JPanel {
         frameGame.setTitle("Tron Battle - IA VS IA");
         frameGame.setFocusable(true);
         frameGame.requestFocus();
-        frameGame.add(twoPlayerView);
-        Game.getInstance().setModalitàCorrente(Settings.TWO_PLAYER);
+        frameGame.add(GAME_VIEW);
+        Game.getInstance().setModalitaCorrente(Settings.TWO_PLAYER);
         frameGame.revalidate();
         frameGame.repaint();
     }

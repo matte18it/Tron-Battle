@@ -1,17 +1,15 @@
 package org.application.controller;
 
-import org.application.view.CompetitionView;
+import org.application.view.GameView;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import org.application.model.Game;
-
 public class MovementController extends KeyAdapter {
-    private CompetitionView competitionView;
+    private GameView gameView;
 
-    public MovementController(CompetitionView competitionView) {
-        this.competitionView = competitionView;
+    public MovementController(GameView gameView) {
+        this.gameView = gameView;
     }
     @Override
     public void keyPressed(KeyEvent e) {
@@ -31,7 +29,7 @@ public class MovementController extends KeyAdapter {
 
     public void update() {
         //Game.getInstance().move();
-        competitionView.repaint();
+        gameView.repaint();
     }
 
 }

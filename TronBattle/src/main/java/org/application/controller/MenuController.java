@@ -113,7 +113,7 @@ public class MenuController {
         JPanel panel = new JPanel(new GridLayout(0, 2));
 
         // Aggiungi la label "Scegli le due IA:"
-        JLabel chooseLabel = new JLabel("Scegli le due IA:");
+        JLabel chooseLabel = new JLabel("Scegli le due IA da far scontrare:");
         panel.add(chooseLabel);
 
         // Aggiungi un componente vuoto per allineare le JComboBox

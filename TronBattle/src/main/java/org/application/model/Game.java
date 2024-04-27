@@ -21,7 +21,7 @@ public class Game {
 
     public void move() {
     }
-    public void setModalitàCorrente(int modalitàCorrente) {
+    public void setModalitaCorrente(int modalitàCorrente) {
         this.modalitàCorrente = modalitàCorrente;
         this.loadWorld();
     }
