@@ -4,9 +4,15 @@ import org.application.Model.MenuModel;
 import org.application.controller.MenuController;
 import org.application.utility.ResourceLoader;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuView extends JPanel {
     // Attributi
@@ -17,6 +23,10 @@ public class MenuView extends JPanel {
     private JButton btnHumanVsIA, btn2Players, btn4Players, btnExit;
     private JLabel titleLabel;
     private Font font;
+    // variabili utili per la gestione dell'animazione di sfondo
+    private List<BufferedImage> frames;
+    private int currentFrame = 0;
+    private Timer timer;
 
     // Costruttore
     public MenuView () {
@@ -38,6 +48,8 @@ public class MenuView extends JPanel {
 
         // Inizializzo il menù
         initMenu();
+
+        initImageAnimation();
     }
 
     // Metodi
@@ -46,11 +58,9 @@ public class MenuView extends JPanel {
         initComponent();    // qua creo tutti i componenti del menu e li metto nel panelMenu
         controller.addListener();
         this.add(panelMenu);    // aggiungo il panelMenu al pannello principale
-
         repaint();
         revalidate();
     }
-
     private void initComponent() {
         // Inizializzo i vari componenti che poi userò nel menù
         btnHumanVsIA = new JButton("Giocatore Singolo");
@@ -67,7 +77,7 @@ public class MenuView extends JPanel {
         btn2Players.setIcon(new ImageIcon(loader.getBufferedImage("/button/buttonBG.png", 300, 75, false)));
         btn2Players.setHorizontalTextPosition(JButton.CENTER);
         btn2Players.setVerticalTextPosition(JButton.CENTER);
-        btn2Players.setFont(font.deriveFont(Font.PLAIN, 20));
+        btn2Players.setFont(font.deriveFont(Font.PLAIN, 25));
         btn2Players.setBorderPainted(false);
         btn2Players.setFocusPainted(false);
         btn2Players.setContentAreaFilled(false);
@@ -77,7 +87,7 @@ public class MenuView extends JPanel {
         btn4Players.setIcon(new ImageIcon(loader.getBufferedImage("/button/buttonBG.png", 300, 75, false)));
         btn4Players.setHorizontalTextPosition(JButton.CENTER);
         btn4Players.setVerticalTextPosition(JButton.CENTER);
-        btn4Players.setFont(font.deriveFont(Font.PLAIN, 20));
+        btn4Players.setFont(font.deriveFont(Font.PLAIN, 25));
         btn4Players.setBorderPainted(false);
         btn4Players.setFocusPainted(false);
         btn4Players.setContentAreaFilled(false);
@@ -87,7 +97,7 @@ public class MenuView extends JPanel {
         btnExit.setIcon(new ImageIcon(loader.getBufferedImage("/button/buttonBG.png", 300, 75, false)));
         btnExit.setHorizontalTextPosition(JButton.CENTER);
         btnExit.setVerticalTextPosition(JButton.CENTER);
-        btnExit.setFont(font.deriveFont(Font.PLAIN, 20));
+        btnExit.setFont(font.deriveFont(Font.PLAIN, 25));
         btnExit.setBorderPainted(false);
         btnExit.setFocusPainted(false);
         btnExit.setContentAreaFilled(false);
@@ -100,8 +110,10 @@ public class MenuView extends JPanel {
         // Aggiungo i vari componenti al pannello
         panelMenu = new JPanel();
         panelMenu.setLayout(new BoxLayout(panelMenu, BoxLayout.Y_AXIS));
+        panelMenu.setOpaque(false);
 
         panelButton = new JPanel();
+        panelButton.setOpaque(false);
         panelButton.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.CENTER;
@@ -129,10 +141,45 @@ public class MenuView extends JPanel {
 
         panelMenu.add(panelButton);
     }
+    private void initImageAnimation() {
+        frames = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            try {
+                // Costruisci il percorso dell'immagine basato sull'indice
+                String imagePath = "/background/gifFrame/frame" + i + ".jpg";
+                // Carica l'immagine
+                BufferedImage frame = ImageIO.read(getClass().getResource(imagePath));
 
+                // Ridimensiona l'immagine se necessario
+                double scaleX = 1280.0 / frame.getWidth();
+                double scaleY = 640.0 / frame.getHeight();
+                AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
+                AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
+                BufferedImage resizedFrame = bilinearScaleOp.filter(frame, null);
+
+                frames.add(resizedFrame);
+            } catch (IOException e) {
+                e.printStackTrace();
+                break;
+            }
+        }
+
+        // Inizializzo il timer per l'animazione
+        timer = new Timer(70, e -> {
+            currentFrame = (currentFrame + 1) % frames.size();
+            invalidate();
+            repaint();
+        });
+        timer.start();
+    }
+
+    // Override del metodo paintComponent per disegnare l'immagine di sfondo
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (frames != null && !frames.isEmpty()) {
+            g.drawImage(frames.get(currentFrame), 0, 0, this);
+        }
     }
 
     // Getters
