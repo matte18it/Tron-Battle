@@ -54,7 +54,7 @@ public class MenuLoop {
     }   // metodo per fermare l'animazione
     private void loadImages() throws IOException {
         for (int i = 0; i < 50; i++) {
-            String imagePath = "/background/gifFrame/frame" + i + ".jpg";
+            String imagePath = "/background/bgFrame/frame" + i + ".jpg";
             BufferedImage originalImage = ImageIO.read(getClass().getResource(imagePath));
 
             // Crea un AffineTransform per ridimensionare l'immagine
