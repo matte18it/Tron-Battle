@@ -1,6 +1,6 @@
 package org.application.view;
 
-import org.application.Model.MenuModel;
+import org.application.model.MenuModel;
 import org.application.controller.MenuController;
 import org.application.loop.MenuLoop;
 import org.application.utility.ResourceLoader;

@@ -1,4 +1,4 @@
-package org.application.Model;
+package org.application.model;
 
 import org.application.view.MenuView;
 

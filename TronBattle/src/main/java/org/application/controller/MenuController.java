@@ -1,6 +1,6 @@
 package org.application.controller;
 
-import org.application.Model.MenuModel;
+import org.application.model.MenuModel;
 import org.application.view.GameFrame;
 import org.application.view.MenuView;
 
