@@ -68,7 +68,13 @@ public class Game {
     public void move() {
         switch (modalitaCorrente) {
             case Settings.SINGLE_PLAYER -> {
-                //TODO
+                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
+                try {
+                    directionPlayer1 = future1.get();
+                }catch (InterruptedException | ExecutionException e){
+                    e.printStackTrace();
+                }
+                movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
             }
             case Settings.TWO_PLAYER -> {
                 Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
@@ -183,7 +189,8 @@ public class Game {
     }
 
     public void setModalitaCorrente ( int modalitaCorrente){
-        this.getRandomizeIA();
+            if(modalitaCorrente == Settings.COMPETITION || modalitaCorrente == Settings.TWO_PLAYER)
+                this.getRandomizeIA();
             this.modalitaCorrente = modalitaCorrente;
             this.loadWorld();
         }
@@ -228,7 +235,15 @@ public class Game {
                 directionPlayer2 = Settings.LEFT;
             }
             else if(modalitaCorrente == Settings.SINGLE_PLAYER){
-                //TODO
+                alivePlayers = new ArrayList<>(2); // Inizializza i giocatori vivi
+                alivePlayers.add(1);
+                alivePlayers.add(2);
+                // Imposta il giocatore 1 nell'angolo in alto a sinistra
+                blocks[1][1] = new Block(Block.PLAYER1_HEAD);
+                directionPlayer1 = Settings.RIGHT;
+                // Imposta il giocatore 2 nell'angolo in basso a destra
+                blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER2_HEAD);
+                directionPlayer2 = Settings.LEFT;
             }
         }
 
@@ -289,7 +304,6 @@ public class Game {
             Settings.iaNames[index] = Settings.iaNames[i];
             Settings.iaNames[i] = temp;
         }
-
     }
     private void controllaVincitore() {
         if (alivePlayers.isEmpty() && reload) {

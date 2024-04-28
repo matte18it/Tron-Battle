@@ -78,16 +78,16 @@ public class MenuController {
         int choice = JOptionPane.showOptionDialog(view, "Contro quale IA vuoi giocare?", "Modalità Giocatore Singolo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, new String[]{"Palkia", "Dialga", "4F", "NonPiuSoli"}, null);
         switch (choice) {
             case 0:
-                Settings.iaNames = new String[] {"Palkia", "TU"};
+                Settings.iaNames = new String[] {"Palkia", "Umano"};
                 break;
             case 1:
-                Settings.iaNames = new String[] {"Dialga", "TU"};
+                Settings.iaNames = new String[] {"Dialga", "Umano"};
                 break;
             case 2:
-                Settings.iaNames = new String[] {"4F", "TU"};
+                Settings.iaNames = new String[] {"4F", "Umano"};
                 break;
             case 3:
-                Settings.iaNames = new String[] {"NonPiuSoli", "TU"};
+                Settings.iaNames = new String[] {"NonPiuSoli", "Umano"};
                 break;
         }
 
