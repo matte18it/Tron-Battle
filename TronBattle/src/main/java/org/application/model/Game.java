@@ -8,18 +8,16 @@ import org.application.view.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class Game {
     private final Random random = new Random();
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
     private static final String[] iaNames = new String[]{"_4F", "Dialga", "Palkia", "NonPiùSoli"};
     private List<Integer> alivePlayers;
+    Stack<Integer> deadPlayers = new Stack<>();
     private boolean reload = false;
-    private int x;
-    private int y;
     private int modalitàCorrente;
     private int directionPlayer1;
     private int directionPlayer2;
@@ -30,33 +28,21 @@ public class Game {
         return directionPlayer1;
     }
 
-    public void setDirectionPlayer1(int directionPlayer1) {
-        this.directionPlayer1 = directionPlayer1;
-    }
 
     public int getDirectionPlayer3() {
         return directionPlayer3;
     }
 
-    public void setDirectionPlayer3(int directionPlayer3) {
-        this.directionPlayer3 = directionPlayer3;
-    }
 
     public int getDirectionPlayer4() {
         return directionPlayer4;
     }
 
-    public void setDirectionPlayer4(int directionPlayer4) {
-        this.directionPlayer4 = directionPlayer4;
-    }
 
     public int getDirectionPlayer2() {
         return directionPlayer2;
     }
 
-    public void setDirectionPlayer2(int directionPlayer2) {
-        this.directionPlayer2 = directionPlayer2;
-    }
 
     private Game() {
 
@@ -86,6 +72,10 @@ public class Game {
                 directionPlayer2=iaServices(iaNames[1], directionPlayer2);
                 directionPlayer3=iaServices(iaNames[2], directionPlayer3);
                 directionPlayer4=iaServices(iaNames[3], directionPlayer4);
+                directionPlayer1=0;
+                directionPlayer2=1;
+                directionPlayer3=1;
+                directionPlayer4=0;
 
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
@@ -93,17 +83,10 @@ public class Game {
                 movePlayer( directionPlayer4, Block.PLAYER4_HEAD, Block.PLAYER4_BODY);
             }
         }
-        if(alivePlayers.size()==1 && reload){
-            int winner = alivePlayers.get(0);
-            IconFontSwing.register(FontAwesomeSolid.getIconFont());
-            Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.TROPHY, 40, new Color(255, 215, 0));
-            String message = "The winner is player " + iaNames[winner-1] ;
-            reload = false;
-            JOptionPane.showConfirmDialog(null, message, "THE END", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
-            GameFrame.launchMenu();
-        }else if(alivePlayers.size()==1 && !reload){
-            reload = true;
-        }
+
+        controllaVincitore();
+
+
     }
 
     private int iaServices(String iaName, int directionPlayer) {
@@ -165,6 +148,9 @@ public class Game {
 
     private void uccidiGiocatore(int headType, int bodyType) {
         alivePlayers.remove((Integer) headType);
+        if(!deadPlayers.contains(headType))
+            deadPlayers.add( headType);
+
 
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks[i].length; j++) {
@@ -269,6 +255,45 @@ public class Game {
 
         return iaNames;
     }
+    private void controllaVincitore() {
+        if (alivePlayers.isEmpty() && reload) {
+            reload = false;
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.append("<html><body><h1>Final rankings:</h1>");
+            int position = 1;
+            int winner = 0;
+
+// Estrai i giocatori eliminati finché lo stack non è vuoto
+            while (!deadPlayers.isEmpty()) {
+                Integer player = deadPlayers.pop(); // Prendi il primo giocatore eliminato (l'ultimo inserito)
+                messageBuilder.append("<h2>").append(position).append(". Player ").append(iaNames[player - 1]).append("</h2>");
+                if (position == 1) {
+                    winner = player;
+                }
+                position++;
+            }
+
+// Aggiungi anche il vincitore alla classifica
+            messageBuilder.append("<h1>The winner is player ").append(iaNames[winner - 1]).append("</h1></body></html>");
+
+
+            IconFontSwing.register(FontAwesomeSolid.getIconFont());
+            Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.TROPHY, 40, new Color(255, 215, 0));
+            JOptionPane.showConfirmDialog(null, messageBuilder.toString(), "THE END", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+            GameFrame.launchMenu();
+        } else if (alivePlayers.isEmpty()) {
+            reload = true;
+        }
+        if(alivePlayers.size()==1){
+            deadPlayers.add(alivePlayers.get(0));
+            alivePlayers.clear();
+            reload = true;
+        }
+
+    }
+
+
+
 }
 
 
