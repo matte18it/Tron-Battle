@@ -22,4 +22,7 @@ public class Settings {
     // variabili per la gestione del gioco
     public static boolean access = false;
     public static String[] iaNames;
+
+    // variabili per il logger
+    public static int log = 1;
 }

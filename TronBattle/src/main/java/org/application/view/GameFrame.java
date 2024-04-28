@@ -20,18 +20,25 @@ public class GameFrame extends JPanel {
 
     //Metodi
     public static void launchMenu() {
+        menuView = new MenuView();
         if(GAME_VIEW != null && GAME_VIEW.isShowing()) {
             frameGame.getContentPane().removeAll();
+            frameGame.setVisible(false);
             frameGame.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY);
             gameLoop.stopGame();
+            frameGame.add(menuView);
+            frameGame.revalidate();
+            frameGame.repaint();
+            frameGame.setVisible(true);
         }   // se è attiva la schermata di gioco, la elimino
-        menuView = new MenuView();
+        else{
+            frameGame.add(menuView);
+            frameGame.revalidate();
+            frameGame.repaint();
+        }
         frameGame.setTitle("Tron Battle - Menu");
         frameGame.setFocusable(true);
         frameGame.requestFocus();
-        frameGame.add(menuView);
-        frameGame.revalidate();
-        frameGame.repaint();
 
         if(!Settings.access){
             Settings.access = true;
@@ -62,6 +69,10 @@ public class GameFrame extends JPanel {
     }
 
     public static void initGameScene() {
+        // stampo il log
+        System.out.println("----- LOG PARTITA " + Settings.log + " -----");
+        Settings.log++;
+
         GAME_VIEW = new GameView();
         GAME_MENU_VIEW = new GameMenuView();
         frameGame.remove(menuView);

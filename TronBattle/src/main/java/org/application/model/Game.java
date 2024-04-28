@@ -111,22 +111,18 @@ public class Game {
         switch (iaName){
             case "4F" -> {
                  directionPlayer = ia_4F.getDirection(getBlocks());
-                System.out.println("4F: " + directionPlayer);
                  break;
             }
             case "Dialga" -> {
                 directionPlayer = ia_Dialga.getDirection(getBlocks());
-                System.out.println("Dialga: " + directionPlayer);
                 break;
             }
             case "Palkia" -> {
                 directionPlayer = ia_Palkia.getDirection(getBlocks());
-                System.out.println("Palkia: " + directionPlayer);
                 break;
             }
             case "NonPiuSoli" -> {
                 directionPlayer = ia_NonPiuSoli.getDirection(getBlocks());
-                System.out.println("NPS: " + directionPlayer);
                 break;
             }
         }
