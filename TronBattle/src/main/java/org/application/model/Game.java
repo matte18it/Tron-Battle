@@ -82,10 +82,11 @@ public class Game {
                 //TODO
             }
             case Settings.COMPETITION -> {
-                directionPlayer1 = 0;
-                directionPlayer2 = 2;
-                directionPlayer3 = 1;
-                directionPlayer4 = 2;
+               directionPlayer1= iaServices(iaNames[0], directionPlayer1);
+                directionPlayer2=iaServices(iaNames[1], directionPlayer2);
+                directionPlayer3=iaServices(iaNames[2], directionPlayer3);
+                directionPlayer4=iaServices(iaNames[3], directionPlayer4);
+
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
                 movePlayer( directionPlayer3, Block.PLAYER3_HEAD, Block.PLAYER3_BODY);
@@ -103,6 +104,26 @@ public class Game {
         }else if(alivePlayers.size()==1 && !reload){
             reload = true;
         }
+    }
+
+    private int iaServices(String iaName, int directionPlayer) {
+        // la matrice blocks contiene il mondo di gioco
+        // ogni IA deve modificare directionPlayer in base alla sua strategia
+        switch (iaName){
+            case "_4F" -> {
+                // TODO IA 4F
+            }
+            case "Dialga" -> {
+               // TODO IA Dialga
+            }
+            case "Palkia" -> {
+               // TODO IA Palkia
+            }
+            case "NonPiùSoli" -> {
+               // TODO IA NonPiùSoli
+            }
+        }
+        return directionPlayer;
     }
 
     private void movePlayer( int direction, int headType, int bodyType) {
