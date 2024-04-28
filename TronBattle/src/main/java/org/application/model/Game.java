@@ -16,6 +16,7 @@ public class Game {
     private final Random random = new Random();
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
     private List<Integer> alivePlayers;
+    private boolean reload = false;
     private int x;
     private int y;
     private int modalitàCorrente;
@@ -90,6 +91,17 @@ public class Game {
                 movePlayer( directionPlayer4, Block.PLAYER4_HEAD, Block.PLAYER4_BODY);
             }
         }
+        if(alivePlayers.size()==1 && reload){
+            int winner = alivePlayers.get(0);
+            IconFontSwing.register(FontAwesomeSolid.getIconFont());
+            Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.TROPHY, 40, new Color(255, 215, 0));
+            String message = "The winner is player " + winner;
+            reload = false;
+            JOptionPane.showConfirmDialog(null, message, "THE END", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
+            GameFrame.launchMenu();
+        }else if(alivePlayers.size()==1 && !reload){
+            reload = true;
+        }
     }
 
     private void movePlayer( int direction, int headType, int bodyType) {
@@ -131,14 +143,7 @@ public class Game {
 
     private void uccidiGiocatore(int headType, int bodyType) {
         alivePlayers.remove((Integer) headType);
-        if(alivePlayers.isEmpty()){
-            IconFontSwing.register(FontAwesomeSolid.getIconFont());
-            Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.TROPHY, 40, new Color(255, 215, 0));
-            String message = "The winner is player " + headType;
 
-            JOptionPane.showConfirmDialog(null, message, "THE END", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
-            GameFrame.launchMenu();
-        }
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks[i].length; j++) {
                 if (blocks[i][j].type() == headType || blocks[i][j].type() == bodyType) {
@@ -146,6 +151,7 @@ public class Game {
                 }
             }
         }
+
     }
 
     public void setModalitaCorrente ( int modalitàCorrente){
