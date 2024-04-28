@@ -205,7 +205,7 @@ public class Game {
                 directionPlayer1 = Settings.RIGHT;
 
                 // Imposta il giocatore 2 nell'angolo in alto a destra
-                blocks[1][6] = new Block(Block.PLAYER2_HEAD);
+                blocks[1][blocks[1].length-2] = new Block(Block.PLAYER2_HEAD);
                 directionPlayer2 = Settings.LEFT;
 
                 // Imposta il giocatore 3 nell'angolo in basso a sinistra
