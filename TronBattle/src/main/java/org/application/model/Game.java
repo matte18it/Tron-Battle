@@ -223,18 +223,7 @@ public class Game {
                 blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER4_HEAD);
                 directionPlayer4 = Settings.LEFT;
             }
-            else if(modalitaCorrente == Settings.TWO_PLAYER){
-                alivePlayers = new ArrayList<>(2); // Inizializza i giocatori vivi
-                alivePlayers.add(1);
-                alivePlayers.add(2);
-                // Imposta il giocatore 1 nell'angolo in alto a sinistra
-                blocks[1][1] = new Block(Block.PLAYER1_HEAD);
-                directionPlayer1 = Settings.RIGHT;
-                // Imposta il giocatore 2 nell'angolo in basso a destra
-                blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER2_HEAD);
-                directionPlayer2 = Settings.LEFT;
-            }
-            else if(modalitaCorrente == Settings.SINGLE_PLAYER){
+            else {
                 alivePlayers = new ArrayList<>(2); // Inizializza i giocatori vivi
                 alivePlayers.add(1);
                 alivePlayers.add(2);
