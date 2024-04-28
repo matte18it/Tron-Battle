@@ -28,9 +28,15 @@ public class GameMenuView extends JPanel {
         label1B.add(label1);
         JLabel label2B = new JLabel("");
         label2 = new JLabel("");
-        label2.setForeground(Color.ORANGE);
         label2.setOpaque(false); // Imposta il background trasparente
-        label2.setIcon(createColorIcon(Color.ORANGE)); // Aggiunge un'icona colorata affianco al testo
+        if(Game.getInstance().getModalitaCorrente() == Settings.COMPETITION){
+            label2.setIcon(createColorIcon(Color.ORANGE)); // Aggiunge un'icona colorata affianco al testo
+            label2.setForeground(Color.ORANGE);
+        }
+        else {
+            label2.setIcon(createColorIcon(Color.WHITE)); // Aggiunge un'icona colorata affianco al testo
+            label2.setForeground(Color.WHITE);
+        }
         label2B.add(label2);
         JLabel label3B = new JLabel("");
         label3 = new JLabel("");
@@ -55,10 +61,16 @@ public class GameMenuView extends JPanel {
         label3.setBorder(new EmptyBorder(0, 30, 0, 0));
         // Aggiungi le etichette nei quadranti desiderati del GridLayout
 
-        add(label1);
-        add(label2);
-        add(label3);
-        add(label4);
+        if(Game.getInstance().getModalitaCorrente() == Settings.COMPETITION){
+            add(label1);
+            add(label2);
+            add(label3);
+            add(label4);
+        }
+        else {
+            add(label1);
+            add(label2);
+        }
     }
 
     private Icon createColorIcon(Color color) {
@@ -75,19 +87,19 @@ public class GameMenuView extends JPanel {
         // Ottieni i nomi randomizzati dalla Game instance
         String[] iaNames = Game.getInstance().getIA();
         // Imposta i nomi dei giocatori
-        if(Game.getInstance().getModalitàCorrente() == Settings.COMPETITION){
+        if(Game.getInstance().getModalitaCorrente() == Settings.COMPETITION){
             label1.setText(iaNames[0]);
             label2.setText(iaNames[2]);
             label3.setText(iaNames[1]);
             label4.setText(iaNames[3]);
         }
-        else if(Game.getInstance().getModalitàCorrente() == Settings.TWO_PLAYER){
+        else if(Game.getInstance().getModalitaCorrente() == Settings.TWO_PLAYER){
             label1.setText(iaNames[0]);
-            label3.setText(iaNames[1]);
-            label2.setText("");
+            label2.setText(iaNames[1]);
+            label3.setText("");
             label4.setText("");
         }
-        else if(Game.getInstance().getModalitàCorrente() == Settings.SINGLE_PLAYER){
+        else if(Game.getInstance().getModalitaCorrente() == Settings.SINGLE_PLAYER){
             //TODO
         }
         // Aggiorna il pannello

@@ -21,7 +21,7 @@ public class Game {
     private List<Integer> alivePlayers;
     Stack<Integer> deadPlayers = new Stack<>();
     private boolean reload = false;
-    private int modalitàCorrente;
+    private int modalitaCorrente;
     private int directionPlayer1;
     private int directionPlayer2;
     private int directionPlayer3;
@@ -66,7 +66,7 @@ public class Game {
 
 
     public void move() {
-        switch (modalitàCorrente) {
+        switch (modalitaCorrente) {
             case Settings.SINGLE_PLAYER -> {
                 //TODO
             }
@@ -182,9 +182,9 @@ public class Game {
 
     }
 
-    public void setModalitaCorrente ( int modalitàCorrente){
+    public void setModalitaCorrente ( int modalitaCorrente){
         this.getRandomizeIA();
-            this.modalitàCorrente = modalitàCorrente;
+            this.modalitaCorrente = modalitaCorrente;
             this.loadWorld();
         }
 
@@ -194,7 +194,7 @@ public class Game {
                     blocks[i][j] = new Block(Block.EMPTY);
                 }
             }
-            if (modalitàCorrente == Settings.COMPETITION) {
+            if (modalitaCorrente == Settings.COMPETITION) {
                 alivePlayers = new ArrayList<>(4); // Inizializza i giocatori vivi
                 alivePlayers.add(1);
                 alivePlayers.add(2);
@@ -216,7 +216,7 @@ public class Game {
                 blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER4_HEAD);
                 directionPlayer4 = Settings.LEFT;
             }
-            else if(modalitàCorrente == Settings.TWO_PLAYER){
+            else if(modalitaCorrente == Settings.TWO_PLAYER){
                 alivePlayers = new ArrayList<>(2); // Inizializza i giocatori vivi
                 alivePlayers.add(1);
                 alivePlayers.add(2);
@@ -227,13 +227,13 @@ public class Game {
                 blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER2_HEAD);
                 directionPlayer2 = Settings.LEFT;
             }
-            else if(modalitàCorrente == Settings.SINGLE_PLAYER){
+            else if(modalitaCorrente == Settings.SINGLE_PLAYER){
                 //TODO
             }
         }
 
-        public int getModalitàCorrente () {
-            return modalitàCorrente;
+        public int getModalitaCorrente () {
+            return modalitaCorrente;
         }
 
         public Block[][] getBlocks () {
@@ -311,7 +311,6 @@ public class Game {
 
             // Aggiungi anche il vincitore alla classifica
             messageBuilder.append("<h1>The winner is player ").append(Settings.iaNames[winner - 1]).append("</h1></body></html>");
-
 
             IconFontSwing.register(FontAwesomeSolid.getIconFont());
             Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.TROPHY, 40, new Color(255, 215, 0));
