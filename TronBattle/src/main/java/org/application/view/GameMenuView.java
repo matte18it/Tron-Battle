@@ -77,11 +77,11 @@ public class GameMenuView extends JPanel {
     public void init() {
 
         // Ottieni i nomi randomizzati dalla Game instance
-        String[] iaNames = Game.getInstance().getRandomizeIA();
+        String[] iaNames = Game.getInstance().getIA();
         // Imposta i nomi dei giocatori
         label1.setText(iaNames[0]);
-        label2.setText(iaNames[1]);
-        label3.setText(iaNames[2]);
+        label2.setText(iaNames[2]);
+        label3.setText(iaNames[1]);
         label4.setText(iaNames[3]);
         // Aggiorna il pannello
         revalidate();

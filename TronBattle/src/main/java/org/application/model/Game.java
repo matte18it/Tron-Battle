@@ -6,7 +6,6 @@ import org.application.IA.Dialga.MainClassDialga;
 import org.application.IA.NonPiuSoli.MainClassNonPiuSoli;
 import org.application.IA.Palkia.MainClassPalkia;
 import org.application.IA._4F.MainClass_4F;
-import org.application.loop.GameLoop;
 import org.application.utility.Settings;
 import org.application.view.GameFrame;
 
@@ -82,10 +81,7 @@ public class Game {
                 directionPlayer2=iaServices(iaNames[1], directionPlayer2);
                 directionPlayer3=iaServices(iaNames[2], directionPlayer3);
                 directionPlayer4=iaServices(iaNames[3], directionPlayer4);
-                directionPlayer1=0;
-                directionPlayer2=1;
-                directionPlayer3=1;
-                directionPlayer4=0;
+
 
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
@@ -177,6 +173,7 @@ public class Game {
     }
 
     public void setModalitaCorrente ( int modalitàCorrente){
+        this.getRandomizeIA();
             this.modalitàCorrente = modalitàCorrente;
             this.loadWorld();
         }
@@ -238,15 +235,19 @@ public class Game {
                 int playerX = playerPosition[0];
                 int playerY = playerPosition[1];
                 if (playerX == newX && playerY == newY - 1) {
+                    uccidiGiocatore(i+1, i+5);
                     return true;
                 }
                 if (playerX == newX && playerY == newY + 1) {
+                    uccidiGiocatore(i+1, i+5);
                     return true;
                 }
                 if(playerY == newY && playerX == newX + 1){
+                    uccidiGiocatore(i+1, i+5);
                     return true;
                 }
                 if(playerY == newY && playerX == newX - 1){
+                    uccidiGiocatore(i+1, i+5);
                     return true;
                 }
             }
@@ -254,7 +255,7 @@ public class Game {
         return false;
     }
 
-    public String[] getRandomizeIA() {
+    public void getRandomizeIA() {
         // Crea un'istanza di Random
         Random random = new Random();
 
@@ -267,7 +268,6 @@ public class Game {
             iaNames[i] = temp;
         }
 
-        return iaNames;
     }
     private void controllaVincitore() {
         if (alivePlayers.isEmpty() && reload) {
@@ -307,7 +307,9 @@ public class Game {
     }
 
 
-
+    public String[] getIA() {
+        return iaNames;
+    }
 }
 
 
