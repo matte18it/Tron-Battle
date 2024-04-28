@@ -15,6 +15,7 @@ import java.util.Random;
 public class Game {
     private final Random random = new Random();
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
+    private static final String[] iaNames = new String[]{"_4F", "Dialga", "Palkia", "NonPiùSoli"};
     private List<Integer> alivePlayers;
     private boolean reload = false;
     private int x;
@@ -95,7 +96,7 @@ public class Game {
             int winner = alivePlayers.get(0);
             IconFontSwing.register(FontAwesomeSolid.getIconFont());
             Icon icon = IconFontSwing.buildIcon(FontAwesomeSolid.TROPHY, 40, new Color(255, 215, 0));
-            String message = "The winner is player " + winner;
+            String message = "The winner is player " + iaNames[winner-1] ;
             reload = false;
             JOptionPane.showConfirmDialog(null, message, "THE END", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, icon);
             GameFrame.launchMenu();
@@ -230,6 +231,22 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public String[] getRandomizeIA() {
+        // Crea un'istanza di Random
+        Random random = new Random();
+
+        // Applica l'algoritmo di Fisher-Yates per randomizzare l'array
+        for (int i = iaNames.length - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            // Scambia l'elemento corrente con uno casuale selezionato precedentemente
+            String temp = iaNames[index];
+            iaNames[index] = iaNames[i];
+            iaNames[i] = temp;
+        }
+
+        return iaNames;
     }
 }
 

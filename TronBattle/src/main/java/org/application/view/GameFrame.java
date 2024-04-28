@@ -15,12 +15,14 @@ public class GameFrame extends JPanel {
     private static final JFrame frameGame = new JFrame("Menu Principale");
     private static MenuView menuView;
     private static final GameView GAME_VIEW = new GameView();
+    private static final GameMenuView GAME_MENU_VIEW = new GameMenuView();
     private static GameLoop gameLoop = null;
 
     //Metodi
     public static void launchMenu() {
         if(GAME_VIEW.isShowing()) {
             frameGame.getContentPane().removeAll();
+            frameGame.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY);
             gameLoop.stopGame();
         }   // se è attiva la schermata di gioco, la elimino
         menuView = new MenuView();
@@ -50,7 +52,11 @@ public class GameFrame extends JPanel {
         GAME_VIEW.setController(controller);
         GAME_VIEW.setFocusable(true);
         GAME_VIEW.requestFocus();
+        GAME_VIEW.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY);
+        frameGame.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY+40);
+        GAME_MENU_VIEW.init();
         frameGame.add(GAME_VIEW);
+        frameGame.add(GAME_MENU_VIEW, BorderLayout.NORTH);
         gameLoop.startGame();
         frameGame.revalidate();
         frameGame.repaint();
