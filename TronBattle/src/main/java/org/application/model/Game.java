@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.*;
 
 public class Game {
     private final Random random = new Random();
@@ -26,6 +27,7 @@ public class Game {
     private int directionPlayer2;
     private int directionPlayer3;
     private int directionPlayer4;
+    private ExecutorService executor = Executors.newCachedThreadPool();
 
     // Oggetti IA
     private final MainClass_4F ia_4F = new MainClass_4F();
@@ -77,11 +79,19 @@ public class Game {
                 //TODO
             }
             case Settings.COMPETITION -> {
-               directionPlayer1= iaServices(iaNames[0], directionPlayer1);
-                directionPlayer2=iaServices(iaNames[1], directionPlayer2);
-                directionPlayer3=iaServices(iaNames[2], directionPlayer3);
-                directionPlayer4=iaServices(iaNames[3], directionPlayer4);
+                Future<Integer> future1 =  executor.submit(() -> iaServices(iaNames[0], directionPlayer1));
+                Future<Integer> future2 =  executor.submit(() -> iaServices(iaNames[1], directionPlayer2));
+                Future<Integer> future3 = executor.submit(() -> iaServices(iaNames[2], directionPlayer3));
+                Future<Integer> future4 =  executor.submit(() -> iaServices(iaNames[3], directionPlayer4));
+               try {
 
+
+                   directionPlayer1 = future1.get();
+                   directionPlayer2 = future2.get();
+                   directionPlayer3 = future3.get();
+                   directionPlayer4 = future4.get();
+               }catch (InterruptedException | ExecutionException e){
+                   e.printStackTrace();}
 
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
@@ -100,19 +110,19 @@ public class Game {
         // ogni IA deve modificare directionPlayer in base alla sua strategia
         switch (iaName){
             case "_4F" -> {
-                 directionPlayer = ia_4F.getDirection();
+                 directionPlayer = ia_4F.getDirection(getBlocks());
                  break;
             }
             case "Dialga" -> {
-                directionPlayer = ia_Dialga.getDirection();
+                directionPlayer = ia_Dialga.getDirection(getBlocks());
                 break;
             }
             case "Palkia" -> {
-                directionPlayer = ia_Palkia.getDirection();
+                directionPlayer = ia_Palkia.getDirection(getBlocks());
                 break;
             }
             case "NonPiùSoli" -> {
-                directionPlayer = ia_NonPiuSoli.getDirection();
+                directionPlayer = ia_NonPiuSoli.getDirection(getBlocks());
                 break;
             }
         }
