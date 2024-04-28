@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class Game {
+    public int humanDirection = 1;
     private final Random random = new Random();
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
     private List<Integer> alivePlayers;
@@ -69,12 +70,15 @@ public class Game {
         switch (modalitaCorrente) {
             case Settings.SINGLE_PLAYER -> {
                 Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
+                Future<Integer> future2 =  executor.submit(this::humanService);
                 try {
                     directionPlayer1 = future1.get();
+                    directionPlayer2 = future2.get();
                 }catch (InterruptedException | ExecutionException e){
                     e.printStackTrace();
                 }
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
+                movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
             }
             case Settings.TWO_PLAYER -> {
                 Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
@@ -137,6 +141,10 @@ public class Game {
             }
         }
         return directionPlayer;
+    }
+
+    private int humanService() {
+        return humanDirection;
     }
 
     private void movePlayer( int direction, int headType, int bodyType) {

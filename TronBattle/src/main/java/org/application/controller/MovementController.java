@@ -17,15 +17,13 @@ public class MovementController extends KeyAdapter {
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
             System.exit(0);
 
-        Object Settings;
-        int direction = switch (e.getKeyCode()) {
+         Game.getInstance().humanDirection = switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> org.application.utility.Settings.LEFT;
             case KeyEvent.VK_RIGHT -> org.application.utility.Settings.RIGHT;
             case KeyEvent.VK_DOWN-> org.application.utility.Settings.DOWN;
             case KeyEvent.VK_UP -> org.application.utility.Settings.UP;
             default -> throw new IllegalStateException("Unexpected value: " + e.getKeyCode());
         };
-
     }
 
     public void update() {

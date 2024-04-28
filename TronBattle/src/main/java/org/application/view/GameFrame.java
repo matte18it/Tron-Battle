@@ -80,14 +80,14 @@ public class GameFrame extends JPanel {
         MovementController controller = new MovementController(GAME_VIEW);
         gameLoop = new GameLoop(controller);
         GAME_VIEW.setController(controller);
-        GAME_VIEW.setFocusable(true);
-        GAME_VIEW.requestFocus();
         GAME_VIEW.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY);
         frameGame.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY+40);
         GAME_MENU_VIEW.init();
         frameGame.add(GAME_VIEW);
         frameGame.add(GAME_MENU_VIEW, BorderLayout.NORTH);
         gameLoop.startGame();
+        GAME_VIEW.setFocusable(true);
+        GAME_VIEW.requestFocus();
         frameGame.revalidate();
         frameGame.repaint();
     }
