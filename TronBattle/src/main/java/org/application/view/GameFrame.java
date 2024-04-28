@@ -70,7 +70,7 @@ public class GameFrame extends JPanel {
 
     public static void initGameScene(String name) {
         // stampo il log
-        System.out.println("----- LOG PARTITA " + Settings.log + " -----");
+        System.out.println("\n----- LOG PARTITA " + Settings.log + " -----");
         System.out.println("Modalità di gioco: " + name + "\n");
         Settings.log++;
 
