@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.Set;
 
 public class GameMenuView extends JPanel {
@@ -92,12 +93,22 @@ public class GameMenuView extends JPanel {
             label2.setText(iaNames[2]);
             label3.setText(iaNames[1]);
             label4.setText(iaNames[3]);
+
+            System.out.println(iaNames[0] + ": " + colorToName(label1.getForeground()));
+            System.out.println(iaNames[1] + ": " + colorToName(label3.getForeground()));
+            System.out.println(iaNames[2] + ": " + colorToName(label2.getForeground()));
+            System.out.println(iaNames[3] + ": " + colorToName(label4.getForeground()));
+            System.out.println();
         }
         else if(Game.getInstance().getModalitaCorrente() == Settings.TWO_PLAYER){
             label1.setText(iaNames[0]);
             label2.setText(iaNames[1]);
             label3.setText("");
             label4.setText("");
+
+            System.out.println(iaNames[0] + ": " + colorToName(label1.getForeground()));
+            System.out.println(iaNames[1] + ": " + colorToName(label2.getForeground()));
+            System.out.println();
         }
         else if(Game.getInstance().getModalitaCorrente() == Settings.SINGLE_PLAYER){
             //TODO
@@ -105,5 +116,33 @@ public class GameMenuView extends JPanel {
         // Aggiorna il pannello
         revalidate();
         repaint();
+    }
+
+    public static String colorToName(Color color) {
+        // Ottieni tutti i campi statici di java.awt.Color
+        return Arrays.stream(Color.class.getFields())
+                // Filtra i campi che sono istanze di Color
+                .filter(field -> field.getType() == Color.class)
+                .filter(field -> {
+                    try {
+                        // Verifica se il valore del campo corrisponde al colore fornito
+                        return ((Color) field.get(null)).equals(color);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                })
+                // Restituisci il nome del campo corrispondente
+                .map(field -> {
+                    try {
+                        return field.getName();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "Sconosciuto";
+                    }
+                })
+                // Se non viene trovato un nome corrispondente, restituisci "Sconosciuto"
+                .findFirst()
+                .orElse("Sconosciuto");
     }
 }

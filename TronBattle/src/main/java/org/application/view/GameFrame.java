@@ -53,24 +53,25 @@ public class GameFrame extends JPanel {
     public static void launchGame() {
         Game.getInstance().setModalitaCorrente(Settings.COMPETITION);
         frameGame.setTitle("Tron Battle - Competition");
-        initGameScene();
+        initGameScene("COMPETITION");
     }
 
     public static void singlePlayer() {
         Game.getInstance().setModalitaCorrente(Settings.SINGLE_PLAYER);
         frameGame.setTitle("Tron Battle - Single Player");
-        initGameScene();
+        initGameScene("SINGLE PLAYER");
     }
 
     public static void twoPlayer() {
         Game.getInstance().setModalitaCorrente(Settings.TWO_PLAYER);
         frameGame.setTitle("Tron Battle - IA VS IA");
-        initGameScene();
+        initGameScene("IA VS IA");
     }
 
-    public static void initGameScene() {
+    public static void initGameScene(String name) {
         // stampo il log
         System.out.println("----- LOG PARTITA " + Settings.log + " -----");
+        System.out.println("Modalità di gioco: " + name + "\n");
         Settings.log++;
 
         GAME_VIEW = new GameView();
