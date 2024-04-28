@@ -42,7 +42,7 @@ public class MenuController {
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
                 view.stopAnimation();
-                Settings.iaNames = new String[]{"4F", "Dialga", "Palkia", "NonPiùSoli"};
+                Settings.iaNames = new String[]{"4F", "Dialga", "Palkia", "NonPiuSoli"};
                 GameFrame.launchGame();
             }
         });
