@@ -99,7 +99,7 @@ public class GameMenuView extends JPanel {
             System.out.println(iaNames[3] + ": " + colorToName(label4.getForeground()));
             System.out.println();
         }
-        else if(Game.getInstance().getModalitaCorrente() == Settings.TWO_PLAYER){
+        else {
             label1.setText(iaNames[0]);
             label2.setText(iaNames[1]);
             label3.setText("");
@@ -109,16 +109,7 @@ public class GameMenuView extends JPanel {
             System.out.println(iaNames[1] + ": " + colorToName(label2.getForeground()));
             System.out.println();
         }
-        else if(Game.getInstance().getModalitaCorrente() == Settings.SINGLE_PLAYER){
-            label1.setText(iaNames[0]);
-            label2.setText(iaNames[1]);
-            label3.setText("");
-            label4.setText("");
 
-            System.out.println(iaNames[0] + ": " + colorToName(label1.getForeground()));
-            System.out.println(iaNames[1] + ": " + colorToName(label2.getForeground()));
-            System.out.println();
-        }
         // Aggiorna il pannello
         revalidate();
         repaint();
