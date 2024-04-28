@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.util.Set;
 
 public class GameMenuView extends JPanel {
     JLabel label1= new JLabel();
