@@ -42,6 +42,7 @@ public class MenuController {
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
                 view.stopAnimation();
+                Settings.iaNames = new String[]{"4F", "Dialga", "Palkia", "NonPiùSoli"};
                 GameFrame.launchGame();
             }
         });
@@ -77,16 +78,16 @@ public class MenuController {
         int choice = JOptionPane.showOptionDialog(view, "Contro quale IA vuoi giocare?", "Modalità Giocatore Singolo", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, icon, new String[]{"Palkia", "Dialga", "4F", "NonPiuSoli"}, null);
         switch (choice) {
             case 0:
-                Settings.SinglePlayerIA = "Palkia";
+                Settings.iaNames = new String[] {"Palkia", "TU"};
                 break;
             case 1:
-                Settings.SinglePlayerIA = "Dialga";
+                Settings.iaNames = new String[] {"Dialga", "TU"};
                 break;
             case 2:
-                Settings.SinglePlayerIA = "_4F";
+                Settings.iaNames = new String[] {"4F", "TU"};
                 break;
             case 3:
-                Settings.SinglePlayerIA = "NonPiuSoli";
+                Settings.iaNames = new String[] {"NonPiuSoli", "TU"};
                 break;
         }
 
@@ -143,8 +144,7 @@ public class MenuController {
         }
 
         // Memorizza le selezioni
-        Settings.TwoPlayer_FirstIA = selectedOptions[0];
-        Settings.TwoPlayer_SecondIA = selectedOptions[1];
+        Settings.iaNames = new String[] {selectedOptions[0], selectedOptions[1]};
 
         return true;
     }

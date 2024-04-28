@@ -1,11 +1,11 @@
-package org.application.IA._4F;
+package org.application.IA.IA_4F;
 
 
 import org.application.model.Block;
 
 import java.util.Random;
 
-public class MainClass_4F {
+public class MainClass4F {
     //Attributi
 
     //Costruttore

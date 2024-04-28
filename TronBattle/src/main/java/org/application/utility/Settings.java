@@ -14,11 +14,6 @@ public class Settings {
     public static final int PLAYER_SIZEX = CELL_SIZEX+30;
     public static final int PLAYER_SIZEY = CELL_SIZEY+32;
 
-    // variabili per la IA
-    public static String SinglePlayerIA = "";
-    public static String TwoPlayer_FirstIA = "";
-    public static String TwoPlayer_SecondIA = "";
-
     // variabili per la modalità
     public static final int SINGLE_PLAYER = 0;
     public static final int TWO_PLAYER = 1;
@@ -26,4 +21,5 @@ public class Settings {
 
     // variabili per la gestione del gioco
     public static boolean access = false;
+    public static String[] iaNames;
 }

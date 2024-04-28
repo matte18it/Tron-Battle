@@ -1,4 +1,4 @@
-package org.application.IA.Palkia;
+package org.application.IA.IA_Palkia;
 
 import org.application.model.Block;
 

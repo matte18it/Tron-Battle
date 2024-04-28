@@ -2,10 +2,10 @@ package org.application.model;
 
 import com.github.pervoj.jiconfont.FontAwesomeSolid;
 import jiconfont.swing.IconFontSwing;
-import org.application.IA.Dialga.MainClassDialga;
-import org.application.IA.NonPiuSoli.MainClassNonPiuSoli;
-import org.application.IA.Palkia.MainClassPalkia;
-import org.application.IA._4F.MainClass_4F;
+import org.application.IA.IA_Dialga.MainClassDialga;
+import org.application.IA.IA_NonPiuSoli.MainClassNonPiuSoli;
+import org.application.IA.IA_Palkia.MainClassPalkia;
+import org.application.IA.IA_4F.MainClass4F;
 import org.application.utility.Settings;
 import org.application.view.GameFrame;
 
@@ -18,7 +18,6 @@ import java.util.concurrent.*;
 public class Game {
     private final Random random = new Random();
     private Block[][] blocks = new Block[Settings.WORLD_SIZEX][Settings.WORLD_SIZEY];
-    private static final String[] iaNames = new String[]{"_4F", "Dialga", "Palkia", "NonPiùSoli"};
     private List<Integer> alivePlayers;
     Stack<Integer> deadPlayers = new Stack<>();
     private boolean reload = false;
@@ -28,9 +27,10 @@ public class Game {
     private int directionPlayer3;
     private int directionPlayer4;
     private ExecutorService executor = Executors.newCachedThreadPool();
+    private static Game instance;
 
     // Oggetti IA
-    private final MainClass_4F ia_4F = new MainClass_4F();
+    private final MainClass4F ia_4F = new MainClass4F();
     private final MainClassDialga ia_Dialga = new MainClassDialga();
     private final MainClassPalkia ia_Palkia = new MainClassPalkia();
     private final MainClassNonPiuSoli ia_NonPiuSoli = new MainClassNonPiuSoli();
@@ -55,12 +55,7 @@ public class Game {
     }
 
 
-    private Game() {
-
-    }
-
-    ;
-    private static Game instance;
+    private Game() {}
 
     public static Game getInstance() {
         if (instance == null) {
@@ -76,22 +71,30 @@ public class Game {
                 //TODO
             }
             case Settings.TWO_PLAYER -> {
-                //TODO
+                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
+                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1], directionPlayer2));
+                try {
+                    directionPlayer1 = future1.get();
+                    directionPlayer2 = future2.get();
+                }catch (InterruptedException | ExecutionException e){
+                    e.printStackTrace();
+                }
+                movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
+                movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
             }
             case Settings.COMPETITION -> {
-                Future<Integer> future1 =  executor.submit(() -> iaServices(iaNames[0], directionPlayer1));
-                Future<Integer> future2 =  executor.submit(() -> iaServices(iaNames[1], directionPlayer2));
-                Future<Integer> future3 = executor.submit(() -> iaServices(iaNames[2], directionPlayer3));
-                Future<Integer> future4 =  executor.submit(() -> iaServices(iaNames[3], directionPlayer4));
+                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
+                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1], directionPlayer2));
+                Future<Integer> future3 = executor.submit(() -> iaServices(Settings.iaNames[2], directionPlayer3));
+                Future<Integer> future4 =  executor.submit(() -> iaServices(Settings.iaNames[3], directionPlayer4));
                try {
-
-
                    directionPlayer1 = future1.get();
                    directionPlayer2 = future2.get();
                    directionPlayer3 = future3.get();
                    directionPlayer4 = future4.get();
                }catch (InterruptedException | ExecutionException e){
-                   e.printStackTrace();}
+                   e.printStackTrace();
+               }
 
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
@@ -99,30 +102,31 @@ public class Game {
                 movePlayer( directionPlayer4, Block.PLAYER4_HEAD, Block.PLAYER4_BODY);
             }
         }
-
         controllaVincitore();
-
-
     }
 
     private int iaServices(String iaName, int directionPlayer) {
         // la matrice blocks contiene il mondo di gioco
         // ogni IA deve modificare directionPlayer in base alla sua strategia
         switch (iaName){
-            case "_4F" -> {
+            case "4F" -> {
                  directionPlayer = ia_4F.getDirection(getBlocks());
+                System.out.println("4F: " + directionPlayer);
                  break;
             }
             case "Dialga" -> {
                 directionPlayer = ia_Dialga.getDirection(getBlocks());
+                System.out.println("Dialga: " + directionPlayer);
                 break;
             }
             case "Palkia" -> {
                 directionPlayer = ia_Palkia.getDirection(getBlocks());
+                System.out.println("Palkia: " + directionPlayer);
                 break;
             }
-            case "NonPiùSoli" -> {
+            case "NonPiuSoli" -> {
                 directionPlayer = ia_NonPiuSoli.getDirection(getBlocks());
+                System.out.println("NPS: " + directionPlayer);
                 break;
             }
         }
@@ -154,8 +158,6 @@ public class Game {
             default:
                 // Direzione non valida
                 return;
-
-
         }
         if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY || isCollisionWithOtherPlayer(newX, newY, headType)){
             uccidiGiocatore(headType, bodyType);
@@ -163,8 +165,6 @@ public class Game {
         blocks[x][y] = new Block(bodyType);
         blocks[newX][newY] = new Block(headType);
     }
-
-
 
     private void uccidiGiocatore(int headType, int bodyType) {
         alivePlayers.remove((Integer) headType);
@@ -215,7 +215,20 @@ public class Game {
                 // Imposta il giocatore 4 nell'angolo in basso a destra
                 blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER4_HEAD);
                 directionPlayer4 = Settings.LEFT;
-
+            }
+            else if(modalitàCorrente == Settings.TWO_PLAYER){
+                alivePlayers = new ArrayList<>(2); // Inizializza i giocatori vivi
+                alivePlayers.add(1);
+                alivePlayers.add(2);
+                // Imposta il giocatore 1 nell'angolo in alto a sinistra
+                blocks[1][1] = new Block(Block.PLAYER1_HEAD);
+                directionPlayer1 = Settings.RIGHT;
+                // Imposta il giocatore 2 nell'angolo in basso a destra
+                blocks[blocks.length - 2][blocks[1].length - 2] = new Block(Block.PLAYER2_HEAD);
+                directionPlayer2 = Settings.LEFT;
+            }
+            else if(modalitàCorrente == Settings.SINGLE_PLAYER){
+                //TODO
             }
         }
 
@@ -226,7 +239,6 @@ public class Game {
         public Block[][] getBlocks () {
             return blocks;
         }
-
 
     private int[] getPlayerPosition(int playerIndex) {
         for (int i = 0; i < blocks.length; i++) {
@@ -270,12 +282,12 @@ public class Game {
         Random random = new Random();
 
         // Applica l'algoritmo di Fisher-Yates per randomizzare l'array
-        for (int i = iaNames.length - 1; i > 0; i--) {
+        for (int i = Settings.iaNames.length - 1; i > 0; i--) {
             int index = random.nextInt(i + 1);
             // Scambia l'elemento corrente con uno casuale selezionato precedentemente
-            String temp = iaNames[index];
-            iaNames[index] = iaNames[i];
-            iaNames[i] = temp;
+            String temp = Settings.iaNames[index];
+            Settings.iaNames[index] = Settings.iaNames[i];
+            Settings.iaNames[i] = temp;
         }
 
     }
@@ -287,18 +299,18 @@ public class Game {
             int position = 1;
             int winner = 0;
 
-// Estrai i giocatori eliminati finché lo stack non è vuoto
+            // Estrai i giocatori eliminati finché lo stack non è vuoto
             while (!deadPlayers.isEmpty()) {
                 Integer player = deadPlayers.pop(); // Prendi il primo giocatore eliminato (l'ultimo inserito)
-                messageBuilder.append("<h2>").append(position).append(". Player ").append(iaNames[player - 1]).append("</h2>");
+                messageBuilder.append("<h2>").append(position).append(". Player ").append(Settings.iaNames[player - 1]).append("</h2>");
                 if (position == 1) {
                     winner = player;
                 }
                 position++;
             }
 
-// Aggiungi anche il vincitore alla classifica
-            messageBuilder.append("<h1>The winner is player ").append(iaNames[winner - 1]).append("</h1></body></html>");
+            // Aggiungi anche il vincitore alla classifica
+            messageBuilder.append("<h1>The winner is player ").append(Settings.iaNames[winner - 1]).append("</h1></body></html>");
 
 
             IconFontSwing.register(FontAwesomeSolid.getIconFont());
@@ -313,12 +325,10 @@ public class Game {
             alivePlayers.clear();
             reload = true;
         }
-
     }
 
-
     public String[] getIA() {
-        return iaNames;
+        return Settings.iaNames;
     }
 }
 

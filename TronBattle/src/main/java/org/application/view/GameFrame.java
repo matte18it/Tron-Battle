@@ -14,13 +14,13 @@ public class GameFrame extends JPanel {
     private static final PlayWav playMenuMusic = PlayWav.getInstance();
     private static final JFrame frameGame = new JFrame("Menu Principale");
     private static MenuView menuView;
-    private static final GameView GAME_VIEW = new GameView();
-    private static final GameMenuView GAME_MENU_VIEW = new GameMenuView();
+    private static GameView GAME_VIEW;
+    private static GameMenuView GAME_MENU_VIEW;
     private static GameLoop gameLoop = null;
 
     //Metodi
     public static void launchMenu() {
-        if(GAME_VIEW.isShowing()) {
+        if(GAME_VIEW != null && GAME_VIEW.isShowing()) {
             frameGame.getContentPane().removeAll();
             frameGame.setSize(Settings.WINDOW_SIZEX, Settings.WINDOW_SIZEY);
             gameLoop.stopGame();
@@ -62,6 +62,8 @@ public class GameFrame extends JPanel {
     }
 
     public static void initGameScene() {
+        GAME_VIEW = new GameView();
+        GAME_MENU_VIEW = new GameMenuView();
         frameGame.remove(menuView);
         MovementController controller = new MovementController(GAME_VIEW);
         gameLoop = new GameLoop(controller);

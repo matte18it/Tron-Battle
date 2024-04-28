@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Set;
 
 public class GameMenuView extends JPanel {
     JLabel label1= new JLabel();
@@ -15,8 +16,6 @@ public class GameMenuView extends JPanel {
     JLabel label4= new JLabel();
 
     GameMenuView() {
-
-
         setPreferredSize(new Dimension(Settings.WINDOW_SIZEX, 40)); // Imposta l'altezza del pannello a 30px
         setLayout(new GridLayout(2, 2)); // Utilizza un GridLayout con 2 righe e 2 colonne
         setBackground(Color.BLACK);
@@ -55,14 +54,12 @@ public class GameMenuView extends JPanel {
         label1.setBorder(new EmptyBorder(0, 30, 0, 0));
         label3.setBorder(new EmptyBorder(0, 30, 0, 0));
         // Aggiungi le etichette nei quadranti desiderati del GridLayout
+
         add(label1);
         add(label2);
         add(label3);
         add(label4);
-
-
     }
-
 
     private Icon createColorIcon(Color color) {
         int size = 10; // Dimensione del pallino
@@ -75,14 +72,24 @@ public class GameMenuView extends JPanel {
     }
 
     public void init() {
-
         // Ottieni i nomi randomizzati dalla Game instance
         String[] iaNames = Game.getInstance().getIA();
         // Imposta i nomi dei giocatori
-        label1.setText(iaNames[0]);
-        label2.setText(iaNames[2]);
-        label3.setText(iaNames[1]);
-        label4.setText(iaNames[3]);
+        if(Game.getInstance().getModalitàCorrente() == Settings.COMPETITION){
+            label1.setText(iaNames[0]);
+            label2.setText(iaNames[2]);
+            label3.setText(iaNames[1]);
+            label4.setText(iaNames[3]);
+        }
+        else if(Game.getInstance().getModalitàCorrente() == Settings.TWO_PLAYER){
+            label1.setText(iaNames[0]);
+            label3.setText(iaNames[1]);
+            label2.setText("");
+            label4.setText("");
+        }
+        else if(Game.getInstance().getModalitàCorrente() == Settings.SINGLE_PLAYER){
+            //TODO
+        }
         // Aggiorna il pannello
         revalidate();
         repaint();

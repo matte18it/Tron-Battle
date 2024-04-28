@@ -1,10 +1,10 @@
-package org.application.IA.Dialga;
+package org.application.IA.IA_NonPiuSoli;
 
 import org.application.model.Block;
 
 import java.util.Random;
 
-public class MainClassDialga {
+public class MainClassNonPiuSoli {
     //Attributi
 
     //Costruttore
