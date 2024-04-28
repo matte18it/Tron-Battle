@@ -2,6 +2,10 @@ package org.application.model;
 
 import com.github.pervoj.jiconfont.FontAwesomeSolid;
 import jiconfont.swing.IconFontSwing;
+import org.application.IA.Dialga.MainClassDialga;
+import org.application.IA.NonPiuSoli.MainClassNonPiuSoli;
+import org.application.IA.Palkia.MainClassPalkia;
+import org.application.IA._4F.MainClass_4F;
 import org.application.loop.GameLoop;
 import org.application.utility.Settings;
 import org.application.view.GameFrame;
@@ -23,6 +27,12 @@ public class Game {
     private int directionPlayer2;
     private int directionPlayer3;
     private int directionPlayer4;
+
+    // Oggetti IA
+    private final MainClass_4F ia_4F = new MainClass_4F();
+    private final MainClassDialga ia_Dialga = new MainClassDialga();
+    private final MainClassPalkia ia_Palkia = new MainClassPalkia();
+    private final MainClassNonPiuSoli ia_NonPiuSoli = new MainClassNonPiuSoli();
 
     public int getDirectionPlayer1() {
         return directionPlayer1;
@@ -94,16 +104,20 @@ public class Game {
         // ogni IA deve modificare directionPlayer in base alla sua strategia
         switch (iaName){
             case "_4F" -> {
-                // TODO IA 4F
+                 directionPlayer = ia_4F.getDirection();
+                 break;
             }
             case "Dialga" -> {
-               // TODO IA Dialga
+                directionPlayer = ia_Dialga.getDirection();
+                break;
             }
             case "Palkia" -> {
-               // TODO IA Palkia
+                directionPlayer = ia_Palkia.getDirection();
+                break;
             }
             case "NonPiùSoli" -> {
-               // TODO IA NonPiùSoli
+                directionPlayer = ia_NonPiuSoli.getDirection();
+                break;
             }
         }
         return directionPlayer;

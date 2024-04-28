@@ -45,8 +45,24 @@ public class GameFrame extends JPanel {
 
     public static void launchGame() {
         Game.getInstance().setModalitaCorrente(Settings.COMPETITION);
-        frameGame.remove(menuView);
         frameGame.setTitle("Tron Battle - Competition");
+        initGameScene();
+    }
+
+    public static void singlePlayer() {
+        Game.getInstance().setModalitaCorrente(Settings.SINGLE_PLAYER);
+        frameGame.setTitle("Tron Battle - Single Player");
+        initGameScene();
+    }
+
+    public static void twoPlayer() {
+        Game.getInstance().setModalitaCorrente(Settings.TWO_PLAYER);
+        frameGame.setTitle("Tron Battle - IA VS IA");
+        initGameScene();
+    }
+
+    public static void initGameScene() {
+        frameGame.remove(menuView);
         MovementController controller = new MovementController(GAME_VIEW);
         gameLoop = new GameLoop(controller);
         GAME_VIEW.setController(controller);
@@ -58,32 +74,6 @@ public class GameFrame extends JPanel {
         frameGame.add(GAME_VIEW);
         frameGame.add(GAME_MENU_VIEW, BorderLayout.NORTH);
         gameLoop.startGame();
-        frameGame.revalidate();
-        frameGame.repaint();
-    }
-
-    public static void singlePlayer() {
-        Game.getInstance().setModalitaCorrente(Settings.SINGLE_PLAYER);
-        frameGame.remove(menuView);
-        frameGame.setTitle("Tron Battle - Single Player");
-        MovementController controller = new MovementController(GAME_VIEW);
-        gameLoop = new GameLoop(controller);
-        frameGame.setFocusable(true);
-        frameGame.requestFocus();
-        frameGame.add(GAME_VIEW);
-        frameGame.revalidate();
-        frameGame.repaint();
-    }
-
-    public static void twoPlayer() {
-        Game.getInstance().setModalitaCorrente(Settings.TWO_PLAYER);
-        frameGame.remove(menuView);
-        frameGame.setTitle("Tron Battle - IA VS IA");
-        MovementController controller = new MovementController(GAME_VIEW);
-        gameLoop = new GameLoop(controller);
-        frameGame.setFocusable(true);
-        frameGame.requestFocus();
-        frameGame.add(GAME_VIEW);
         frameGame.revalidate();
         frameGame.repaint();
     }
