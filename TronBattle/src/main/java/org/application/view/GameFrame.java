@@ -1,5 +1,9 @@
 package org.application.view;
 
+import org.application.IA.IA_4F.MainClass4F;
+import org.application.IA.IA_Dialga.MainClassDialga;
+import org.application.IA.IA_NonPiuSoli.MainClassNonPiuSoli;
+import org.application.IA.IA_Palkia.MainClassPalkia;
 import org.application.controller.MovementController;
 import org.application.loop.GameLoop;
 import org.application.model.Game;
@@ -41,6 +45,12 @@ public class GameFrame extends JPanel {
         frameGame.requestFocus();
 
         if(!Settings.access){
+            // init dei file DLV
+            MainClass4F.getInstance().init();
+            MainClassDialga.getInstance().init();
+            MainClassPalkia.getInstance().init();
+            MainClassNonPiuSoli.getInstance().init();
+
             Settings.access = true;
             init();
             frameGame.setUndecorated(true);

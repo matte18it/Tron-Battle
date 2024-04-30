@@ -30,12 +30,6 @@ public class Game {
     private ExecutorService executor = Executors.newCachedThreadPool();
     private static Game instance;
 
-    // Oggetti IA
-    private final MainClass4F ia_4F = new MainClass4F();
-    private final MainClassDialga ia_Dialga = new MainClassDialga();
-    private final MainClassPalkia ia_Palkia = new MainClassPalkia();
-    private final MainClassNonPiuSoli ia_NonPiuSoli = new MainClassNonPiuSoli();
-
     public int getDirectionPlayer1() {
         return directionPlayer1;
     }
@@ -120,22 +114,22 @@ public class Game {
         // ogni IA deve modificare directionPlayer in base alla sua strategia
         switch (iaName){
             case "4F" -> {
-                 directionPlayer = ia_4F.getDirection(getBlocks());
+                 directionPlayer = MainClass4F.getInstance().getDirection(getBlocks());
                  System.out.println("IA 4F: " + directionPlayer);
                  break;
             }
             case "Dialga" -> {
-                directionPlayer = ia_Dialga.getDirection(getBlocks());
+                directionPlayer = MainClassDialga.getInstance().getDirection(getBlocks());
                 System.out.println("IA Dialga: " + directionPlayer);
                 break;
             }
             case "Palkia" -> {
-                directionPlayer = ia_Palkia.getDirection(getBlocks());
+                directionPlayer = MainClassPalkia.getInstance().getDirection(getBlocks());
                 System.out.println("IA Palkia: " + directionPlayer);
                 break;
             }
             case "NonPiuSoli" -> {
-                directionPlayer = ia_NonPiuSoli.getDirection(getBlocks());
+                directionPlayer = MainClassNonPiuSoli.getInstance().getDirection(getBlocks());
                 System.out.println("IA NonPiuSoli: " + directionPlayer);
                 break;
             }
