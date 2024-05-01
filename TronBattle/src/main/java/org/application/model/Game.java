@@ -63,7 +63,7 @@ public class Game {
     public void move() {
         switch (modalitaCorrente) {
             case Settings.SINGLE_PLAYER -> {
-                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
+                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_HEAD, Block.PLAYER1_BODY));
                 Future<Integer> future2 =  executor.submit(this::humanService);
                 try {
                     directionPlayer1 = future1.get();
@@ -75,8 +75,8 @@ public class Game {
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
             }
             case Settings.TWO_PLAYER -> {
-                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
-                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1], directionPlayer2));
+                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_BODY, Block.PLAYER1_HEAD));
+                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1],  Block.PLAYER2_BODY, Block.PLAYER2_HEAD));
                 try {
                     directionPlayer1 = future1.get();
                     directionPlayer2 = future2.get();
@@ -87,10 +87,10 @@ public class Game {
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
             }
             case Settings.COMPETITION -> {
-                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], directionPlayer1));
-                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1], directionPlayer2));
-                Future<Integer> future3 = executor.submit(() -> iaServices(Settings.iaNames[2], directionPlayer3));
-                Future<Integer> future4 =  executor.submit(() -> iaServices(Settings.iaNames[3], directionPlayer4));
+                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_HEAD, Block.PLAYER1_BODY));
+                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1], Block.PLAYER2_HEAD, Block.PLAYER2_BODY));
+                Future<Integer> future3 = executor.submit(() -> iaServices(Settings.iaNames[2], Block.PLAYER3_HEAD, Block.PLAYER3_BODY));
+                Future<Integer> future4 =  executor.submit(() -> iaServices(Settings.iaNames[3], Block.PLAYER4_HEAD, Block.PLAYER4_BODY));
                try {
                    directionPlayer1 = future1.get();
                    directionPlayer2 = future2.get();
@@ -109,7 +109,8 @@ public class Game {
         controllaVincitore();
     }
 
-    private int iaServices(String iaName, int directionPlayer) {
+    private int iaServices(String iaName, int playerHead, int playerBody) {
+        int directionPlayer = 0;
         // la matrice blocks contiene il mondo di gioco
         // ogni IA deve modificare directionPlayer in base alla sua strategia
         switch (iaName){
