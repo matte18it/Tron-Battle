@@ -84,6 +84,7 @@ public class GameFrame extends JPanel {
         System.out.println("Modalità di gioco: " + name + "\n");
         Settings.log++;
 
+        Game.getInstance().humanDirection = Settings.LEFT;
         GAME_VIEW = new GameView();
         GAME_MENU_VIEW = new GameMenuView();
         frameGame.remove(menuView);

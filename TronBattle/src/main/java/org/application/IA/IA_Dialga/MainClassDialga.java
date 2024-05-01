@@ -1,6 +1,5 @@
 package org.application.IA.IA_Dialga;
 
-import org.application.IA.IA_4F.MainClass4F;
 import org.application.model.Block;
 
 import java.util.Random;
