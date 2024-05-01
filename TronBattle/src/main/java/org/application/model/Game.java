@@ -115,22 +115,22 @@ public class Game {
         // ogni IA deve modificare directionPlayer in base alla sua strategia
         switch (iaName){
             case "4F" -> {
-                 directionPlayer = MainClass4F.getInstance().getDirection(getBlocks());
+                 directionPlayer = MainClass4F.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                  System.out.println("IA 4F: " + directionPlayer);
                  break;
             }
             case "Dialga" -> {
-                directionPlayer = MainClassDialga.getInstance().getDirection(getBlocks());
+                directionPlayer = MainClassDialga.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                 System.out.println("IA Dialga: " + directionPlayer);
                 break;
             }
             case "Palkia" -> {
-                directionPlayer = MainClassPalkia.getInstance().getDirection(getBlocks());
+                directionPlayer = MainClassPalkia.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                 System.out.println("IA Palkia: " + directionPlayer);
                 break;
             }
             case "NonPiuSoli" -> {
-                directionPlayer = MainClassNonPiuSoli.getInstance().getDirection(getBlocks());
+                directionPlayer = MainClassNonPiuSoli.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                 System.out.println("IA NonPiuSoli: " + directionPlayer);
                 break;
             }

@@ -25,7 +25,8 @@ public class MainClassPalkia {
         // metodo per inizializzare i file DLV dell'IA
     }
 
-    public int getDirection(Block[][] blocks) {
+
+    public int getDirection(Block[][] blocks, int playerHead, int playerBody) {
         // Questo metodo ritorna la direzione in cui il personaggio deve muoversi
         // 0 = destra, 1 = sinistra, 2 = su, 3 = giù
         return new Random().nextInt(4);
