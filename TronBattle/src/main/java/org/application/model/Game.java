@@ -27,7 +27,7 @@ public class Game {
     private int directionPlayer2;
     private int directionPlayer3;
     private int directionPlayer4;
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    private final ExecutorService executor = Executors.newCachedThreadPool();
     private static Game instance;
 
     public int getDirectionPlayer1() {
@@ -63,47 +63,46 @@ public class Game {
     public void move() {
         switch (modalitaCorrente) {
             case Settings.SINGLE_PLAYER -> {
-                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_HEAD, Block.PLAYER1_BODY));
-                Future<Integer> future2 =  executor.submit(this::humanService);
+                Future<Integer> future1 = executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_HEAD, Block.PLAYER1_BODY));
+                Future<Integer> future2 = executor.submit(this::humanService);
                 try {
-                    directionPlayer1 = future1.get();
-                    directionPlayer2 = future2.get();
-                }catch (InterruptedException | ExecutionException e){
+                    directionPlayer1 = future1.get(200, TimeUnit.MILLISECONDS);
+                    directionPlayer2 = future2.get(200, TimeUnit.MILLISECONDS);
+                } catch (InterruptedException | ExecutionException | TimeoutException e) {
                     e.printStackTrace();
                 }
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
             }
             case Settings.TWO_PLAYER -> {
-                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_BODY, Block.PLAYER1_HEAD));
-                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1],  Block.PLAYER2_BODY, Block.PLAYER2_HEAD));
+                Future<Integer> future1 = executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_HEAD, Block.PLAYER1_BODY));
+                Future<Integer> future2 = executor.submit(() -> iaServices(Settings.iaNames[1], Block.PLAYER2_HEAD, Block.PLAYER2_BODY));
                 try {
-                    directionPlayer1 = future1.get();
-                    directionPlayer2 = future2.get();
-                }catch (InterruptedException | ExecutionException e){
+                    directionPlayer1 = future1.get(200, TimeUnit.MILLISECONDS);
+                    directionPlayer2 = future2.get(200, TimeUnit.MILLISECONDS);
+                } catch (InterruptedException | ExecutionException |TimeoutException e) {
                     e.printStackTrace();
                 }
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
             }
             case Settings.COMPETITION -> {
-                Future<Integer> future1 =  executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_HEAD, Block.PLAYER1_BODY));
-                Future<Integer> future2 =  executor.submit(() -> iaServices(Settings.iaNames[1], Block.PLAYER2_HEAD, Block.PLAYER2_BODY));
+                Future<Integer> future1 = executor.submit(() -> iaServices(Settings.iaNames[0], Block.PLAYER1_HEAD, Block.PLAYER1_BODY));
+                Future<Integer> future2 = executor.submit(() -> iaServices(Settings.iaNames[1], Block.PLAYER2_HEAD, Block.PLAYER2_BODY));
                 Future<Integer> future3 = executor.submit(() -> iaServices(Settings.iaNames[2], Block.PLAYER3_HEAD, Block.PLAYER3_BODY));
-                Future<Integer> future4 =  executor.submit(() -> iaServices(Settings.iaNames[3], Block.PLAYER4_HEAD, Block.PLAYER4_BODY));
-               try {
-                   directionPlayer1 = future1.get();
-                   directionPlayer2 = future2.get();
-                   directionPlayer3 = future3.get();
-                   directionPlayer4 = future4.get();
-               }catch (InterruptedException | ExecutionException e){
-                   e.printStackTrace();
-               }
-
+                Future<Integer> future4 = executor.submit(() -> iaServices(Settings.iaNames[3], Block.PLAYER4_HEAD, Block.PLAYER4_BODY));
+                try {
+                    directionPlayer1 = future1.get(200, TimeUnit.MILLISECONDS);
+                    directionPlayer2 = future2.get(200, TimeUnit.MILLISECONDS);
+                    directionPlayer3 = future3.get(200, TimeUnit.MILLISECONDS);
+                    directionPlayer4 = future4.get(200, TimeUnit.MILLISECONDS);
+                } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                    e.printStackTrace();
+                }
                 movePlayer(directionPlayer1, Block.PLAYER1_HEAD, Block.PLAYER1_BODY);
                 movePlayer(directionPlayer2, Block.PLAYER2_HEAD, Block.PLAYER2_BODY);
-                movePlayer( directionPlayer3, Block.PLAYER3_HEAD, Block.PLAYER3_BODY);
-                movePlayer( directionPlayer4, Block.PLAYER4_HEAD, Block.PLAYER4_BODY);
+                movePlayer(directionPlayer3, Block.PLAYER3_HEAD, Block.PLAYER3_BODY);
+                movePlayer(directionPlayer4, Block.PLAYER4_HEAD, Block.PLAYER4_BODY);
             }
         }
         controllaVincitore();
