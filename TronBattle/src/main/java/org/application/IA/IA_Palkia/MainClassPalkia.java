@@ -13,7 +13,7 @@ public class MainClassPalkia {
 
     //Metodi
     public static MainClassPalkia getInstance() {
-        // funzione per ottenere l'istanza del MainClass4F
+        // funzione per ottenere l'istanza del MainClassPalkia
         if(instance == null)
             instance = new MainClassPalkia();
 

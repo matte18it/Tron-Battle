@@ -13,7 +13,7 @@ public class MainClassDialga {
 
     //Metodi
     public static MainClassDialga getInstance() {
-        // funzione per ottenere l'istanza del MainClass4F
+        // funzione per ottenere l'istanza del MainClassDialga
         if(instance == null)
             instance = new MainClassDialga();
 

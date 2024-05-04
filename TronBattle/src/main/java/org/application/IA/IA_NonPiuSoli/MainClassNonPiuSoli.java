@@ -13,7 +13,7 @@ public class MainClassNonPiuSoli {
 
     //Metodi
     public static MainClassNonPiuSoli getInstance() {
-        // funzione per ottenere l'istanza del MainClass4F
+        // funzione per ottenere l'istanza del MainClassNonPiuSoli
         if(instance == null)
             instance = new MainClassNonPiuSoli();
 
