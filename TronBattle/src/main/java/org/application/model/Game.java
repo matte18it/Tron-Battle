@@ -167,7 +167,7 @@ public class Game {
                 // Direzione non valida
                 return;
         }
-        if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY || isCollisionWithOtherPlayer(newX, newY, headType)){
+        if(newX < 0 || newX >= blocks.length || newY < 0 || newY >= blocks[0].length || blocks[newX][newY].type() != Block.EMPTY ){
             uccidiGiocatore(headType, bodyType);
             return;}
         blocks[x][y] = new Block(bodyType);
@@ -256,32 +256,7 @@ public class Game {
         }
         return new int[]{-1, -1};
     }
-    private boolean isCollisionWithOtherPlayer(int newX, int newY, int currentPlayerType) {
-        for (int i = 0; i < 4; i++) {
-            if (i + 1 != currentPlayerType) {
-                int[] playerPosition = getPlayerPosition(i + 1);
-                int playerX = playerPosition[0];
-                int playerY = playerPosition[1];
-                if (playerX == newX && playerY == newY - 1) {
-                    uccidiGiocatore(i+1, i+5);
-                    return true;
-                }
-                if (playerX == newX && playerY == newY + 1) {
-                    uccidiGiocatore(i+1, i+5);
-                    return true;
-                }
-                if(playerY == newY && playerX == newX + 1){
-                    uccidiGiocatore(i+1, i+5);
-                    return true;
-                }
-                if(playerY == newY && playerX == newX - 1){
-                    uccidiGiocatore(i+1, i+5);
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+
 
     public void getRandomizeIA() {
         // Crea un'istanza di Random
