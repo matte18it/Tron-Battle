@@ -1,0 +1,24 @@
+% ----- SCELTA DEL TARGET -----
+finalEnemyPalkia(X, Y) | nonFinalEnemyPalkia(X, Y) :- reachableEnemyPalkia(X, Y).
+
+% Vincolo che impone che ci sia almeno un nemico a cui puntare
+:- not finalEnemyExistsPalkia.
+finalEnemyExistsPalkia :- finalEnemyPalkia(X, Y).
+
+% ----- 1° constraint (preferisci un nemico che non è vicino ad altri) -----
+maxDistancePalkia(Dmax) :- #max{D : distanceBetweenEnemiesPalkia(_, _, D)} = Dmax.
+:~ finalEnemyPalkia(X, Y), distanceBetweenEnemiesPalkia(X, Y, D), maxDistancePalkia(Dmax). [Dmax-D@4]
+
+% ----- 2° constraint (per farlo andare dal nemico attualmente più vicino) -----
+minValuePalkia(Dmin) :- #min{D : distanceBetweenPlayerEnemyPalkia(_, _, D)} = Dmin.
+:~ finalEnemyPalkia(X, Y), distanceBetweenPlayerEnemyPalkia(X, Y, D), minValuePalkia(Dmin). [D-Dmin@3]
+
+% ----- 3° constraint (per farlo andare dal nemico più vicino al bordo) -----
+minDistanceEnemyPalkia(Dmin) :- #min{D : edgeDistancePalkia(_, _, D)} = Dmin.
+:~ finalEnemyPalkia(X, Y), edgeDistancePalkia(X, Y, D), minDistanceEnemyPalkia(Dmin). [D-Dmin@2]
+
+% ----- 4° constraint (per farlo andare dal nemico con meno spazio libero adiacente) -----
+minDepthPalkia(Dmin) :- #min{D : depthFreeSpacePalkia(_, _, D)} = Dmin.
+:~ finalEnemyPalkia(X, Y), depthFreeSpacePalkia(X, Y, D), minDepthPalkia(Dmin). [D-Dmin@1]
+
+#show finalEnemyPalkia/2.

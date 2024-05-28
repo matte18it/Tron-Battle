@@ -1,0 +1,17 @@
+move(X) | not_move(X) :- direction(X).
+
+% Impone che ci sia almeno una mossa
+:- not existMove.
+existMove :- move(X).
+
+% Prende il minimo
+min_val_1(Dmin) :- #min{ Dist : distance(Dist,_)} = Dmin.
+:~ move(X), distance(Dist,X), min_val_1(Dmin). [Dist-Dmin @ 3]
+
+max_val_2(Dmax) :- #max{ Space : free_space(Space,_)} = Dmax.
+:~ move(X), free_space(Space,X), max_val_2(Dmax). [Dmax-Space @ 2]
+
+min_val_3(Dmin) :- #min{ Risk : risk_trap(Risk,_)} = Dmin.
+:~ move(X), risk_trap(Risk,X), min_val_3(Dmin). [Risk-Dmin @ 1]
+
+#show move/1.
