@@ -125,12 +125,10 @@ public class ExplorerGameStrategyDialga extends StrategyDialga {
 
         int playerX = MainClassDialga.getInstance().getPlayerX();
         int playerY = MainClassDialga.getInstance().getPlayerY();
-        int height = MainClassDialga.getInstance().getBlocks()[0].length;
-        int width = MainClassDialga.getInstance().getBlocks().length;
         List<CellUtilDialga> reachableCells = manager.getReachableCells();
 
-        int midX = (width - playerX ) / 3;
-        int midY = (height - playerY ) / 3;
+        int midX = 15;
+        int midY = 13;
 
         for (CellUtilDialga cell : reachableCells) {
             int x = cell.getX();
