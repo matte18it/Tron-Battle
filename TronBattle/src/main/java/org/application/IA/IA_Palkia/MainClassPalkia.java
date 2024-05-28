@@ -14,16 +14,17 @@ import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 import org.application.IA.IA_Palkia.Facts.*;
 import org.application.IA.IA_Palkia.Research.AStar.AStar;
 import org.application.IA.IA_Palkia.Research.BFS.BreadthFirstSearch;
-import org.application.IA.IA_Palkia.Research.Support.PlayerPositionType;
 import org.application.IA.IA_Palkia.Research.Support.Cell;
-import org.application.IA.IA_Palkia.Research.Support.PosizioniPlayers;
+import org.application.IA.IA_Palkia.Utility.CheckClass;
 import org.application.IA.IA_Palkia.Utility.DataClass;
 import org.application.IA.IA_Palkia.Utility.FindLockingPath;
 import org.application.model.Block;
 import org.application.utility.Settings;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class MainClassPalkia {
     // ----- ATTRIBUTE -----
@@ -52,7 +53,7 @@ public class MainClassPalkia {
 
     // ----- INIT METHODS -----
     public void init() {
-        service = new DLV2DesktopService("lib/dlv-2");
+        service = new DLV2DesktopService("lib/dlv2");
         handler = new DesktopHandler(service);
         fixedProgram = new ASPInputProgram();
         fixedProgram.addFilesPath("encodings/encodings_Palkia/findBestCellForPath.txt");
@@ -66,11 +67,8 @@ public class MainClassPalkia {
         // Registro le classi per l'uso di EMBASP
         try{
             ASPMapper.getInstance().registerClass(IndirectCellDepth.class);
-            ASPMapper.getInstance().registerClass(Enemy.class);
             ASPMapper.getInstance().registerClass(IndirectCell.class);
             ASPMapper.getInstance().registerClass(MinDistance.class);
-            ASPMapper.getInstance().registerClass(Player.class);
-            ASPMapper.getInstance().registerClass(Wall.class);
             ASPMapper.getInstance().registerClass(NextCell.class);
             ASPMapper.getInstance().registerClass(FinalMove.class);
             ASPMapper.getInstance().registerClass(FreeAdjacent.class);
@@ -90,7 +88,7 @@ public class MainClassPalkia {
     // ----- MAIN METHODS -----
     public int getDirection(Block[][] blocks, int playerHead, int playerBody) {
         // verifico se sono all'inizio della partita (se non ci sono muri sulla mappa)
-        if(wallNumber(blocks) == 0)
+        if(CheckClass.wallNumber(blocks) == 0)
             DataClass.getInstance().reset();
 
         // pulisco i fatti
@@ -98,50 +96,49 @@ public class MainClassPalkia {
 
         // analizzo la matrice e verifico se il player è ancora vivo, sennò salto il tutto
         try {
-            if(analyzeMatrix(blocks, playerHead)) {
-                // Parto ottimizzando lo spazio per chiudere le celle sopra di me
-                if(DataClass.getInstance().getFirstMove() < 3){
-                    DataClass.getInstance().setFirstMove(DataClass.getInstance().getFirstMove() + 1);
-                    return openOptimizationStrategy(blocks);
-                }
+            analyzeMatrix(blocks, playerHead);  // analizzo la matrice e prendo la posizione del player
+            // Parto ottimizzando lo spazio per chiudere le celle sopra di me
+            if(DataClass.getInstance().getFirstMove() < 3){
+                DataClass.getInstance().setFirstMove(DataClass.getInstance().getFirstMove() + 1);
+                return closedOptimizationStrategy(blocks);
+            }
 
-                // ----- GAME STRATEGY -----
-                // Inizio verificando se sono aperto o chiuso
-                if(isPlayerEnclosed(blocks, playerHead)){
-                    // se entro qua vuol dire che il player si trova in un ambiente chiuso, quindi ottimizzo
-                    return closedOptimizationStrategy(blocks);
+            // ----- GAME STRATEGY -----
+            // Inizio verificando se sono aperto o chiuso
+            if(CheckClass.isPlayerEnclosed(blocks, playerHead)){
+                // se entro qua vuol dire che il player si trova in un ambiente chiuso, quindi ottimizzo
+                return closedOptimizationStrategy(blocks);
+            }
+            else {
+                if(!DataClass.getInstance().getPathChiusura().isEmpty()){
+                    FinalMove move = new FinalMove(DataClass.getInstance().getPathChiusura().get(0).x, DataClass.getInstance().getPathChiusura().get(0).y);
+                    DataClass.getInstance().getPathChiusura().remove(0);
+                    return analyzeDirection(move);
                 }
-                else {
-                    if(!DataClass.getInstance().getPathChiusura().isEmpty()){
-                        FinalMove move = new FinalMove(DataClass.getInstance().getPathChiusura().get(0).x, DataClass.getInstance().getPathChiusura().get(0).y);
-                        DataClass.getInstance().getPathChiusura().remove(0);
-                        return analyzeDirection(move);
+                else{
+                    // se entro qua vuol dire che mi trovo in un ambiente aperto
+                    int findEnemyDistance = findEnemyDistance(blocks, playerHead);
+                    variableProgram.clearAll(); // pulisco i fatti
+                    if(findEnemyDistance == -1) {
+                        // se mi restituisce -1 vuol dire che ASP non mi ha restituito nulla oppure che non ho nemici raggiungibili
+                        return closedOptimizationStrategy(blocks);
                     }
-                    else{
-                        // se entro qua vuol dire che mi trovo in un ambiente aperto
-                        int findEnemyDistance = findEnemyDistance(blocks, playerHead);
-                        variableProgram.clearAll(); // pulisco i fatti
-                        if(findEnemyDistance == -1) {
-                            // se mi restituisce -1 vuol dire che ASP non mi ha restituito nulla oppure che non ho nemici raggiungibili
-                            return openOptimizationStrategy(blocks);
-                        }
-                        else {
-                            // se entro qua vuol dire che ho trovato il nemico e voglio attaccare
-                            if(findEnemyDistance < DataClass.getInstance().getFixedDistance()){
-                                if(DataClass.getInstance().getCounter() % 3 == 0 && FindLockingPath.getInstance().evaluate(blocks, playerHead)) {
-                                    // se sono qua, vuol dire ho il path di chiusura, per cui mi muovo lungo il path
-                                    FinalMove move = new FinalMove(DataClass.getInstance().getPathChiusura().get(0).x, DataClass.getInstance().getPathChiusura().get(0).y);
-                                    DataClass.getInstance().getPathChiusura().remove(0);
-                                    return analyzeDirection(move);
-                                }
-                                else {
-                                    // se entro qua vuol dire che non ho il path di chiusura
-                                    return setAttackStrategy(blocks);
-                                }
+                    else {
+                        // se entro qua vuol dire che ho trovato il nemico e voglio attaccare
+                        if(findEnemyDistance < DataClass.getInstance().getFixedDistance()){
+                            if(FindLockingPath.getInstance().evaluate(blocks, playerHead)) {
+                                // se sono qua, vuol dire ho il path di chiusura, per cui mi muovo lungo il path
+                                FinalMove move = new FinalMove(DataClass.getInstance().getPathChiusura().get(0).x, DataClass.getInstance().getPathChiusura().get(0).y);
+                                DataClass.getInstance().getPathChiusura().remove(0);
+                                return analyzeDirection(move);
                             }
                             else {
-                                return findPath(blocks, playerHead);
+                                // se entro qua vuol dire che non ho il path di chiusura
+                                return setAttackStrategy(blocks);
                             }
+                        }
+                        else {
+                            return findPath(blocks, playerHead);
                         }
                     }
                 }
@@ -151,60 +148,41 @@ public class MainClassPalkia {
 
         return 0;
     }
-    private boolean analyzeMatrix(Block[][] blocks, int playerHead) throws Exception {
-        boolean trovato = false;    // variabile che mi serve per indicare se il player è vivo o no
-
+    private void analyzeMatrix(Block[][] blocks, int playerHead) throws Exception {
         // inizio a scorrere la matrice per costruire tutti i fatti da dare all'IA
         for (int i = 0; i < blocks.length; i++){
             for (int j = 0; j < blocks[i].length; j++) {
                 boolean hasAdjacentZero = (i > 0 && blocks[i-1][j].type() == 0) || (i < blocks.length - 1 && blocks[i+1][j].type() == 0) || (j > 0 && blocks[i][j-1].type() == 0) || (j < blocks[i].length - 1 && blocks[i][j+1].type() == 0);
                 if((blocks[i][j].type() == playerHead) && hasAdjacentZero) {
-                    trovato = true; // player ancora vivo
-                    DataClass.getInstance().setPlayerX(i); DataClass.getInstance().setPlayerY(j); // prendo le coordinate del player
-                    variableProgram.addObjectInput(new Player(i, j));   // do alla mia IA le sue coordinate
-                }
-                if(blocks[i][j].type() == Block.PLAYER1_BODY || blocks[i][j].type() == Block.PLAYER2_BODY || blocks[i][j].type() == Block.PLAYER3_BODY || blocks[i][j].type() == Block.PLAYER4_BODY)
-                    variableProgram.addObjectInput(new Wall(i, j)); // do alla mia IA le coordinate dei muri
-                if((blocks[i][j].type() == Block.PLAYER1_HEAD && blocks[i][j].type() != playerHead) || (blocks[i][j].type() == Block.PLAYER2_HEAD && blocks[i][j].type() != playerHead) || (blocks[i][j].type() == Block.PLAYER3_HEAD && blocks[i][j].type() != playerHead) || (blocks[i][j].type() == Block.PLAYER4_HEAD && blocks[i][j].type() != playerHead)) {
-                    variableProgram.addObjectInput(new Enemy(i, j));    // do alla mia IA le coordinate dei nemici
+                    DataClass.getInstance().setPlayerX(i);
+                    DataClass.getInstance().setPlayerY(j); // prendo le coordinate del player
                 }
             }
         }
-
-        return trovato;
+    }
+    private int analyzeDirection(FinalMove move) {
+        // analizza la mossa e restituisce la direzione
+        if (move.getX() > DataClass.getInstance().getPlayerX()) {
+            return 0; // Right
+        } else if (move.getX() < DataClass.getInstance().getPlayerX()) {
+            return 1; // Left
+        } else if (move.getY() < DataClass.getInstance().getPlayerY()) {
+            return 2; // Up
+        } else if (move.getY() > DataClass.getInstance().getPlayerY()) {
+            return 3; // Down
+        }
+        return -1; // No movement or undefined
     }
 
     // ----- MODULE METHODS -----
-    private int openOptimizationStrategy(Block[][] blocks) throws Exception {
-        // Modulo per la strategia di ottimizzazione dello spazio in ambienti aperti
-        DataClass.getInstance().setEyeVision(2);    // setto eye vision
-
-        // qua setto il modulo di ottimizzazione per l'IA (in spazi aperti): il metodo di ottimizzazione ottimizza lo spazio con l'obiettivo di far rimanere la IA in vita il più a lungo possibile
-        if(!fixedProgram.getStringOfFilesPaths().equals("encodings/encodings_Palkia/openOptimizationStrategy.txt ")){
-            fixedProgram.clearFilesPaths();
-            fixedProgram.addFilesPath("encodings/encodings_Palkia/openOptimizationStrategy.txt");
-        }
-
-        DataClass.getInstance().getNextCell().clear();  // pulisco la lista delle celle adiacenti libere
-
-        // mi costruisco i fatti che mi servono per questo modulo
-        nextCell(blocks);   // calcolo le celle adiacenti libere
-        countAdjacentFreeCells(blocks); // calcolo le celle adiacenti libere per ogni cella presente in nextCell
-        countEdgeDistance(blocks);
-        for(Cell cell : DataClass.getInstance().getNextCell())
-            variableProgram.addObjectInput(new IndirectCell(cell.x, cell.y, BreadthFirstSearch.getInstance().indirectCell(blocks, new Cell(cell.x, cell.y, 0))));
-
-        FinalMove elements = runProgram(FinalMove.class);
-        return analyzeDirection(elements);
-    }
     private int closedOptimizationStrategy(Block[][] blocks) throws Exception {
         // Modulo per la strategia di ottimizzazione dello spazio in ambienti aperti
         DataClass.getInstance().setEyeVision(2);    // setto eye vision
 
         // qua setto il modulo di ottimizzazione per l'IA (in spazi chiusi): il metodo di ottimizzazione ottimizza lo spazio con l'obiettivo di far rimanere la IA in vita il più a lungo possibile
-        if(!fixedProgram.getStringOfFilesPaths().equals("encodings/encodings_Palkia/closedOptimizationStrategy.txt ")){
+        if(!fixedProgram.getStringOfFilesPaths().equals("encodings/encodings_Palkia/optimizationStrategy.txt ")){
             fixedProgram.clearFilesPaths();
-            fixedProgram.addFilesPath("encodings/encodings_Palkia/closedOptimizationStrategy.txt");
+            fixedProgram.addFilesPath("encodings/encodings_Palkia/optimizationStrategy.txt");
         }
 
         DataClass.getInstance().getNextCell().clear();  // pulisco la lista delle celle adiacenti libere
@@ -223,7 +201,6 @@ public class MainClassPalkia {
     private int setAttackStrategy(Block[][] blocks) throws Exception {
         // Modulo per la strategia di attacco
         DataClass.getInstance().setEyeVision(5);    // setto eye vision
-        DataClass.getInstance().setCounter(DataClass.getInstance().getCounter() + 1);
 
         // setto il modulo di attacco
         if(!fixedProgram.getStringOfFilesPaths().equals("encodings/encodings_Palkia/attackStrategy.txt " )){
@@ -258,7 +235,7 @@ public class MainClassPalkia {
         }
 
         // se non ho ancora trovato la strada minima, la cerco
-        if(DataClass.getInstance().getMinStreet().isEmpty() || !isRouteValid(blocks, playerHead) || !isAdjacent(new Cell(DataClass.getInstance().getMinStreet().get(0).x, DataClass.getInstance().getMinStreet().get(0).y, 0))){
+        if(DataClass.getInstance().getMinStreet().isEmpty() || !CheckClass.isRouteValid(blocks, playerHead) || !CheckClass.isAdjacent(new Cell(DataClass.getInstance().getMinStreet().get(0).x, DataClass.getInstance().getMinStreet().get(0).y, 0))){
             if(!DataClass.getInstance().getMinStreet().isEmpty())
                 DataClass.getInstance().getMinStreet().clear();
 
@@ -326,19 +303,6 @@ public class MainClassPalkia {
 
             variableProgram.addObjectInput(new FreeAdjacent(x, y, freeCount));
         }
-    }
-    private int analyzeDirection(FinalMove move) {
-        // analizza la mossa e restituisce la direzione
-        if (move.getX() > DataClass.getInstance().getPlayerX()) {
-            return 0; // Right
-        } else if (move.getX() < DataClass.getInstance().getPlayerX()) {
-            return 1; // Left
-        } else if (move.getY() < DataClass.getInstance().getPlayerY()) {
-            return 2; // Up
-        } else if (move.getY() > DataClass.getInstance().getPlayerY()) {
-            return 3; // Down
-        }
-        return -1; // No movement or undefined
     }
     private int findEnemyDistance(Block[][] blocks, int playerHead) throws Exception {
         List<Cell> enemycell = new ArrayList<>();  // qua dentro ho le celle dei nemici
@@ -440,46 +404,6 @@ public class MainClassPalkia {
         }
 
         return -1;
-    }
-    private boolean isPlayerEnclosed(Block[][] blocks, int playerHead) {
-        //vede le indirect cells di tutti i players e le salva in una lista
-        List<Cell> indirectCellsPlayers = new ArrayList<>();
-        int mieCelle = 0;
-        for(PlayerPositionType player : PosizioniPlayers.posizioniPlayers(blocks)){
-            if(player.getId() == playerHead)
-                mieCelle = BreadthFirstSearch.getInstance().indirectCell(blocks, new Cell(player.getX(), player.getY(), 0));
-            else
-                indirectCellsPlayers.add(new Cell(player.getX(), player.getY(), BreadthFirstSearch.getInstance().indirectCell(blocks, new Cell(player.getX(), player.getY(), 0))));
-        }
-
-        //controlla se le mie celle sono in numero diverso da quelle di tutti gli altri player, se si, sono chiuso
-        int count = 0;
-        for(Cell cell : indirectCellsPlayers){
-            if(mieCelle < cell.c)
-                count++;
-        }
-
-        if(count == indirectCellsPlayers.size())
-            return true;
-
-        return false;
-    }
-    private boolean isRouteValid(Block[][] blocks, int playerHead) {
-        //controllo se ci sta un nemico vicino
-        if(BreadthFirstSearch.getInstance().thisIsEnemy(blocks, new Cell(DataClass.getInstance().getPlayerX(), DataClass.getInstance().getPlayerY(), 0), DataClass.getInstance().getEyeVision(), playerHead))
-            return false;
-
-        // controlla se le celle rianenti nel cammino sono vuote
-        for(Cell cell : DataClass.getInstance().getMinStreet()){
-            if(blocks[cell.x][cell.y].type() != 0)
-                return false;
-        }
-
-        return true;
-    }
-    private boolean isAdjacent(Cell point){
-        // controlla se la cella è adiacente al player
-        return (point.x == DataClass.getInstance().getPlayerX() && (point.y == DataClass.getInstance().getPlayerY() + 1 || point.y == DataClass.getInstance().getPlayerY() - 1)) || (point.y == DataClass.getInstance().getPlayerY() && (point.x == DataClass.getInstance().getPlayerX() + 1 || point.x == DataClass.getInstance().getPlayerX() - 1));
     }
     private void nextNCell(Block[][] blocks, int playerHead) throws Exception {
         // SPIEGAZIONE: metodo per calcolare le celle che vede il player a distanza N
@@ -620,15 +544,5 @@ public class MainClassPalkia {
             // Stampa la distanza dal bordo più vicino
             variableProgram.addObjectInput(new EdgeDistance(x, y, minDistance));
         }
-    }
-    private int wallNumber(Block[][] blocks) {
-        // conto il numero di muri sulla mappa
-        int wallNumber = 0;
-        for (Block[] block : blocks)
-            for (Block value : block)
-                if (value.type() == Block.PLAYER1_BODY || value.type() == Block.PLAYER2_BODY || value.type() == Block.PLAYER3_BODY || value.type() == Block.PLAYER4_BODY)
-                    wallNumber++;
-
-        return wallNumber;
     }
 }

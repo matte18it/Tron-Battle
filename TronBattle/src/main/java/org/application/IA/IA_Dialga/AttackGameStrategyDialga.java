@@ -35,7 +35,6 @@ public class AttackGameStrategyDialga extends StrategyDialga {
             path.remove(0);
 
         CellUtilDialga nextCell = path.get(0);
-        System.out.println("Next cell: " + nextCell.getX() + " " + nextCell.getY());
         path.remove(0);
         return findDirection(nextCell.getX(), nextCell.getY());
     }
@@ -62,12 +61,12 @@ public class AttackGameStrategyDialga extends StrategyDialga {
 
 
     private void getCell() {
-        System.out.println(program.getPrograms());
+        //System.out.println(program.getPrograms());
         AnswerSet answerSets = MainClassDialga.getInstance().runASP();
         try {
             for (Object obj : answerSets.getAtoms()) {
                 if (obj instanceof CellaSceltaDialga var) {
-                    System.out.println("Cella scelta: " + var.getX() + " " + var.getY());
+                    //System.out.println("Cella scelta: " + var.getX() + " " + var.getY());
                     for (int[] cell : paths.keySet()) {
                         if (cell[0] == var.getX() && cell[1] == var.getY()) {
                             path = paths.get(cell);

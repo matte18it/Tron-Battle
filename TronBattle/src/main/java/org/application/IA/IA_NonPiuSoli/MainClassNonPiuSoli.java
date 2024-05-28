@@ -47,7 +47,7 @@ public class MainClassNonPiuSoli {
 
     public void init() {
         // metodo per inizializzare i file DLV dell'IA
-        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
+        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
         OptionDescriptor option = new OptionDescriptor("-n 0");
         handler.addOption(option);
         attacco.addFilesPath("encodings/encodings_NonPiuSoli/attacco");
@@ -93,7 +93,7 @@ public class MainClassNonPiuSoli {
             }
         }
 
-        System.out.println("countCelleOccupate: " + countCelleOccupate);
+        //System.out.println("countCelleOccupate: " + countCelleOccupate);
         if (countCelleOccupate > 1000) {
             attacco.clearPrograms();
             handler.removeProgram(0);
@@ -151,7 +151,7 @@ public class MainClassNonPiuSoli {
                 //controllo se sono occupati i blocchi in diagonale
                 if (blocks[playerPositionX + 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY + 1));
-                    System.out.println(" a x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" a x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
 
             }
@@ -162,7 +162,7 @@ public class MainClassNonPiuSoli {
                 //controllo se sono occupati i blocchi in diagonale
                 if (blocks[playerPositionX - 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY + 1));
-                    System.out.println(" b x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" b x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
 
 
@@ -174,7 +174,7 @@ public class MainClassNonPiuSoli {
                 //controllo se sono occupati i blocchi in diagonale
                 if (blocks[playerPositionX - 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY - 1));
-                    System.out.println(" c x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
+                    //System.out.println(" c x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
 
@@ -186,7 +186,7 @@ public class MainClassNonPiuSoli {
                 //controllo se sono occupati i blocchi in diagonale
                 if (blocks[playerPositionX + 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY - 1));
-                    System.out.println(" d x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
+                    //System.out.println(" d x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
 
@@ -198,12 +198,12 @@ public class MainClassNonPiuSoli {
                 //controllo se sono occupati i blocchi in diagonale (sinistra)
                 if (blocks[playerPositionX - 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY + 1));
-                    System.out.println(" e x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" e x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
                 //controllo se sono occupati i blocchi in diagonale (destra)
                 if (blocks[playerPositionX + 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY + 1));
-                    System.out.println(" f x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" f x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
 
 
@@ -215,13 +215,13 @@ public class MainClassNonPiuSoli {
                 //controllo se sono occupati i blocchi in diagonale (sinistra)
                 if (blocks[playerPositionX - 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY - 1));
-                    System.out.println(" g x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
+                    //System.out.println(" g x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
                 //controllo se sono occupati i blocchi in diagonale (destra)
                 if (blocks[playerPositionX + 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY - 1));
-                    System.out.println(" h x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
+                    //System.out.println(" h x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
 
@@ -235,7 +235,7 @@ public class MainClassNonPiuSoli {
                 if (playerPositionX == 0 && playerPositionY == 1) {
                     if (blocks[playerPositionX + 1][playerPositionY].type() != Block.EMPTY) {
                         conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY));
-                        System.out.println(" ii x: " + (playerPositionX + 1) + " y: " + (playerPositionY) + " occupato");
+                        //System.out.println(" ii x: " + (playerPositionX + 1) + " y: " + (playerPositionY) + " occupato");
                     }
                 }
 
@@ -244,7 +244,7 @@ public class MainClassNonPiuSoli {
                 if (playerPositionX == 0 && playerPositionY == 38) {
                     if (blocks[playerPositionX + 1][playerPositionY].type() != Block.EMPTY) {
                         conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY));
-                        System.out.println(" ii x: " + (playerPositionX + 1) + " y: " + (playerPositionY) + " occupato");
+                        //System.out.println(" ii x: " + (playerPositionX + 1) + " y: " + (playerPositionY) + " occupato");
                     }
                 }
 
@@ -252,14 +252,14 @@ public class MainClassNonPiuSoli {
                 //controllo se sono occupati i blocchi in diagonale (sopra)
                 if (blocks[playerPositionX + 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY - 1));
-                    System.out.println(" i x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
+                   // System.out.println(" i x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
 
                 //controllo se sono occupati i blocchi in diagonale (sotto)
                 if (blocks[playerPositionX + 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY + 1));
-                    System.out.println(" j x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" j x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
 
 
@@ -274,7 +274,7 @@ public class MainClassNonPiuSoli {
                 if (playerPositionX == 63 && playerPositionY == 1) {
                     if (blocks[playerPositionX - 1][playerPositionY].type() != Block.EMPTY) {
                         conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY));
-                        System.out.println(" k x: " + (playerPositionX - 1) + " y: " + (playerPositionY) + " occupato");
+                        //System.out.println(" k x: " + (playerPositionX - 1) + " y: " + (playerPositionY) + " occupato");
                     }
                 }
 
@@ -282,20 +282,20 @@ public class MainClassNonPiuSoli {
                 if (playerPositionX == 63 && playerPositionY == 38) {
                     if (blocks[playerPositionX - 1][playerPositionY].type() != Block.EMPTY) {
                         conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY));
-                        System.out.println(" k x: " + (playerPositionX - 1) + " y: " + (playerPositionY) + " occupato");
+                        //System.out.println(" k x: " + (playerPositionX - 1) + " y: " + (playerPositionY) + " occupato");
                     }
                 }
 
                 //controllo se sono occupati i blocchi in diagonale (sopra)
                 if (blocks[playerPositionX - 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY - 1));
-                    System.out.println(" k x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
+                    //System.out.println(" k x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
                 //controllo se sono occupati i blocchi in diagonale (sotto)
                 if (blocks[playerPositionX - 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY + 1));
-                    System.out.println(" l x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" l x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
 
 
@@ -303,30 +303,30 @@ public class MainClassNonPiuSoli {
             //se la moto non si trova ne ai bordi e nemmeno agli angoli
             if ((playerPositionX > 0 && playerPositionX < 63) && (playerPositionY > 0 && playerPositionY < 39)) {
 
-                System.out.println("entro -------------------------------------------------------------");
+                //System.out.println("entro -------------------------------------------------------------");
 
                 //controllo se sono occupati i blocchi in diagonale (in alto a destra)
                 if (blocks[playerPositionX + 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY - 1));
-                    System.out.println(" m x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
+                    //System.out.println(" m x: " + (playerPositionX + 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
                 //controllo se sono occupati i blocchi in diagonale (in basso a destra)
                 if (blocks[playerPositionX + 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX + 1, playerPositionY + 1));
-                    System.out.println(" n x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" n x: " + (playerPositionX + 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
 
                 //controllo se sono occupati i blocchi in diagonale (in basso a sinistra)
                 if (blocks[playerPositionX - 1][playerPositionY + 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY + 1));
-                    System.out.println(" o x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
+                    //System.out.println(" o x: " + (playerPositionX - 1) + " y: " + (playerPositionY + 1) + " occupato");
                 }
 
                 //controllo se sono occupati i blocchi in diagonale (sinistra)
                 if (blocks[playerPositionX - 1][playerPositionY - 1].type() != Block.EMPTY) {
                     conquistaTerritorio.addObjectInput(new Occupato(playerPositionX - 1, playerPositionY - 1));
-                    System.out.println(" p x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
+                    //System.out.println(" p x: " + (playerPositionX - 1) + " y: " + (playerPositionY - 1) + " occupato");
                 }
 
 
@@ -368,47 +368,47 @@ public class MainClassNonPiuSoli {
         }
 
         // Log per debug
-        System.out.println("Fatti inviati:");
-        System.out.println(attacco.getPrograms());
-        System.out.println();
+        //System.out.println("Fatti inviati:");
+        //System.out.println(attacco.getPrograms());
+        //System.out.println();
 
         Output o = handler.startSync();
 
-        System.out.println(o.getOutput());
-        System.out.println("Errori del solver:");
-        System.out.println(o.getErrors());
+        //System.out.println(o.getOutput());
+        //System.out.println("Errori del solver:");
+        //System.out.println(o.getErrors());
 
         AnswerSets answersets = (AnswerSets) o;
 
         if (answersets.getAnswersets().isEmpty()) {
-            System.out.println("Nessun risultato restituito dall'ASP.");
+            //System.out.println("Nessun risultato restituito dall'ASP.");
             return -1;
         }
 
         List<AnswerSet> answerSets = answersets.getAnswersets();
         if (answerSets.isEmpty()) {
-            System.out.println("Nessuna configurazione ottimale trovata.");
+            //System.out.println("Nessuna configurazione ottimale trovata.");
             return -1;
         }
 
         for (AnswerSet a : answerSets) {
-            System.out.println("Risultato ASP:");
-            System.out.println(a.toString());
-            System.out.println();
+            //System.out.println("Risultato ASP:");
+            //System.out.println(a.toString());
+            //System.out.println();
 
             for (Object obj : a.getAtoms()) {
-                System.out.println("Oggetto nell'AnswerSet: " + obj.toString());
+                //System.out.println("Oggetto nell'AnswerSet: " + obj.toString());
                 if (obj instanceof Move move) {
-                    System.out.println();
-                    System.out.println("Direzione trovata: " + move.getDirection());
-                    System.out.println();
+                    //System.out.println();
+                    //System.out.println("Direzione trovata: " + move.getDirection());
+                    //System.out.println();
                     ultimaDirezione= move.getDirection();
                     return move.getDirection();
                 }
             }
         }
 
-        System.out.println("Nessuna direzione valida trovata nei risultati ASP.");
+        //System.out.println("Nessuna direzione valida trovata nei risultati ASP.");
         return -1;
     }
 
@@ -479,7 +479,7 @@ public class MainClassNonPiuSoli {
 
 
     public List<Node> percorso(Block blocks[][], int playerPositionX, int playerPositionY, int num1, int num2, HashSet<Node> closedList){
-        System.out.println("Percorso da: "+ playerPositionX+" "+playerPositionY+" A "+num1+" "+num2);
+        //System.out.println("Percorso da: "+ playerPositionX+" "+playerPositionY+" A "+num1+" "+num2);
         Node start = new Node(playerPositionX, playerPositionY);
         Node goal = new Node(num1, num2);
         return findPath(blocks, start, goal, closedList);

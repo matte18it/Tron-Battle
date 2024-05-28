@@ -41,7 +41,7 @@ public class MainClassDialga {
     @Getter
     private int playerBody;
     private static MainClassDialga instance = null;
-    private final DesktopService service = new DLV2DesktopService("lib/dlv-2");
+    private final DesktopService service = new DLV2DesktopService("lib/dlv2");
     private final Handler handler = new DesktopHandler(service);
     private StrategyManagerDialga strategy = null;
 

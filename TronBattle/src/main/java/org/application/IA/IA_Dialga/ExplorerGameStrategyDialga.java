@@ -39,7 +39,7 @@ public class ExplorerGameStrategyDialga extends StrategyDialga {
                 path.remove(0);
         }
         CellUtilDialga nextCell = path.get(0);
-        System.out.println("Next cell: " + nextCell.getX() + " " + nextCell.getY());
+        //System.out.println("Next cell: " + nextCell.getX() + " " + nextCell.getY());
         path.remove(0);
         return findDirection(nextCell.getX(), nextCell.getY());
     }
@@ -61,13 +61,13 @@ public class ExplorerGameStrategyDialga extends StrategyDialga {
     }
 
     private void getZonaScelta() {
-        System.out.println(program.getPrograms());
+        //System.out.println(program.getPrograms());
         AnswerSet answerSets = MainClassDialga.getInstance().runASP();
         try {
             for (Object obj : answerSets.getAtoms()) {
                 if (obj instanceof ZonaSceltaDialga var) {
                     selectedZone = ZoneENUMDialga.valueOf(var.getNome().toString().toUpperCase());
-                    System.out.println("Zona scelta: " + selectedZone);
+                    //System.out.println("Zona scelta: " + selectedZone);
                 }
             }
         } catch (InstantiationException | NoSuchMethodException |

@@ -1,12 +1,3 @@
-% Posizione iniziale del player:
-playerPalkia(X, Y).
-
-% Celle che rappresentano le scie presenti nel campo di gioco (visti come muri): 
-wallPalkia(X, Y).
-
-% Celle dove si trovano i nemici:
-enemyPalkia(X, Y).
-
 % Nemici a cui posso arrivare:
 reachableEnemyPalkia(X, Y).
 

@@ -36,7 +36,7 @@ public class MainClass4F {
 
     public void init(){
         // metodo per inizializzare i file DLV dell'IA
-        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
+        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
 
         //opzioni per l'handler
         //OptionDescriptor optionDescriptorNoFacts = new OptionDescriptor("--no-facts"); //elimina i fatti
@@ -92,23 +92,23 @@ public class MainClass4F {
         //System.out.println("ANSWER SETS: "+answerSets.getOptimalAnswerSets());
 
         for (AnswerSet a: answerSets.getOptimalAnswerSets()){
-            System.out.println("ANSWER SET: "+a);
+            //System.out.println("ANSWER SET: "+a);
             try{
                 for (Object obj : a.getAtoms()) {
                     if (!(obj instanceof Movement))continue;{
                         Movement m = (Movement) obj;
                         switch (m.getDirection()){
                             case 0:
-                                System.out.println("MOVIMENTO: DESTRA");
+                                //System.out.println("MOVIMENTO: DESTRA");
                                 break;
                             case 1:
-                                System.out.println("MOVIMENTO: SINISTRA");
+                                //System.out.println("MOVIMENTO: SINISTRA");
                                 break;
                             case 2:
-                                System.out.println("MOVIMENTO: SU");
+                                //System.out.println("MOVIMENTO: SU");
                                 break;
                             case 3:
-                                System.out.println("MOVIMENTO: GIU");
+                                //System.out.println("MOVIMENTO: GIU");
                                 break;
                         }
                         return m.getDirection();

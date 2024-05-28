@@ -54,7 +54,7 @@ public class EndGameStrategyDialga extends StrategyDialga {
     }
 
     private void getPath() {
-        System.out.println(program.getPrograms());
+        //System.out.println(program.getPrograms());
         AnswerSet answerSets = MainClassDialga.getInstance().runASP();
         try {
             for (Object obj : answerSets.getAtoms()) {

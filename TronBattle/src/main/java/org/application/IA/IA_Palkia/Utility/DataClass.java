@@ -19,7 +19,6 @@ public class DataClass {
     private int playerX = 0, playerY = 0;   // coordinate del player
     private List<Cell> pathChiusura = new ArrayList<>();  // lista che contiene la strada per chiudere l'avversario
     private int fixedDistance = 15; // Distanza di partenza
-    private int counter = 0;    // counter per determinare quando calcolare il path chiusura
 
     // ----- CONSTRUCTOR -----
     private DataClass() {}
@@ -33,7 +32,6 @@ public class DataClass {
     // ----- METHODS -----
     public void reset() {
         firstMove = 0;
-        counter = 0;
         eyeVision = 5;
         enemyCoordinates = null;
         nextCell.clear();

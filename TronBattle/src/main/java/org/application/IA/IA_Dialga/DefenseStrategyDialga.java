@@ -138,7 +138,7 @@ public class DefenseStrategyDialga extends StrategyDialga {
     }
 
     private int extractDirection() {
-        System.out.println(program.getPrograms());
+        //System.out.println(program.getPrograms());
         AnswerSet answerSets = MainClassDialga.getInstance().runASP();
         try {
 
