@@ -21,6 +21,7 @@ import org.application.IA.IA_Palkia.Utility.FindLockingPath;
 import org.application.model.Block;
 import org.application.utility.Settings;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -241,6 +242,7 @@ public class MainClassPalkia {
 
             nextNCell(blocks, playerHead);  // calcolo le celle che vede il player a distanza N e che sono vicino al bordo
 
+            System.out.println(fixedProgram.getPrograms());
             FinalMove elements = runProgram(FinalMove.class);
 
             //calcolo il cammino
@@ -422,7 +424,8 @@ public class MainClassPalkia {
             for (int col = startCol; col <= endCol; col++) {
                 // Evitiamo di processare la cella in cui si trova il giocatore o celle non vuote
                 if ((row == DataClass.getInstance().getPlayerX() && col == DataClass.getInstance().getPlayerY()) || blocks[row][col].type() != 0) continue;
-
+                // Evitiamo di processare le celle che non sono raggiungibili
+                if(BreadthFirstSearch.getInstance().searchStartEnd(blocks, new Cell(DataClass.getInstance().getPlayerX(), DataClass.getInstance().getPlayerY(), 0), new Cell(row, col, 0)) == -1) continue;
                 // Se siamo in modalità di attacco, escludiamo le celle che non sono sulla stessa x o y del giocatore
                 if (isAttackMode && row != DataClass.getInstance().getPlayerX() && col != DataClass.getInstance().getPlayerY()) continue;
 
