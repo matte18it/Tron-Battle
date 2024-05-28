@@ -20,7 +20,7 @@ public class FindLockingPath {
     // ----- METHODS -----
     public boolean evaluate(Block[][] blocks, int playerHead) {
         // Valuto se ci sta un path di chiusura oppure no
-        if(CloseEnemy.getInstance().isEnemyCloseable(blocks, 5, playerHead))
+        if(CloseEnemy.getInstance().isEnemyCloseable(blocks, 7, playerHead))
             return true;
         else
             return false;
