@@ -149,8 +149,13 @@ public class Game {
                 break;
             }
             case "NonPiuSoli" -> {
-                if(analyzeMatrix(getBlocks(), playerHead))
-                    directionPlayer = MainClassNonPiuSoli.getInstance().getDirection(getBlocks(), playerHead, playerBody);
+                if(analyzeMatrix(getBlocks(), playerHead)) {
+                    try {
+                        directionPlayer = MainClassNonPiuSoli.getInstance().getDirection(getBlocks(), playerHead, playerBody);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
                 System.out.println("IA NonPiuSoli: " + directionPlayer);
                 break;
             }
