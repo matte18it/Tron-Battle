@@ -15,11 +15,28 @@ public class GameLoop {
 
 
     public void startGame() {
-          if(executor != null)
+        if(executor != null)
             return;
-    executor = Executors.newSingleThreadScheduledExecutor();
+        executor = Executors.newSingleThreadScheduledExecutor();
 
-        executor.scheduleAtFixedRate(() -> controller.update(), 0, 200, TimeUnit.MILLISECONDS);
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                long startTime = System.currentTimeMillis();
+                try {
+                    controller.update();
+                } catch (Exception e) {
+                    e.printStackTrace(); // Handle exceptions appropriately
+                } finally {
+                    long elapsedTime = System.currentTimeMillis() - startTime;
+                    long delay = Math.max(200 - elapsedTime, 0);
+                    executor.schedule(this, delay, TimeUnit.MILLISECONDS);
+                }
+            }
+        };
+
+        // Initial scheduling of the task
+        executor.schedule(task, 0, TimeUnit.MILLISECONDS);
     }
 
     public void stopGame() {
