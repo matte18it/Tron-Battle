@@ -131,22 +131,26 @@ public class Game {
         // ogni IA deve modificare directionPlayer in base alla sua strategia
         switch (iaName){
             case "4F" -> {
-                 directionPlayer = MainClass4F.getInstance().getDirection(getBlocks(), playerHead, playerBody);
+                if(analyzeMatrix(getBlocks(), playerHead))
+                    directionPlayer = MainClass4F.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                  System.out.println("IA 4F: " + directionPlayer);
                  break;
             }
             case "Dialga" -> {
-                directionPlayer = MainClassDialga.getInstance().getDirection(getBlocks(), playerHead, playerBody);
+                if(analyzeMatrix(getBlocks(), playerHead))
+                    directionPlayer = MainClassDialga.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                 System.out.println("IA Dialga: " + directionPlayer);
                 break;
             }
             case "Palkia" -> {
-                directionPlayer = MainClassPalkia.getInstance().getDirection(getBlocks(), playerHead, playerBody);
+                if(analyzeMatrix(getBlocks(), playerHead))
+                    directionPlayer = MainClassPalkia.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                 System.out.println("IA Palkia: " + directionPlayer);
                 break;
             }
             case "NonPiuSoli" -> {
-                directionPlayer = MainClassNonPiuSoli.getInstance().getDirection(getBlocks(), playerHead, playerBody);
+                if(analyzeMatrix(getBlocks(), playerHead))
+                    directionPlayer = MainClassNonPiuSoli.getInstance().getDirection(getBlocks(), playerHead, playerBody);
                 System.out.println("IA NonPiuSoli: " + directionPlayer);
                 break;
             }
@@ -325,6 +329,18 @@ public class Game {
 
     public String[] getIA() {
         return Settings.iaNames;
+    }
+
+    public boolean analyzeMatrix(Block[][] blocks, int playerHead) {
+        // cerco se trovo il player interessato
+        for(int i = 0; i < blocks.length; i++) {
+            for(int j = 0; j < blocks[i].length; j++) {
+                if(blocks[i][j].type() == playerHead)
+                    return true;
+            }
+        }
+
+        return false;
     }
 }
 
