@@ -331,7 +331,7 @@ public class MainClassPalkia {
             for (int i = 0; i < reachableEnemies.size(); i++) {
                 for (int j = i + 1; j < reachableEnemies.size(); j++) {
                     int distance = BreadthFirstSearch.getInstance().searchStartEnd(blocks, reachableEnemies.get(i), reachableEnemies.get(j));
-                    if (distance != -1 && distance <= DataClass.getInstance().getFixedDistance())
+                    if (distance != -1 && distance <= DataClass.getInstance().getEnemyNear())
                         allEnemiesClose++;
                 }
             }
