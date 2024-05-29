@@ -242,7 +242,7 @@ public class MainClassPalkia {
 
             nextNCell(blocks, playerHead);  // calcolo le celle che vede il player a distanza N e che sono vicino al bordo
 
-            System.out.println(fixedProgram.getPrograms());
+            //System.out.println(fixedProgram.getPrograms());
             FinalMove elements = runProgram(FinalMove.class);
 
             //calcolo il cammino

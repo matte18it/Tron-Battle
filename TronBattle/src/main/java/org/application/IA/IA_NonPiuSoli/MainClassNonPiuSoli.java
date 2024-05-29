@@ -94,10 +94,10 @@ public class MainClassNonPiuSoli {
         }
 
         //System.out.println("countCelleOccupate: " + countCelleOccupate);
-        if (countCelleOccupate > 1000) {
-            attacco.clearPrograms();
+        if (countCelleOccupate > 100) {
             handler.removeProgram(0);
             handler.addProgram(attacco);
+            attacco.clearPrograms();
             if (playerPositionX != -1) {
                 if (playerPositionX + 1 < blocks.length && blocks[playerPositionX + 1][playerPositionY].type() == Block.EMPTY) {
                     int distanceRight = bfs(blocks, playerPositionX + 1, playerPositionY, playerHead);
@@ -137,9 +137,9 @@ public class MainClassNonPiuSoli {
                 }
             }
         } else {
-            conquistaTerritorio.clearPrograms();
             handler.removeProgram(0);
             handler.addProgram(conquistaTerritorio);
+            conquistaTerritorio.clearPrograms();
             //System.out.println("--------------------------------------------> entro nell'else");
 
             conquistaTerritorio.addObjectInput(new PlayerPosition(playerPositionX, playerPositionY));
@@ -382,13 +382,13 @@ public class MainClassNonPiuSoli {
 
         if (answersets.getAnswersets().isEmpty()) {
             //System.out.println("Nessun risultato restituito dall'ASP.");
-            return -1;
+            return 0;
         }
 
         List<AnswerSet> answerSets = answersets.getAnswersets();
         if (answerSets.isEmpty()) {
             //System.out.println("Nessuna configurazione ottimale trovata.");
-            return -1;
+            return 0;
         }
 
         for (AnswerSet a : answerSets) {
@@ -409,7 +409,7 @@ public class MainClassNonPiuSoli {
         }
 
         //System.out.println("Nessuna direzione valida trovata nei risultati ASP.");
-        return -1;
+        return 0;
     }
 
 
