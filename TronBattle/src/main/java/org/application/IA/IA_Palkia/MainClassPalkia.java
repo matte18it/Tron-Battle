@@ -54,7 +54,10 @@ public class MainClassPalkia {
 
     // ----- INIT METHODS -----
     public void init() {
-        service = new DLV2DesktopService("lib/dlv2");
+        //linux
+        service = new DLV2DesktopService("lib/dlv-2");
+        //win
+        //service = new DLV2DesktopService("lib/dlv2.exe");
         handler = new DesktopHandler(service);
         fixedProgram = new ASPInputProgram();
         fixedProgram.addFilesPath("encodings/encodings_Palkia/findBestCellForPath.txt");
