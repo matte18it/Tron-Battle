@@ -68,8 +68,6 @@ public class Game {
                 Future<Integer> future2 = executor.submit(this::humanService);
                 try {
                     directionPlayer1 = future1.get();
-                    long end = System.currentTimeMillis();
-                    System.out.println("Tempo impiegato "+Settings.iaNames[0]+" : " + (end - start) + "ms");
                     directionPlayer2 = future2.get();
                 } catch (InterruptedException | ExecutionException  e) {
                     e.printStackTrace();
@@ -83,11 +81,7 @@ public class Game {
                 Future<Integer> future2 = executor.submit(() -> iaServices(Settings.iaNames[1], Block.PLAYER2_HEAD, Block.PLAYER2_BODY));
                 try {
                     directionPlayer1 = future1.get();
-                    long end = System.currentTimeMillis();
-                    System.out.println("Tempo impiegato "+Settings.iaNames[0]+" : " + (end - start) + "ms");
                     directionPlayer2 = future2.get();
-                     end = System.currentTimeMillis();
-                    System.out.println("Tempo impiegato "+Settings.iaNames[1]+" : " + (end - start) + "ms");
                 } catch (InterruptedException | ExecutionException  e) {
                     e.printStackTrace();
                 }
@@ -102,17 +96,9 @@ public class Game {
                 Future<Integer> future4 = executor.submit(() -> iaServices(Settings.iaNames[3], Block.PLAYER4_HEAD, Block.PLAYER4_BODY));
                 try {
                     directionPlayer1 = future1.get();
-                    long end = System.currentTimeMillis();
-                    System.out.println("Tempo impiegato "+Settings.iaNames[0]+" : " + (end - start) + "ms");
                     directionPlayer2 = future2.get();
-                     end = System.currentTimeMillis();
-                    System.out.println("Tempo impiegato "+Settings.iaNames[1]+" : " + (end - start) + "ms");
                     directionPlayer3 = future3.get();
-                     end = System.currentTimeMillis();
-                    System.out.println("Tempo impiegato "+Settings.iaNames[2]+" : " + (end - start) + "ms");
                     directionPlayer4 = future4.get();
-                     end = System.currentTimeMillis();
-                    System.out.println("Tempo impiegato "+Settings.iaNames[3]+" : " + (end - start) + "ms");
                 } catch (InterruptedException | ExecutionException  e) {
                     e.printStackTrace();
                 }
@@ -126,6 +112,7 @@ public class Game {
     }
 
     private int iaServices(String iaName, int playerHead, int playerBody) {
+        long start=System.currentTimeMillis();
         int directionPlayer = 0;
         // la matrice blocks contiene il mondo di gioco
         // ogni IA deve modificare directionPlayer in base alla sua strategia
@@ -157,8 +144,9 @@ public class Game {
                     }
                 System.out.println("IA NonPiuSoli: " + directionPlayer);
                 break;
-            }
-        }
+            }}
+            long end=System.currentTimeMillis();
+            System.out.println("IA"+iaName +" "+ (end-start) + "ms");
         return directionPlayer;
     }
 
