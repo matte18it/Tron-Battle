@@ -32,7 +32,7 @@ public class MainClassNonPiuSoli {
     private  boolean controlloPosizioneIniziale = false;
     private  int posizioneInizialeX = 0;
     private  int posizioneInizialeY = 0;
-    private int ultimaDirezione ;
+    private int ultimaDirezione = 0;
 
 
 
@@ -58,11 +58,6 @@ public class MainClassNonPiuSoli {
         attacco.addFilesPath("encodings/encodings_NonPiuSoli/attacco");
         conquistaTerritorio.addFilesPath("encodings/encodings_NonPiuSoli/conquistaTerritorio");
         handler.addProgram(attacco);
-
-    }
-
-    public int getDirection(Block[][] blocks, int playerHead, int playerBody) throws Exception {
-
         try {
             ASPMapper.getInstance().registerClass(Direction.class);
             ASPMapper.getInstance().registerClass(Distance.class);
@@ -76,6 +71,9 @@ public class MainClassNonPiuSoli {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public int getDirection(Block[][] blocks, int playerHead, int playerBody) throws Exception {
         int playerPositionX = -1;
         int playerPositionY = -1;
         int countCelleOccupate = 0;
@@ -83,8 +81,7 @@ public class MainClassNonPiuSoli {
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks[i].length; j++) {
                 if (blocks[i][j].type() == playerHead) {
-                    playerPositionX = i;
-                    playerPositionY = j;
+                    playerPositionX = i; playerPositionY = j;
                 }
                 if (blocks[i][j].type() != 0) {
                     countCelleOccupate++;
@@ -93,8 +90,8 @@ public class MainClassNonPiuSoli {
                     posizioneInizialeX = playerPositionX;
                     posizioneInizialeY = playerPositionY;
                     controlloPosizioneIniziale = true;
+                    conquistaTerritorio.addObjectInput((new InitialPosition(posizioneInizialeX, posizioneInizialeY)));
                 }
-                conquistaTerritorio.addObjectInput((new InitialPosition(posizioneInizialeX, posizioneInizialeY)));
             }
         }
 
@@ -141,7 +138,8 @@ public class MainClassNonPiuSoli {
                     attacco.addObjectInput(new Direction(3));
                 }
             }
-        } else {
+        }
+        else {
             handler.removeProgram(0);
             handler.addProgram(conquistaTerritorio);
             conquistaTerritorio.clearPrograms();
