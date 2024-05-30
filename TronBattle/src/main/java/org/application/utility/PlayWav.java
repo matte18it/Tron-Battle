@@ -21,7 +21,7 @@ public class PlayWav {
     }   // funzione per ottenere l'istanza di PlayWav
     public void play() {
         // scelgo un file audio a caso
-        String[] paths = {"/music/music1.wav", "/music/music2.wav", "/music/music3.wav"};
+        String[] paths = {"/music/music1.wav", "/music/music2.wav", "/music/music3.wav", "/music/TRONBATTL.wav"};
         String path = paths[(int) (Math.random() * paths.length)];
 
         // lo carico e lo riproduco
