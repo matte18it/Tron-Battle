@@ -369,7 +369,7 @@ public class MainClassNonPiuSoli {
 
         // Log per debug
         //System.out.println("Fatti inviati:");
-        //System.out.println(attacco.getPrograms());
+        System.out.println(attacco.getPrograms());
         //System.out.println();
 
         Output o = handler.startSync();

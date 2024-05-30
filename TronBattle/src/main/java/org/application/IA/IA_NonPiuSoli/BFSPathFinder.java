@@ -44,11 +44,11 @@ public class BFSPathFinder {
                         visited[nx][ny] = true;
                         queue.add(new Node(nx, ny, distance + 1));
                     } else if (matrix[nx][ny].type() >= Block.PLAYER1_HEAD && matrix[nx][ny].type() <= Block.PLAYER4_HEAD && matrix[nx][ny].type() != playerHead) {
-                        return distance + 1;
+                        return distance ++;
                     }
                 }
             }
         }
-        return -1;
+        return 0;
     }
 }
