@@ -35,9 +35,10 @@ public class MainClass4F {
     }
 
     public void init(){
-        // metodo per inizializzare i file DLV dell'IA
-        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
-
+        //linux
+        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
+        //win
+        //service = new DLV2DesktopService("lib/dlv2.exe");
         //opzioni per l'handler
         //OptionDescriptor optionDescriptorNoFacts = new OptionDescriptor("--no-facts"); //elimina i fatti
         //OptionDescriptor optionDescriptorAllAS = new OptionDescriptor("-n 0"); //mostra tutti gli answer set
@@ -85,11 +86,11 @@ public class MainClass4F {
         Output o = handler.startSync();
         AnswerSets answerSets = (AnswerSets) o;
 
-        /*System.out.println("Numero di as: " + answerSets.getAnswersets().size());
-        if(answerSets.getAnswersets().isEmpty()){
+        //System.out.println("Numero di as: " + answerSets.getAnswersets().size());
+        /*if(answerSets.getAnswersets().isEmpty()){
             System.out.println("NESSUN ANSWER SET TROVATO");
-        }*/
-        //System.out.println("ANSWER SETS: "+answerSets.getOptimalAnswerSets());
+        }
+        System.out.println("ANSWER SETS: "+answerSets.getOptimalAnswerSets());*/
 
         for (AnswerSet a: answerSets.getOptimalAnswerSets()){
             //System.out.println("ANSWER SET: "+a);

@@ -47,7 +47,10 @@ public class MainClassNonPiuSoli {
 
     public void init() {
         // metodo per inizializzare i file DLV dell'IA
-        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
+        //linux
+        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
+        //win
+        //service = new DLV2DesktopService("lib/dlv2.exe");
         OptionDescriptor option = new OptionDescriptor("-n 0");
         handler.addOption(option);
         attacco.addFilesPath("encodings/encodings_NonPiuSoli/attacco");
