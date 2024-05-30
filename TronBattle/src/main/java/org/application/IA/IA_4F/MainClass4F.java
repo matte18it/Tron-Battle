@@ -38,7 +38,9 @@ public class MainClass4F {
         //linux
         handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
         //win
-        //service = new DLV2DesktopService("lib/dlv2.exe");
+        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
+        //mac
+        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
         //opzioni per l'handler
         //OptionDescriptor optionDescriptorNoFacts = new OptionDescriptor("--no-facts"); //elimina i fatti
         //OptionDescriptor optionDescriptorAllAS = new OptionDescriptor("-n 0"); //mostra tutti gli answer set

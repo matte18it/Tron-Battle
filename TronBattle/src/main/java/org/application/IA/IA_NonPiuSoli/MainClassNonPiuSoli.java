@@ -50,7 +50,9 @@ public class MainClassNonPiuSoli {
         //linux
         handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
         //win
-        //service = new DLV2DesktopService("lib/dlv2.exe");
+        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
+        //mac
+        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
         OptionDescriptor option = new OptionDescriptor("-n 0");
         handler.addOption(option);
         attacco.addFilesPath("encodings/encodings_NonPiuSoli/attacco");
@@ -372,7 +374,7 @@ public class MainClassNonPiuSoli {
 
         // Log per debug
         //System.out.println("Fatti inviati:");
-        System.out.println(attacco.getPrograms());
+        //System.out.println(attacco.getPrograms());
         //System.out.println();
 
         Output o = handler.startSync();

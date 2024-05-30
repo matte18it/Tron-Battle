@@ -45,6 +45,8 @@ public class MainClassDialga {
     private final DesktopService service = new DLV2DesktopService("lib/dlv-2");
     //win
     //private final DesktopService service = new DLV2DesktopService("lib/dlv2.exe");
+    //mac
+    //private final DesktopService service = new DLV2DesktopService("lib/dlv2");
     private final Handler handler = new DesktopHandler(service);
     private StrategyManagerDialga strategy = null;
 

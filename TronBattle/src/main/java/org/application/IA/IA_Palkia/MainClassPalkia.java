@@ -14,14 +14,13 @@ import it.unical.mat.embasp.specializations.dlv2.desktop.DLV2DesktopService;
 import org.application.IA.IA_Palkia.Facts.*;
 import org.application.IA.IA_Palkia.Research.AStar.AStar;
 import org.application.IA.IA_Palkia.Research.BFS.BreadthFirstSearch;
+import org.application.IA.IA_Palkia.Research.CloseEnemy.CloseEnemy;
 import org.application.IA.IA_Palkia.Research.Support.Cell;
 import org.application.IA.IA_Palkia.Utility.CheckClass;
 import org.application.IA.IA_Palkia.Utility.DataClass;
-import org.application.IA.IA_Palkia.Utility.FindLockingPath;
 import org.application.model.Block;
 import org.application.utility.Settings;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +57,8 @@ public class MainClassPalkia {
         service = new DLV2DesktopService("lib/dlv-2");
         //win
         //service = new DLV2DesktopService("lib/dlv2.exe");
+        //mac
+        //service = new DLV2DesktopService("lib/dlv2");
         handler = new DesktopHandler(service);
         fixedProgram = new ASPInputProgram();
         fixedProgram.addFilesPath("encodings/encodings_Palkia/findBestCellForPath.txt");
@@ -130,7 +131,7 @@ public class MainClassPalkia {
                     else {
                         // se entro qua vuol dire che ho trovato il nemico e voglio attaccare
                         if(findEnemyDistance < DataClass.getInstance().getFixedDistance()){
-                            if(FindLockingPath.getInstance().evaluate(blocks, playerHead)) {
+                            if(CloseEnemy.getInstance().isEnemyCloseable(blocks, 7, playerHead)) {
                                 // se sono qua, vuol dire ho il path di chiusura, per cui mi muovo lungo il path
                                 FinalMove move = new FinalMove(DataClass.getInstance().getPathChiusura().get(0).x, DataClass.getInstance().getPathChiusura().get(0).y);
                                 DataClass.getInstance().getPathChiusura().remove(0);
