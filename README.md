@@ -1,4 +1,4 @@
-# Tron-Battle
+# Tron Battle
 Nel gioco Tron Battle, l'ambiente in cui opera il nostro agente basato sull'utilità ha le seguenti caratteristiche:
 
 Totalmente Osservabile: perchè l'agente può osservare l'intero stato del gioco, inclusa la posizione degli altri giocatori e le tracce lasciate dalle moto.
