@@ -1,0 +1,25 @@
+% ----- MODULO DI OTTIMIZZAZIONE - CHIUSO -----
+finalMovePalkia(X, Y) | nonFinalMovePalkia(X, Y) :- nextCellPalkia(X, Y). % una cella adiacente al player può essere la mossa finale (successiva) oppure no
+
+% Vincolo che impone di avere almeno una finalMove:
+:- not existsFinalMovePalkia.
+existsFinalMovePalkia :- finalMovePalkia(X, Y).
+
+% CONSTRAINT
+% ----- 1° constraint (deve fare in modo di non finire in un vicolo cieco) -----
+maxNumCellPalkia(Cmax) :- #max{C : indirectCellPalkia(_, _, C)} = Cmax. % prendo il valore massimo di celle indirette raggiungibili da una nextCell
+:~ finalMovePalkia(X, Y), indirectCellPalkia(X, Y, C), maxNumCellPalkia(Cmax). [Cmax-C@4]   % gli dico di preferire una cella che gl permette di avere più strada disponibile
+
+% ----- 2° constraint (deve cercare se riesce ad ottimizzare lo spazio) -----
+:~ finalMovePalkia(X, Y), freeAdjacentPalkia(X, Y, C). [C@3]  % adesso gli dico di preferire tutte quelle celle che hanno meno celle adiacenti per ottimizzare lo spazio (quindi la cella nextCell che ha meno celle adiacenti)
+
+% ----- 3° constraint (vai verso la cella con meno spazio libero da ottimizzare) -----
+minIndirectCellDepthPalkia(Dmin) :- #min{D : indirectCellDepthPalkia(_, _, D)} = Dmin.  % prendo il valore minimo di celle indirette raggiungibili da una nextCell
+:~ finalMovePalkia(X, Y), indirectCellDepthPalkia(X, Y, D), minIndirectCellDepthPalkia(Dmin). [D-Dmin@2]    % adesso gli dico di preferire una cella che gli permette di avere meno spazio libero
+
+% ----- 4° constraint (deve cercare di andare verso la cella più vicino al bordo in linea d'aria) -----
+minEdgeDistancePalkia(Dmin) :- #min{D : edgeDistancePalkia(_, _, D)} = Dmin. % prendo il valore minimo di distanza dalla cella al bordo
+:~ finalMovePalkia(X, Y), edgeDistancePalkia(X, Y, D), minEdgeDistancePalkia(Dmin). [D-Dmin@1]  % adesso gli dico di preferire una cella che gli permette di andare verso il bordo
+
+% Prendo la/e mossa/e successiva che vuoi fare:
+#show finalMovePalkia/2.

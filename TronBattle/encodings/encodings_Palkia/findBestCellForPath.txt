@@ -1,0 +1,22 @@
+% ----- MODULO DI SCELTA PERCORSO -----
+finalMovePalkia(X, Y) | nonFinalMovePalkia(X, Y) :- nextCellPalkia(X, Y).
+
+% Vincolo che impone di avere almeno una finalMove:
+:- not existsFinalMovePalkia.
+existsFinalMovePalkia :- finalMovePalkia(X, Y).
+
+% CONSTRAINT
+% ----- 1° constraint (deve fare in modo di non finire in un vicolo cieco) -----
+maxNumCellPalkia(Cmax) :- #max{C : indirectCellPalkia(_, _, C)} = Cmax. % prendo il valore massimo di celle indirette raggiungibili da una nextCell
+:~ finalMovePalkia(X, Y), indirectCellPalkia(X, Y, C), maxNumCellPalkia(Cmax). [Cmax-C@3]   % gli dico di preferire una cella che gl permette di avere più strada disponibile
+
+% ----- 2° constraint (deve fare in modo di andare verso il nemico più vicino che stai puntando) -----
+minEnemyDistancePalkia(Dmin) :- #min{D : enemyDistanceFromNextCellPalkia(_, _, D)} = Dmin.  % prendo la distanza minima dal nemico tra tutte le celle che vede
+:~ finalMovePalkia(X, Y), enemyDistanceFromNextCellPalkia(X, Y, D), minEnemyDistancePalkia(Dmin). [D-Dmin@2]    % gli dico di preferire una cella che gli permette di arrivare più vicino al nemico
+
+% ----- 3° constraint (deve fare in modo di scegliere la cella con più spazio locale) -----
+maxLocalSpacePalkia(Dmax) :- #max{D : indirectCellDepthPalkia(_, _, D)} = Dmax. % prendo il valore massimo di celle indirette raggiungibili tra tutte le celle che vede
+:~ finalMovePalkia(X, Y), indirectCellDepthPalkia(X, Y, D), maxLocalSpacePalkia(Dmax). [Dmax-D@1]   % gli dico di preferire una cella che gli permette di avere più spazio locale
+
+% Prendo la/e mossa/e successiva che vuoi fare:
+#show finalMovePalkia/2.

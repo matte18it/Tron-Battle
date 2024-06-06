@@ -1,0 +1,77 @@
+col(0..39).
+rig(0..63).
+
+
+
+move(D) | noMove(D):- mossa(D).
+
+
+
+%non vorrei passare da un blocco se quelli ai lati sono occupati
+
+%se mi trovo nell'angolo 0 0
+:~playerPosition(X,Y), X=0, Y=0, occupato(I,J), I = 1, J = 1, move(D), D = 0. [1@1]
+:~playerPosition(X,Y), X=0, Y=0, occupato(I,J), I = 1, J = 1, move(D), D = 3. [1@1]
+
+%se mi trovo nell'angolo 63 0
+:~playerPosition(X,Y), X = 63, Y = 0, occupato(I,J), I = 62, J = 1, move(D), D = 1. [1@1]
+:~playerPosition(X,Y), X = 63, Y = 0, occupato(I,J), I = 62, J = 1, move(D), D = 3. [1@1]
+
+%se mi trovo nell'angolo 63 39
+:~playerPosition(X,Y), X = 63, Y = 39, occupato(I,J), I = 62, J = 38, move(D), D = 2. [1@1]
+:~playerPosition(X,Y), X = 63, Y = 39, occupato(I,J), I = 62, J = 38, move(D), D = 1. [1@1]
+
+%se mi trovo all'angolo 0 39
+:~playerPosition(X,Y), X = 0, Y = 39, occupato(I,J), I = 1, J = 38, move(D), D = 2. [1@1]
+:~playerPosition(X,Y), X = 0, Y = 39, occupato(I,J), I = 1, J = 38, move(D), D = 0. [1@1]
+
+%se mi trovo sul bordo superiore(eccetto gli angoli)
+:~playerPosition(X,Y), X > 0, X < 63, Y = 0, occupato(I,J), I = X-1, J = Y+1, move(D), D = 1. [1@1]
+:~playerPosition(X,Y), X > 0, X < 63, Y = 0, occupato(I,J), I = X-1, J = Y+1, occupato(H,K), H = X+1, K = Y+1, move(D), D = 3. [1@1]
+:~playerPosition(X,Y), X > 0, X < 63, Y = 0, occupato(I,J), I = X+1, J = Y+1, move(D), D = 0. [1@1]
+
+%se mi trovo sul bordo inferiore(eccetto gli angoli)
+:~playerPosition(X,Y), X > 0, X < 63, Y = 39, occupato(I,J), I = X-1, J = Y-1, move(D), D = 1. [1@1]
+:~playerPosition(X,Y), X > 0, X < 63, Y = 39, occupato(I,J), I = X-1, J = Y-1, occupato(H,K), H = X+1, K = Y-1, move(D), D = 2. [1@1]
+:~playerPosition(X,Y), X > 0, X < 63, Y = 39, occupato(I,J), I = X+1, J = Y-1, move(D), D = 0. [1@1]
+
+%se mi trovo sul bordo destro(eccetto gli angoli)
+:~playerPosition(X,Y), X = 63, Y > 0, Y < 39, occupato(I,J), I = X-1, J = Y-1, move(D), D = 2. [1@1]
+:~playerPosition(X,Y), X = 63, Y > 0, Y < 39, occupato(I,J), I = X-1, J = Y-1, occupato(H,K), H = X-1, K = Y+1, move(D), D = 1. [1@1]
+:~playerPosition(X,Y), X = 63, Y > 0, Y < 39, occupato(I,J), I = X-1, J = Y+1, move(D), D = 3. [1@1]
+
+%se mi trovo sul bordo sinistro(eccetto gli angoli)
+:~playerPosition(X,Y), X = 0, Y > 0, Y < 39, occupato(I,J), I = X+1, J = Y-1, move(D), D = 2. [1@1]
+:~playerPosition(X,Y), X = 0, Y > 0, Y < 39, occupato(I,J), I = X+1, J = Y-1, occupato(H,K), H = X+1, K = Y+1, move(D), D = 0. [1@1]
+:~playerPosition(X,Y), X = 0, Y > 0, Y < 39, occupato(I,J), I = X+1, J = Y+1, move(D), D = 3. [1@1]
+
+%se non mi trovo sul bordo e sugli angoli
+:~playerPosition(X,Y),X > 0, X < 63, Y > 0, Y < 39 ,occupato(I,J), I = X+1, J = Y-1, occupato(H,K), H = X+1, K = Y+1, move(D), D = 0. [1@1]
+:~playerPosition(X,Y),X > 0, X < 63, Y > 0, Y < 39 ,occupato(I,J), I = X-1, J = Y-1, occupato(H,K), H = X-1, K = Y+1, move(D), D = 1. [1@1]
+:~playerPosition(X,Y),X > 0, X < 63, Y > 0, Y < 39 ,occupato(I,J), I = X+1, J = Y-1, occupato(H,K), H = X-1, K = Y-1, move(D), D = 2. [1@1]
+:~playerPosition(X,Y),X > 0, X < 63, Y > 0, Y < 39 ,occupato(I,J), I = X-1, J = Y+1, occupato(H,K), H = X+1, K = Y+1, move(D), D = 3. [1@1]
+
+
+
+%se mi trovo in posizione 0 38
+:~playerPosition(X,Y), X = 0, Y = 38, occupato(I,J), I = X+1, J = Y, move(D), D = 3. [1@1]
+
+%se mi trovo in posizione 0 1
+:~playerPosition(X,Y), X = 0, Y = 1, occupato(I,J), I = X+1, J = Y, move(D), D = 2. [1@1]
+
+%se mi trovo in posizione 63 1
+:~playerPosition(X,Y), X = 63, Y = 1, occupato(I,J), I = X-1, J = Y, move(D), D = 2. [1@1]
+
+%se mi trovo in posizione 63 38
+:~playerPosition(X,Y), X = 63, Y = 38, occupato(I,J), I = X-1, J = Y, move(D), D = 3. [1@1]
+
+:~noMove(D). [2@1]
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------------------------

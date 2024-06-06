@@ -1,0 +1,32 @@
+% Nemici a cui posso arrivare:
+reachableEnemyPalkia(X, Y).
+
+% Celle adiacenti in cui il player può andare con annessa distanza dal nemico più vicino a lui:
+minDistancePalkia(X, Y, D).
+
+% Prossima mossa possibile del giocatore:
+nextCellPalkia(X, Y).
+
+% Celle indirettamente collegate ad ogni cella adiacente del player:
+indirectCellPalkia(X, Y, C).
+
+% Celle adiacenti a quelle collegate al player:
+freeAdjacentPalkia(X, Y, C).
+
+% Distanza dal nemico più vicino ad ogni cella che sto guardando:
+enemyDistanceFromNextCellPalkia(X, Y, D).
+
+% Celle indirettamente collegate ad una certa profondità:
+indirectCellDepthPalkia(X, Y, D).
+
+% Distanza tra nemici:
+distanceBetweenEnemiesPalkia(X, Y, D).
+
+% Spazio libero adiacente ad una certa profondità per nemico:
+depthFreeSpacePalkia(X, Y, D).
+
+% Distanza tra player e nemico:
+distanceBetweenPlayerEnemyPalkia(X, Y, D).
+
+% Distanza di ogni nextCell dal bordo più vicino:
+edgeDistancePalkia(X, Y, D).

@@ -1,0 +1,22 @@
+% ----- MODULO DI ATTACCO -----
+finalMovePalkia(X, Y) | nonFinalMovePalkia(X, Y) :- nextCellPalkia(X, Y).
+
+% Vincolo che impone di avere almeno una finalMove:
+:- not existsFinalMovePalkia.
+existsFinalMovePalkia :- finalMovePalkia(X, Y).
+
+% CONSTRAINT
+% ----- 1° constraint (deve fare in modo di non finire in un vicolo cieco) -----
+maxNumCellPalkia(Cmax) :- #max{C : indirectCellPalkia(_, _, C)} = Cmax. % prendo il valore massimo di celle indirette raggiungibili da una nextCell
+:~ finalMovePalkia(X, Y), indirectCellPalkia(X, Y, C), maxNumCellPalkia(Cmax). [Cmax-C@3]   % gli dico di preferire una cella che gl permette di avere più strada disponibile
+
+% ----- 2° constraint (deve fare in modo di avvicinarsi al nemico) -----
+minEnemyDistancePalkia(Dmin) :- #min{D : minDistancePalkia(_, _, D)} = Dmin.    % prende il valore minimo da ogni nextCell al nemico
+:~ finalMovePalkia(X, Y), minDistancePalkia(X, Y, D), minEnemyDistancePalkia(Dmin). [D-Dmin@2]  % preferisce la cella che lo avvicina di più al nemico
+
+% ----- 3° constraint (vai verso la cella con più spazio libero) -----
+maxFreeSpacePalkia(Dmax) :- #max{D : indirectCellDepthPalkia(_, _, D)} = Dmax.  % prende il valore massimo di celle indirette raggiungibili da una nextCell
+:~ finalMovePalkia(X, Y), indirectCellDepthPalkia(X, Y, D), maxFreeSpacePalkia(Dmax). [Dmax-D@1]    % preferisce la cella con più spazio libero
+
+% Prendo la/e mossa/e successiva che vuoi fare:
+#show finalMovePalkia/2.
