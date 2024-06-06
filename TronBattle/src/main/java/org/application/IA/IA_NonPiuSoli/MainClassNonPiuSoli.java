@@ -48,9 +48,9 @@ public class MainClassNonPiuSoli {
     public void init() {
         // metodo per inizializzare i file DLV dell'IA
         //linux
-        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
+        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
         //win
-        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
+        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
         //mac
         //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
         OptionDescriptor option = new OptionDescriptor("-n 0");
