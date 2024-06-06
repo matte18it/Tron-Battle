@@ -29,9 +29,9 @@ public class MainClassNonPiuSoli {
     private static final InputProgram conquistaTerritorio = new ASPInputProgram();
 
     //servono per determinare la posizione iniziale del giocatore
-    private  boolean controlloPosizioneIniziale = false;
-    private  int posizioneInizialeX = 0;
-    private  int posizioneInizialeY = 0;
+    //private  boolean controlloPosizioneIniziale = false;
+    //private  int posizioneInizialeX = 0;
+    //private  int posizioneInizialeY = 0;
     private int ultimaDirezione = 0;
 
 
@@ -48,9 +48,9 @@ public class MainClassNonPiuSoli {
     public void init() {
         // metodo per inizializzare i file DLV dell'IA
         //linux
-        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
+        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv-2"));
         //win
-        //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
+        handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2.exe"));
         //mac
         //handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
         OptionDescriptor option = new OptionDescriptor("-n 0");
@@ -64,7 +64,8 @@ public class MainClassNonPiuSoli {
             ASPMapper.getInstance().registerClass(FreeSpace.class);
             ASPMapper.getInstance().registerClass(RiskTrap.class);
             ASPMapper.getInstance().registerClass(Move.class);
-            ASPMapper.getInstance().registerClass(InitialPosition.class);
+            ASPMapper.getInstance().registerClass(Mossa.class);
+            //ASPMapper.getInstance().registerClass(InitialPosition.class);
             ASPMapper.getInstance().registerClass(Distance.class);
             ASPMapper.getInstance().registerClass(PlayerPosition.class);
         } catch (ObjectNotValidException | IllegalAnnotationException e) {
@@ -86,12 +87,14 @@ public class MainClassNonPiuSoli {
                 if (blocks[i][j].type() != 0) {
                     countCelleOccupate++;
                 }
+                /*
                 if(! controlloPosizioneIniziale){
                     posizioneInizialeX = playerPositionX;
                     posizioneInizialeY = playerPositionY;
                     controlloPosizioneIniziale = true;
                     conquistaTerritorio.addObjectInput((new InitialPosition(posizioneInizialeX, posizioneInizialeY)));
                 }
+                */
             }
         }
 
@@ -341,33 +344,51 @@ public class MainClassNonPiuSoli {
 
             int num1;
             int num2;
+            List<Node> path;
+            List<Node> path1;
+            int count = 1;
 
             do {
-                int[] lista = getGoal();
+
+
+                int[] lista = getGoal(blocks);
                 num1 = lista[0];
                 num2 = lista[1];
 
-            } while (blocks[num1][num2].type() != Block.EMPTY);
+
+
+                path = percorso(blocks, playerPositionX, playerPositionY, num1, num2, closedList);
+                path1 = percorso(blocks, playerPositionX, playerPositionY, num1, num2, closedList);
 
 
 
-            List<Node> path = percorso(blocks, playerPositionX, playerPositionY, num1, num2, closedList);
-            List<Node> path1=percorso(blocks, playerPositionX, playerPositionY, num1, num2, closedList);
+
+                count+=1;
+                //System.out.println("count------------------------> "+count);
+
+                if(count == 10)
+                    break;
+
+
+            }while (path.size()<1 && path1.size()<1);
 
             if(path.size()>1) {
                 int direzione1 = calcolaDirezione(path.get(1), playerPositionX, playerPositionY);
-                conquistaTerritorio.addObjectInput(new Move(direzione1));
+                conquistaTerritorio.addObjectInput(new Mossa(direzione1));
             }
 
             if(path1.size()>1) {
                 int direzione2 = calcolaDirezione(path1.get(1), playerPositionX, playerPositionY);
-                conquistaTerritorio.addObjectInput(new Move(direzione2));
+                conquistaTerritorio.addObjectInput(new Mossa(direzione2));
             }
 
 
             if(path.size()<1 && path1.size()<1){
-                conquistaTerritorio.addObjectInput(new Move(ultimaDirezione));
+                //System.out.println("inserisco l'ultima direzione:"+ultimaDirezione );
+                conquistaTerritorio.addObjectInput(new Mossa(ultimaDirezione));
             }
+
+
         }
 
         // Log per debug
@@ -505,15 +526,23 @@ public class MainClassNonPiuSoli {
     }
 
 
-    public int[] getGoal(){
+    public int[] getGoal(Block[][] blocks ){
         Random random = new Random();
         int[] lista = new int[2];
-        // Genera un numero casuale minore o uguale a 39
-        int num1 = random.nextInt(64);
-        // Genera un numero casuale minore o uguale a 39
-        int num2 = random.nextInt(40);
+        int num1, num2;
+
+        do{
+            num1 = random.nextInt(64);
+            num2 = random.nextInt(40);
+
+        }while(blocks[num1][num2].type() != Block.EMPTY);
+
+
         lista[0] = num1;
         lista[1] = num2;
+
+
         return lista;
+
     }
 }
