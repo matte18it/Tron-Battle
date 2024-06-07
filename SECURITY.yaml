@@ -1,0 +1,14 @@
+name: Block Push
+
+on: push:
+  branches:
+    - main
+
+jobs:
+  block_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Block push
+        run: |
+          echo "Pushes to this branch are not allowed."
+          exit 1
