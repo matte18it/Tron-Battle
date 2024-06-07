@@ -18,8 +18,8 @@ public class DataClass {
     private List<Cell> minStreet = new ArrayList<>();  // lista che contiene la strada minima da fare
     private int playerX = 0, playerY = 0;   // coordinate del player
     private List<Cell> pathChiusura = new ArrayList<>();  // lista che contiene la strada per chiudere l'avversario
-    private int fixedDistance = 20; // Distanza a cui vede il nemico
-    private int enemyNear = 15; // Distanza a cui l'IA considera un nemico vicino
+    private int fixedDistance = 20; // distanza a cui vede il nemico
+    private int enemyNear = 15; // distanza a cui l'IA considera un nemico vicino
 
     // ----- CONSTRUCTOR -----
     private DataClass() {}

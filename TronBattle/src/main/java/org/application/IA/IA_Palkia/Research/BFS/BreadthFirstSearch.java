@@ -4,10 +4,7 @@ import org.application.IA.IA_Palkia.Research.Support.Cell;
 import org.application.model.Block;
 import org.application.utility.Settings;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 // Classe che implementa la ricerca in ampiezza (BFS)
 public class BreadthFirstSearch {
