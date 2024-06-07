@@ -21,8 +21,10 @@ import org.application.IA.IA_Palkia.Utility.DataClass;
 import org.application.model.Block;
 import org.application.utility.Settings;
 
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 public class MainClassPalkia {
     // ----- ATTRIBUTE -----
@@ -51,7 +53,12 @@ public class MainClassPalkia {
 
     // ----- INIT METHODS -----
     public void init() {
-        service = new DLV2DesktopService("lib/dlv2");
+        //linux
+        service = new DLV2DesktopService("lib/dlv-2");
+        //win
+        //service = new DLV2DesktopService("lib/dlv2.exe");
+        //mac
+        //service = new DLV2DesktopService("lib/dlv2");
         handler = new DesktopHandler(service);
         fixedProgram = new ASPInputProgram();
         fixedProgram.addFilesPath("encodings/encodings_Palkia/findBestCellForPath.txt");
@@ -92,6 +99,7 @@ public class MainClassPalkia {
         // pulisco i fatti
         variableProgram.clearAll();
 
+        // analizzo la matrice e verifico se il player è ancora vivo, sennò salto il tutto
         try {
             analyzeMatrix(blocks, playerHead);  // analizzo la matrice e prendo la posizione del player
             // Parto ottimizzando lo spazio per chiudere le celle sopra di me
@@ -238,6 +246,7 @@ public class MainClassPalkia {
 
             nextNCell(blocks, playerHead);  // calcolo le celle che vede il player a distanza N e che sono vicino al bordo
 
+            //System.out.println(fixedProgram.getPrograms());
             FinalMove elements = runProgram(FinalMove.class);
 
             //calcolo il cammino
