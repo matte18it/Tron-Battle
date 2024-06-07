@@ -9,4 +9,4 @@ Nel gioco Tron Battle, l'ambiente in cui opera il nostro agente basato sull'util
 <li><strong>Noto:</strong> le regole del gioco sono ben definite e note a tutti i giocatori. Non ci sono elementi nascosti o incognite sulle meccaniche di gioco.</li>
 <li><strong>Dinamico:</strong> il campo di gioco cambia continuamente poiché le moto si muovono e lasciano tracce dietro di sé. Questi cambiamenti devono essere costantemente monitorati e gestiti dai giocatori.</li>
 <li><strong>Sequenziale:</strong> le decisioni prese in ogni momento influenzano le opzioni disponibili in futuro. Ad esempio, una mossa che lascia la moto in una posizione rischiosa può limitare drasticamente le scelte successive.</li>
-</ol>
+</ol
