@@ -13,13 +13,12 @@ maxDistancePalkia(Dmax) :- #max{D : distanceBetweenEnemiesPalkia(_, _, D)} = Dma
 minValuePalkia(Dmin) :- #min{D : distanceBetweenPlayerEnemyPalkia(_, _, D)} = Dmin. % prendo la distanza minima tra il giocatore e i nemici
 :~ finalEnemyPalkia(X, Y), distanceBetweenPlayerEnemyPalkia(X, Y, D), minValuePalkia(Dmin). [D-Dmin@3]  % gli dico di preferire il nemico più vicino
 
-% ----- 3° constraint (per farlo andare dal nemico più vicino al bordo) -----
-minDistanceEnemyPalkia(Dmin) :- #min{D : edgeDistancePalkia(_, _, D)} = Dmin.   % prendo la distanza minima tra il nemico e il bordo
-:~ finalEnemyPalkia(X, Y), edgeDistancePalkia(X, Y, D), minDistanceEnemyPalkia(Dmin). [D-Dmin@2]    % gli dico di preferire il nemico più vicino al bordo
-
-% ----- 4° constraint (per farlo andare dal nemico con meno spazio libero adiacente) -----
+% ----- 3° constraint (per farlo andare dal nemico con meno spazio libero adiacente) -----
 minDepthPalkia(Dmin) :- #min{D : depthFreeSpacePalkia(_, _, D)} = Dmin.  % prendo la profondità minima dello spazio libero adiacente al nemico
-:~ finalEnemyPalkia(X, Y), depthFreeSpacePalkia(X, Y, D), minDepthPalkia(Dmin). [D-Dmin@1]  % gli dico di preferire il nemico con meno spazio libero adiacente
+:~ finalEnemyPalkia(X, Y), depthFreeSpacePalkia(X, Y, D), minDepthPalkia(Dmin). [D-Dmin@2]  % gli dico di preferire il nemico con meno spazio libero adiacente
 
+% ----- 4° constraint (per farlo andare dal nemico più vicino al bordo) -----
+minDistanceEnemyPalkia(Dmin) :- #min{D : edgeDistancePalkia(_, _, D)} = Dmin.   % prendo la distanza minima tra il nemico e il bordo
+:~ finalEnemyPalkia(X, Y), edgeDistancePalkia(X, Y, D), minDistanceEnemyPalkia(Dmin). [D-Dmin@1]    % gli dico di preferire il nemico più vicino al bordo
 % Prendo la/e mossa/e successiva che vuoi fare:
 #show finalEnemyPalkia/2.
