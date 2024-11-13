@@ -11,4 +11,9 @@ Nel gioco Tron Battle, l'ambiente in cui opera il nostro agente basato sull'util
  <li><strong>Sequenziale:</strong> le decisioni prese in ogni momento influenzano le opzioni disponibili in futuro. Ad esempio, una mossa che lascia la moto in una posizione rischiosa può limitare drasticamente le scelte successive.</li>
  </ol>
 
-
+# 📼 Demo Video 📼
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=CWZ11AGHrdc">
+    <img src="https://img.youtube.com/vi/CWZ11AGHrdc/0.jpg" alt="Guarda il video su YouTube" width="600">
+  </a>
+</div>
